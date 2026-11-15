@@ -117,7 +117,7 @@ jobs:
       - name: Kode hasil sqlc sesuai query
         run: sqlc diff
       - run: go vet ./...
-      - uses: golangci/golangci-lint-action@v8
+      - uses: golangci/golangci-lint-action@v9
         with:
           version: latest
           working-directory: apps/api
