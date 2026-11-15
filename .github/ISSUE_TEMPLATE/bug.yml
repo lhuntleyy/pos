@@ -1,0 +1,46 @@
+name: Laporan bug
+description: Ada yang tidak berjalan sebagaimana mestinya
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: aplikasi
+    attributes:
+      label: Aplikasi
+      options:
+        - App kasir (Android)
+        - Web back office
+        - Situs
+        - API
+        - WhatsApp
+    validations:
+      required: true
+  - type: textarea
+    id: langkah
+    attributes:
+      label: Langkah untuk mengulang
+      placeholder: |
+        1. Buka layar Jualan
+        2. Tambah 2 Es Kopi Susu
+        3. Bayar tunai Rp50.000
+    validations:
+      required: true
+  - type: textarea
+    id: harapan
+    attributes:
+      label: Yang diharapkan vs yang terjadi
+    validations:
+      required: true
+  - type: input
+    id: perangkat
+    attributes:
+      label: Perangkat dan versi app
+      placeholder: "Sunmi V2s, Android 11, app 0.3.1"
+  - type: dropdown
+    id: dampak
+    attributes:
+      label: Dampak
+      options:
+        - Uang atau stok salah (paling gawat)
+        - Tidak bisa jualan
+        - Mengganggu tapi ada jalan lain
+        - Tampilan saja

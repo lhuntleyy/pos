@@ -1,0 +1,99 @@
+{
+  "v": 3,
+  "createdOnFiles": {"v": 1, "at": "2026-11-14T19:30:00+07:00"},
+  "title": "Mockup POS Kita",
+  "launch": {"view": "canvas", "page": "p-kasir"},
+  "pages": [
+    {"id": "p-kasir", "name": "Kasir tablet"},
+    {"id": "p-hp", "name": "Aplikasi HP"},
+    {"id": "p-web", "name": "Web back office"},
+    {"id": "p-admin", "name": "Super admin"},
+    {"id": "p-layar", "name": "Layar, struk & menu QR"},
+    {"id": "p-situs", "name": "Website & sistem desain"}
+  ],
+  "boards": {
+    "Kasir-Login.dc.html": {"x": 0, "y": 0, "w": 1280, "h": 800, "title": "Masuk pakai PIN", "page": "p-kasir"},
+    "Kasir-ShiftBuka.dc.html": {"x": 1360, "y": 0, "w": 1280, "h": 800, "title": "Buka kasir · hitung modal", "page": "p-kasir"},
+    "Main.dc.html": {"x": 2720, "y": 0, "w": 1280, "h": 800, "title": "Jualan → bayar → selesai (bisa dicoba)", "is_interactive": true, "page": "p-kasir"},
+    "Kasir-Diskon.dc.html": {"x": 4080, "y": 0, "w": 1280, "h": 800, "title": "Diskon, member & poin", "page": "p-kasir"},
+    "Kasir-PisahBill.dc.html": {"x": 5440, "y": 0, "w": 1280, "h": 800, "title": "Pisah tagihan", "page": "p-kasir"},
+    "Kasir-Riwayat.dc.html": {"x": 0, "y": 1220, "w": 1280, "h": 800, "title": "Riwayat & refund dengan PIN", "page": "p-kasir"},
+    "Kasir-ShiftTutup.dc.html": {"x": 1360, "y": 1220, "w": 1280, "h": 800, "title": "Tutup kasir · selisih & setoran", "page": "p-kasir"},
+    "Kasir-Pelanggan.dc.html": {"x": 2720, "y": 1220, "w": 1280, "h": 800, "title": "Pelanggan & kasbon", "page": "p-kasir"},
+    "Kasir-Pengaturan.dc.html": {"x": 4080, "y": 1220, "w": 1280, "h": 800, "title": "Printer, tampilan & sinkron", "page": "p-kasir"},
+    "Kasir-Meja.dc.html": {"x": 0, "y": 2440, "w": 1280, "h": 800, "title": "F&B · denah meja & open bill", "page": "p-kasir"},
+    "Kasir-Retail.dc.html": {"x": 1360, "y": 2440, "w": 1280, "h": 800, "title": "Retail · scan, multi-satuan, grosir", "page": "p-kasir"},
+    "Kasir-Jasa.dc.html": {"x": 2720, "y": 2440, "w": 1280, "h": 800, "title": "Jasa · laundry & status pengerjaan", "page": "p-kasir"},
+
+    "HP-Daftar.dc.html": {"x": 0, "y": 0, "w": 390, "h": 844, "title": "1 · Daftar pakai nomor HP", "page": "p-hp"},
+    "HP-Onboarding.dc.html": {"x": 470, "y": 0, "w": 390, "h": 844, "title": "2 · Pilih jenis usaha", "page": "p-hp"},
+    "HP-InfoToko.dc.html": {"x": 940, "y": 0, "w": 390, "h": 844, "title": "3 · Info usaha & pajak", "page": "p-hp"},
+    "HP-Siap.dc.html": {"x": 1410, "y": 0, "w": 390, "h": 844, "title": "4 · Isi menu pertama", "page": "p-hp"},
+    "HP-Kasir.dc.html": {"x": 0, "y": 1264, "w": 390, "h": 844, "title": "Kasir warung (teks besar)", "page": "p-hp"},
+    "HP-Bayar.dc.html": {"x": 470, "y": 1264, "w": 390, "h": 844, "title": "Bayar di HP", "page": "p-hp"},
+    "HP-Pelayan.dc.html": {"x": 940, "y": 1264, "w": 390, "h": 844, "title": "Mode pelayan · pilih topping", "page": "p-hp"},
+    "HP-StokOpname.dc.html": {"x": 1410, "y": 1264, "w": 390, "h": 844, "title": "Stok opname di HP", "page": "p-hp"},
+    "HP-Pemilik.dc.html": {"x": 0, "y": 2528, "w": 390, "h": 844, "title": "App pemilik · beranda", "page": "p-hp"},
+    "HP-Laporan.dc.html": {"x": 470, "y": 2528, "w": 390, "h": 844, "title": "App pemilik · laporan", "page": "p-hp"},
+
+    "Web-Dashboard.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 1180, "title": "Beranda", "expand": "fill", "page": "p-web"},
+    "Web-Produk.dc.html": {"x": 1520, "y": 0, "w": 1440, "h": 1100, "title": "Produk & stok", "expand": "fill", "page": "p-web"},
+    "Web-StokOpname.dc.html": {"x": 3040, "y": 0, "w": 1440, "h": 1000, "title": "Stok opname", "expand": "fill", "page": "p-web"},
+    "Web-StokMasuk.dc.html": {"x": 4560, "y": 0, "w": 1440, "h": 1000, "title": "Stok masuk dari supplier", "expand": "fill", "page": "p-web"},
+    "Web-Laporan.dc.html": {"x": 0, "y": 1600, "w": 1440, "h": 1300, "title": "Laporan (satu halaman)", "expand": "fill", "page": "p-web"},
+    "Web-Pelanggan.dc.html": {"x": 1520, "y": 1600, "w": 1440, "h": 1000, "title": "Pelanggan & kasbon", "expand": "fill", "page": "p-web"},
+    "Web-Karyawan.dc.html": {"x": 3040, "y": 1600, "w": 1440, "h": 1000, "title": "Karyawan & hak akses", "expand": "fill", "page": "p-web"},
+    "Web-Promo.dc.html": {"x": 4560, "y": 1600, "w": 1440, "h": 1000, "title": "Buat promo", "expand": "fill", "page": "p-web"},
+    "Web-Pengaturan.dc.html": {"x": 0, "y": 3320, "w": 1440, "h": 1200, "title": "Pengaturan · modul, pajak, struk", "expand": "fill", "page": "p-web"},
+    "Web-WhatsApp.dc.html": {"x": 1520, "y": 3320, "w": 1440, "h": 1000, "title": "WhatsApp toko (Baileys)", "expand": "fill", "page": "p-web"},
+    "Web-Langganan.dc.html": {"x": 3040, "y": 3320, "w": 1440, "h": 1100, "title": "Langganan & tagihan", "expand": "fill", "page": "p-web"},
+
+    "Admin-Ringkasan.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 1100, "title": "Ringkasan platform & daftar toko", "expand": "fill", "page": "p-admin"},
+    "Admin-Paket.dc.html": {"x": 1520, "y": 0, "w": 1440, "h": 1100, "title": "Paket & harga", "expand": "fill", "page": "p-admin"},
+    "Admin-Branding.dc.html": {"x": 3040, "y": 0, "w": 1440, "h": 1000, "title": "Branding: nama, logo, warna (bisa dicoba)", "expand": "fill", "is_interactive": true, "page": "p-admin"},
+
+    "Layar-Dapur.dc.html": {"x": 0, "y": 0, "w": 1280, "h": 800, "title": "Layar dapur (KDS)", "page": "p-layar"},
+    "Layar-Pelanggan.dc.html": {"x": 1360, "y": 0, "w": 1280, "h": 800, "title": "Layar pelanggan", "page": "p-layar"},
+    "Layar-MenuQR.dc.html": {"x": 2720, "y": 0, "w": 390, "h": 844, "title": "Menu QR di HP pelanggan (Fase 3)", "page": "p-layar"},
+    "Struk.dc.html": {"x": 3190, "y": 0, "w": 420, "h": 1000, "title": "Struk thermal 58 mm", "page": "p-layar"},
+
+    "Web-Harga.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 2000, "title": "Halaman harga", "expand": "fill", "is_interactive": true, "page": "p-situs"},
+    "Sistem-Desain.dc.html": {"x": 1520, "y": 0, "w": 1280, "h": 1150, "title": "Sistem desain · aturan semua umur", "page": "p-situs"}
+  },
+  "order": [
+    "Kasir-Login.dc.html", "Kasir-ShiftBuka.dc.html", "Main.dc.html", "Kasir-Diskon.dc.html", "Kasir-PisahBill.dc.html",
+    "Kasir-Riwayat.dc.html", "Kasir-ShiftTutup.dc.html", "Kasir-Pelanggan.dc.html", "Kasir-Pengaturan.dc.html",
+    "Kasir-Meja.dc.html", "Kasir-Retail.dc.html", "Kasir-Jasa.dc.html",
+    "HP-Daftar.dc.html", "HP-Onboarding.dc.html", "HP-InfoToko.dc.html", "HP-Siap.dc.html",
+    "HP-Kasir.dc.html", "HP-Bayar.dc.html", "HP-Pelayan.dc.html", "HP-StokOpname.dc.html",
+    "HP-Pemilik.dc.html", "HP-Laporan.dc.html",
+    "Web-Dashboard.dc.html", "Web-Produk.dc.html", "Web-StokOpname.dc.html", "Web-StokMasuk.dc.html",
+    "Web-Laporan.dc.html", "Web-Pelanggan.dc.html", "Web-Karyawan.dc.html", "Web-Promo.dc.html",
+    "Web-Pengaturan.dc.html", "Web-WhatsApp.dc.html", "Web-Langganan.dc.html",
+    "Admin-Ringkasan.dc.html", "Admin-Paket.dc.html", "Admin-Branding.dc.html",
+    "Layar-Dapur.dc.html", "Layar-Pelanggan.dc.html", "Layar-MenuQR.dc.html", "Struk.dc.html",
+    "Web-Harga.dc.html", "Sistem-Desain.dc.html"
+  ],
+  "notes": {
+    "t1": {"x": 0, "y": -300, "text": "Alur harian kasir", "kind": "title1", "maxW": 6720, "page": "p-kasir"},
+    "t2": {"x": 0, "y": 920, "text": "Setelah transaksi & pengaturan", "kind": "title1", "maxW": 5360, "page": "p-kasir"},
+    "t3": {"x": 0, "y": 2140, "text": "Mode usaha: F&B, retail, jasa", "kind": "title1", "maxW": 4000, "page": "p-kasir"},
+    "s1": {"x": 6800, "y": 0, "w": 380, "text": "Coba alurnya: tekan Play di 'Jualan → bayar → selesai'. Tap menu, ubah jumlah, pilih Bawa pulang / GoFood (harga ojol otomatis), lalu Bayar, pilih uang cepat, dan Selesai. Ganti ukuran teks lewat tombol A / A+ / A++.", "size": "m", "fill": "orange", "page": "p-kasir"},
+
+    "t4": {"x": 0, "y": -300, "text": "Daftar & mulai (4 langkah)", "kind": "title1", "maxW": 1800, "page": "p-hp"},
+    "t5": {"x": 0, "y": 964, "text": "Jualan & stok di HP", "kind": "title1", "maxW": 1800, "page": "p-hp"},
+    "t6": {"x": 0, "y": 2228, "text": "App pemilik", "kind": "title1", "maxW": 860, "page": "p-hp"},
+    "s2": {"x": 1880, "y": 0, "w": 380, "text": "Semua layar memakai aturan yang sama: tombol minimal 48 px (CTA 64 px), teks 16/18/20 px, ikon selalu berlabel, status ditandai warna + ikon + teks, dan bahasa sehari-hari.", "size": "m", "fill": "blue", "page": "p-hp"},
+
+    "t7": {"x": 0, "y": -300, "text": "Operasional harian", "kind": "title1", "maxW": 6000, "page": "p-web"},
+    "t8": {"x": 0, "y": 1300, "text": "Laporan, pelanggan, tim, promo", "kind": "title1", "maxW": 6000, "page": "p-web"},
+    "t9": {"x": 0, "y": 3020, "text": "Pengaturan, WhatsApp & langganan", "kind": "title1", "maxW": 4480, "page": "p-web"},
+
+    "t10": {"x": 0, "y": -300, "text": "Panel super admin (tim internal)", "kind": "title1", "maxW": 4480, "page": "p-admin"},
+    "s3": {"x": 4560, "y": 0, "w": 380, "text": "Nama produk, logo, warna, harga paket, batas, dan fitur per paket diatur dari sini tanpa rilis aplikasi baru. Coba ketik nama baru di halaman Branding.", "size": "m", "fill": "green", "page": "p-admin"},
+
+    "t11": {"x": 0, "y": -300, "text": "Layar pendukung, menu QR & struk", "kind": "title1", "maxW": 3610, "page": "p-layar"},
+    "t12": {"x": 0, "y": -300, "text": "Website harga & sistem desain", "kind": "title1", "maxW": 2800, "page": "p-situs"}
+  },
+  "designSystems": []
+}

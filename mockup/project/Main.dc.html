@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Kasir tablet</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+button:focus-visible,input:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden; position: relative">
+
+  <!-- Bar atas -->
+  <header style="height: 64px; flex: none; display: flex; align-items: center; gap: 16px; padding: 0 20px; background: #FFFFFF; border-bottom: 1px solid #D9DBEA; box-sizing: border-box">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <div style="width: 36px; height: 36px; border-radius: 10px; background: {{accent}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div>
+      <div style="display: flex; flex-direction: column; line-height: 1.25">
+        <span style="font-weight: 800; font-size: 16px">Kedai Kopi Senja</span>
+        <span style="font-size: 13px; color: #51546F">Kasir: Dimas · Shift pagi</span>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: #DDF3E7; color: #16774A; font-size: 14px; font-weight: 700">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+      Online · semua data terkirim
+    </div>
+    <div style="flex: 1"></div>
+    <div role="group" aria-label="Ukuran teks" style="display: flex; align-items: center; gap: 6px">
+      <span style="font-size: 13px; color: #51546F; margin-right: 4px">Ukuran teks</span>
+      <button type="button" onClick="{{ sizeN.pick }}" aria-pressed="{{ sizeN.on }}" style="height: 44px; min-width: 48px; padding: 0 10px; border-radius: 10px; border: 2px solid {{sizeN.border}}; background: {{sizeN.bg}}; color: {{sizeN.fg}}; font-weight: 800; font-size: 15px">A</button>
+      <button type="button" onClick="{{ sizeB.pick }}" aria-pressed="{{ sizeB.on }}" style="height: 44px; min-width: 48px; padding: 0 10px; border-radius: 10px; border: 2px solid {{sizeB.border}}; background: {{sizeB.bg}}; color: {{sizeB.fg}}; font-weight: 800; font-size: 18px">A+</button>
+      <button type="button" onClick="{{ sizeS.pick }}" aria-pressed="{{ sizeS.on }}" style="height: 44px; min-width: 48px; padding: 0 10px; border-radius: 10px; border: 2px solid {{sizeS.border}}; background: {{sizeS.bg}}; color: {{sizeS.fg}}; font-weight: 800; font-size: 21px">A++</button>
+    </div>
+    <button type="button" style="height: 44px; padding: 0 14px; border-radius: 10px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h12v20l-6-4-6 4Z"></path></svg>
+      Pesanan disimpan · 2
+    </button>
+    <button type="button" style="height: 44px; padding: 0 14px; border-radius: 10px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      Menu lain
+    </button>
+  </header>
+
+  <!-- LAYAR JUALAN -->
+  <sc-if value="{{ isJual }}" hint-placeholder-val="{{ true }}">
+  <div style="flex: 1; min-height: 0; display: flex">
+    <!-- Kategori -->
+    <nav aria-label="Kategori menu" style="width: 196px; flex: none; background: #FFFFFF; border-right: 1px solid #D9DBEA; padding: 16px 12px; box-sizing: border-box; display: flex; flex-direction: column; gap: 6px">
+      <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
+        <button type="button" onClick="{{ c.pick }}" aria-pressed="{{ c.on }}" style="min-height: 56px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border-radius: 12px; border: 0; background: {{c.bg}}; color: {{c.fg}}; font-weight: 700; font-size: {{sz.cat}}px; text-align: left">
+          <span style="width: 12px; height: 12px; border-radius: 4px; background: {{c.dot}}; flex: none; border: 1px solid rgba(0,0,0,0.12)"></span>
+          <span style="flex: 1">{{c.label}}</span>
+          <span style="font-size: 13px; font-weight: 700; opacity: 0.8">{{c.count}}</span>
+        </button>
+      </sc-for>
+      <div style="flex: 1"></div>
+      <button type="button" style="min-height: 56px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border-radius: 12px; border: 1px dashed #B9BCD3; background: #FFFFFF; color: #3B35B5; font-weight: 700; font-size: 15px; text-align: left">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+        Harga bebas
+      </button>
+    </nav>
+
+    <!-- Produk -->
+    <main style="flex: 1; min-width: 0; display: flex; flex-direction: column; padding: 16px; gap: 12px; box-sizing: border-box">
+      <div style="display: flex; gap: 12px; align-items: center">
+        <label for="cari-menu" style="flex: 1; height: 52px; display: flex; align-items: center; gap: 10px; padding: 0 14px; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 12px; box-sizing: border-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#51546F" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+          <input id="cari-menu" type="search" value="{{ q }}" onChange="{{ onSearch }}" placeholder="Cari menu atau scan barcode" style="flex: 1; border: 0; outline: none; font-size: {{sz.body}}px; background: transparent; color: #181A2E; min-width: 0">
+        </label>
+      </div>
+      <div role="group" aria-label="Jenis pesanan" style="display: flex; gap: 8px">
+        <sc-for list="{{ orders }}" as="o" hint-placeholder-count="4">
+          <button type="button" onClick="{{ o.pick }}" aria-pressed="{{ o.on }}" style="flex: 1; height: 48px; border-radius: 12px; border: 2px solid {{o.border}}; background: {{o.bg}}; color: {{o.fg}}; font-weight: 700; font-size: {{sz.small}}px">{{o.label}}</button>
+        </sc-for>
+      </div>
+      <sc-if value="{{ ojol }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 10px; background: #FFF2D2; color: #6B4600; font-size: 14px; font-weight: 600">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5M12 16h.01"></path></svg>
+          Harga ojol aktif: +20% dari harga toko, mengikuti pengaturan kanal.
+        </div>
+      </sc-if>
+      <div style="flex: 1; min-height: 0; overflow: auto">
+        <div style="display: grid; grid-template-columns: repeat({{sz.cols}}, minmax(0, 1fr)); gap: 12px; padding-bottom: 8px">
+          <sc-for list="{{ products }}" as="p" hint-placeholder-count="16">
+            <button type="button" onClick="{{ p.add }}" disabled="{{ p.soldOut }}" aria-label="{{p.label}}" style="position: relative; display: flex; flex-direction: column; align-items: stretch; text-align: left; padding: 0; border: 2px solid {{p.border}}; border-radius: 14px; background: #FFFFFF; overflow: hidden; min-height: {{sz.tileH}}px; opacity: {{p.op}}; color: #181A2E">
+              <div style="height: 52px; flex: none; background: {{p.bg}}; color: {{p.ink}}; display: flex; align-items: center; justify-content: space-between; padding: 0 12px">
+                <sc-if value="{{ p.isKopi }}" hint-placeholder-val="{{ true }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path><path d="M6 2v2M10 2v2M14 2v2"></path></svg></sc-if>
+                <sc-if value="{{ p.isNon }}" hint-placeholder-val="{{ false }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h14l-1.6 16.2a2 2 0 0 1-2 1.8H8.6a2 2 0 0 1-2-1.8Z"></path><path d="M5.6 9h12.8"></path><path d="M13 4 15 1"></path></svg></sc-if>
+                <sc-if value="{{ p.isMakan }}" hint-placeholder-val="{{ false }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18a9 9 0 0 1-18 0Z"></path><path d="M8 7c0-1.2 1-1.8 1-3M12 7c0-1.2 1-1.8 1-3M16 7c0-1.2 1-1.8 1-3"></path></svg></sc-if>
+                <sc-if value="{{ p.isCamil }}" hint-placeholder-val="{{ false }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9 9.5h.01M14.5 8.5h.01M15 14h.01M10 15h.01"></path></svg></sc-if>
+                <sc-if value="{{ p.low }}" hint-placeholder-val="{{ false }}"><span style="padding: 3px 8px; border-radius: 999px; background: #FFFFFF; color: #6B4600; font-size: 12px; font-weight: 800; border: 1px solid #E8C26A">{{p.lowTxt}}</span></sc-if>
+                <sc-if value="{{ p.soldOut }}" hint-placeholder-val="{{ false }}"><span style="padding: 3px 8px; border-radius: 999px; background: #FFFFFF; color: #B42318; font-size: 12px; font-weight: 800; border: 1px solid #F1B5AE">Habis</span></sc-if>
+              </div>
+              <div style="padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 6px; flex: 1; justify-content: space-between">
+                <span style="font-size: {{sz.name}}px; font-weight: 700; line-height: 1.25">{{p.name}}</span>
+                <span style="font-size: {{sz.price}}px; font-weight: 800; font-variant-numeric: tabular-nums">{{p.priceTxt}}</span>
+              </div>
+              <sc-if value="{{ p.inCart }}" hint-placeholder-val="{{ false }}">
+                <span style="position: absolute; top: 10px; right: 10px; min-width: 32px; height: 32px; padding: 0 8px; box-sizing: border-box; border-radius: 999px; background: {{accent}}; color: #FFFFFF; font-weight: 800; font-size: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 3px #FFFFFF">{{p.qty}}</span>
+              </sc-if>
+            </button>
+          </sc-for>
+        </div>
+        <sc-if value="{{ noResult }}" hint-placeholder-val="{{ false }}">
+          <div style="padding: 48px 16px; text-align: center; color: #51546F; font-size: 16px">Menu "{{q}}" tidak ditemukan. Coba kata lain, atau pakai tombol Harga bebas.</div>
+        </sc-if>
+      </div>
+    </main>
+
+    <!-- Keranjang -->
+    <aside aria-label="Pesanan" style="width: 380px; flex: none; background: #FFFFFF; border-left: 1px solid #D9DBEA; display: flex; flex-direction: column; position: relative">
+      <div style="padding: 16px 20px 12px; border-bottom: 1px solid #EDEEF7; display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; justify-content: space-between; align-items: baseline">
+          <span style="font-size: 20px; font-weight: 800">Pesanan</span>
+          <span style="font-size: 14px; color: #51546F; font-weight: 600">{{orderLabel}} · {{itemCount}} item</span>
+        </div>
+        <div style="display: flex; gap: 8px">
+          <button type="button" style="flex: 1; height: 44px; border-radius: 10px; border: 1px solid #D9DBEA; background: #F6F6FB; color: #181A2E; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 6px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg>
+            Tambah pelanggan
+          </button>
+          <button type="button" style="flex: 1; height: 44px; border-radius: 10px; border: 1px solid #D9DBEA; background: #F6F6FB; color: #181A2E; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 6px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4h16v12H8l-4 4Z"></path></svg>
+            Catatan
+          </button>
+        </div>
+      </div>
+      <div style="flex: 1; min-height: 0; overflow: auto; padding: 0 20px">
+        <sc-for list="{{ lines }}" as="l" hint-placeholder-count="3">
+          <div style="padding: 12px 0; border-bottom: 1px solid #EDEEF7; display: flex; flex-direction: column; gap: 8px">
+            <div style="display: flex; justify-content: space-between; gap: 12px; align-items: baseline">
+              <span style="font-size: {{sz.body}}px; font-weight: 700; line-height: 1.3">{{l.name}}</span>
+              <span style="font-size: {{sz.body}}px; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap">{{l.lineTxt}}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center">
+              <span style="font-size: {{sz.small}}px; color: #51546F; font-variant-numeric: tabular-nums">{{l.unitTxt}} / porsi</span>
+              <div style="display: flex; align-items: center; gap: 4px">
+                <button type="button" onClick="{{ l.dec }}" aria-label="Kurangi {{l.name}}" style="width: 48px; height: 44px; border-radius: 10px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-size: 22px; font-weight: 700; display: flex; align-items: center; justify-content: center">−</button>
+                <span style="min-width: 36px; text-align: center; font-weight: 800; font-size: {{sz.body}}px; font-variant-numeric: tabular-nums">{{l.qty}}</span>
+                <button type="button" onClick="{{ l.inc }}" aria-label="Tambah {{l.name}}" style="width: 48px; height: 44px; border-radius: 10px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-size: 22px; font-weight: 700; display: flex; align-items: center; justify-content: center">+</button>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="padding: 56px 8px; text-align: center; display: flex; flex-direction: column; gap: 8px; align-items: center; color: #51546F">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#9A9DB8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.5L21 8H6.2"></path><circle cx="10" cy="20" r="1"></circle><circle cx="17" cy="20" r="1"></circle></svg>
+            <span style="font-size: 17px; font-weight: 700; color: #181A2E">Belum ada pesanan</span>
+            <span style="font-size: 15px">Tap menu di sebelah kiri untuk menambahkan.</span>
+          </div>
+        </sc-if>
+      </div>
+      <sc-if value="{{ hasUndo }}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="margin: 0 16px 10px; padding: 10px 10px 10px 16px; border-radius: 12px; background: #181A2E; color: #FFFFFF; display: flex; align-items: center; gap: 10px; font-size: 15px">
+          <span style="flex: 1">{{undoTxt}}</span>
+          <button type="button" onClick="{{ doUndo }}" style="height: 40px; padding: 0 14px; border-radius: 10px; border: 0; background: #FFC23D; color: #181A2E; font-weight: 800; font-size: 15px">Batalkan</button>
+        </div>
+      </sc-if>
+      <div style="padding: 14px 20px 18px; border-top: 1px solid #D9DBEA; display: flex; flex-direction: column; gap: 6px; background: #FFFFFF">
+        <div style="display: flex; justify-content: space-between; font-size: {{sz.small}}px; color: #51546F"><span>Subtotal</span><span style="font-variant-numeric: tabular-nums">{{subTxt}}</span></div>
+        <div style="display: flex; justify-content: space-between; font-size: {{sz.small}}px; color: #51546F"><span>PBJT makan-minum 10%</span><span style="font-variant-numeric: tabular-nums">{{taxTxt}}</span></div>
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 4px">
+          <span style="font-size: 18px; font-weight: 700">Total</span>
+          <span style="font-size: {{sz.total}}px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.01em">{{totalTxt}}</span>
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: 8px">
+          <button type="button" disabled="{{ cartEmpty }}" style="width: 112px; height: 64px; border-radius: 14px; border: 2px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 17px">Simpan</button>
+          <button type="button" onClick="{{ goPay }}" disabled="{{ cartEmpty }}" style="flex: 1; height: 64px; border-radius: 14px; border: 0; background: {{payBg}}; color: #FFFFFF; font-weight: 800; font-size: 19px; display: flex; align-items: center; justify-content: center; gap: 10px">
+            Bayar
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+  </div>
+  </sc-if>
+
+  <!-- LAYAR BAYAR -->
+  <sc-if value="{{ isBayar }}" hint-placeholder-val="{{ false }}">
+  <div style="flex: 1; min-height: 0; display: flex">
+    <section aria-label="Ringkasan pesanan" style="width: 440px; flex: none; background: #FFFFFF; border-right: 1px solid #D9DBEA; padding: 20px 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+      <button type="button" onClick="{{ backToSell }}" style="align-self: flex-start; height: 44px; padding: 0 14px 0 10px; border-radius: 10px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 6px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
+        Kembali ke pesanan
+      </button>
+      <span style="font-size: 14px; color: #51546F; font-weight: 600">{{orderLabel}} · {{itemCount}} item</span>
+      <div style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column">
+        <sc-for list="{{ lines }}" as="l" hint-placeholder-count="3">
+          <div style="display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid #EDEEF7; font-size: {{sz.body}}px">
+            <span><b style="font-variant-numeric: tabular-nums">{{l.qty}}×</b> {{l.name}}</span>
+            <span style="font-variant-numeric: tabular-nums; font-weight: 700; white-space: nowrap">{{l.lineTxt}}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px; font-size: {{sz.small}}px; color: #51546F">
+        <div style="display: flex; justify-content: space-between"><span>Subtotal</span><span style="font-variant-numeric: tabular-nums">{{subTxt}}</span></div>
+        <div style="display: flex; justify-content: space-between"><span>PBJT makan-minum 10%</span><span style="font-variant-numeric: tabular-nums">{{taxTxt}}</span></div>
+      </div>
+      <div style="background: #F6F6FB; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 16px; font-weight: 700; color: #51546F">Total tagihan</span>
+        <span style="font-size: 48px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; line-height: 1.1">{{totalTxt}}</span>
+      </div>
+    </section>
+
+    <section aria-label="Pembayaran" style="flex: 1; min-width: 0; padding: 20px 28px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+      <div role="group" aria-label="Cara bayar" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px">
+        <sc-for list="{{ methods }}" as="m" hint-placeholder-count="4">
+          <button type="button" onClick="{{ m.pick }}" aria-pressed="{{ m.on }}" style="height: 64px; border-radius: 14px; border: 2px solid {{m.border}}; background: {{m.bg}}; color: {{m.fg}}; font-weight: 800; font-size: 17px">{{m.label}}</button>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ isTunai }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: 18px; flex: 1; min-height: 0">
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+            <div style="background: #FFFFFF; border: 2px solid {{accent}}; border-radius: 14px; padding: 12px 16px; display: flex; flex-direction: column">
+              <span style="font-size: 15px; font-weight: 700; color: #51546F">Uang diterima</span>
+              <span style="font-size: 36px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.2">{{paidTxt}}</span>
+            </div>
+            <div style="background: {{changeBg}}; border-radius: 14px; padding: 12px 16px; display: flex; flex-direction: column">
+              <span style="font-size: 15px; font-weight: 700; color: {{changeFg}}">{{changeLabel}}</span>
+              <span style="font-size: 36px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.2; color: {{changeFg}}">{{changeTxt}}</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px">
+            <div style="width: 250px; flex: none; display: flex; flex-direction: column; gap: 10px">
+              <span style="font-size: 14px; font-weight: 700; color: #51546F">Uang cepat</span>
+              <sc-for list="{{ quick }}" as="k" hint-placeholder-count="4">
+                <button type="button" onClick="{{ k.pick }}" style="height: 60px; border-radius: 12px; border: 2px solid {{k.border}}; background: {{k.bg}}; color: {{k.fg}}; font-weight: 800; font-size: 19px; font-variant-numeric: tabular-nums; display: flex; align-items: center; justify-content: space-between; padding: 0 16px">
+                  <span>{{k.label}}</span><span style="font-size: 13px; font-weight: 700; opacity: 0.9">{{k.hint}}</span>
+                </button>
+              </sc-for>
+            </div>
+            <div style="flex: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; align-content: start; padding-top: 30px">
+              <sc-for list="{{ keys }}" as="key" hint-placeholder-count="12">
+                <button type="button" onClick="{{ key.press }}" aria-label="{{key.aria}}" style="height: 60px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 24px; font-variant-numeric: tabular-nums">{{key.label}}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="flex: 1"></div>
+          <button type="button" onClick="{{ finish }}" disabled="{{ cannotFinish }}" style="height: 68px; border-radius: 14px; border: 0; background: {{finishBg}}; color: #FFFFFF; font-weight: 800; font-size: 20px">{{finishLabel}}</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isQris }}" hint-placeholder-val="{{ false }}">
+        <div style="flex: 1; display: flex; gap: 28px; align-items: center">
+          <div style="padding: 18px; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; display: flex; flex-direction: column; align-items: center; gap: 10px">
+            <div style="font-weight: 800; font-size: 16px; letter-spacing: 0.08em">QRIS</div>
+            <div aria-label="Contoh kode QR" role="img" style="display: grid; grid-template-columns: repeat(25, 10px); width: 250px; height: 250px">
+              <sc-for list="{{ qr }}" as="cell" hint-placeholder-count="625"><div style="width: 10px; height: 10px; background: {{cell.c}}"></div></sc-for>
+            </div>
+            <div style="font-size: 14px; color: #51546F">NMID contoh · Kedai Kopi Senja</div>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 14px">
+            <span style="font-size: 16px; font-weight: 700; color: #51546F">Jumlah yang dibayar</span>
+            <span style="font-size: 44px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1">{{totalTxt}}</span>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; background: #FFF2D2; color: #6B4600; font-weight: 700; font-size: 16px">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+              Menunggu pembayaran dari pelanggan…
+            </div>
+            <span style="font-size: 15px; color: #51546F; line-height: 1.5">QR juga tampil di layar pelanggan. Status berubah otomatis saat uang masuk. MDR 0% untuk transaksi sampai Rp100.000.</span>
+            <button type="button" onClick="{{ finish }}" style="height: 64px; border-radius: 14px; border: 0; background: {{accent}}; color: #FFFFFF; font-weight: 800; font-size: 18px">Demo: tandai sudah dibayar</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isOther }}" hint-placeholder-val="{{ false }}">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 16px; justify-content: center; max-width: 520px">
+          <span style="font-size: 22px; font-weight: 800">{{otherTitle}}</span>
+          <span style="font-size: 17px; color: #51546F; line-height: 1.5">{{otherHelp}}</span>
+          <label for="ref-bayar" style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 700">Nomor referensi (opsional)
+            <input id="ref-bayar" type="text" placeholder="Contoh: 004512" style="height: 56px; border-radius: 12px; border: 1px solid #D9DBEA; padding: 0 14px; font-size: 18px">
+          </label>
+          <button type="button" onClick="{{ finish }}" style="height: 64px; border-radius: 14px; border: 0; background: {{accent}}; color: #FFFFFF; font-weight: 800; font-size: 18px">Konfirmasi pembayaran {{totalTxt}}</button>
+        </div>
+      </sc-if>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- LAYAR SUKSES -->
+  <sc-if value="{{ isSukses }}" hint-placeholder-val="{{ false }}">
+  <div style="flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 24px">
+    <div style="width: 640px; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 24px; padding: 36px 40px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center">
+      <div style="width: 88px; height: 88px; border-radius: 50%; background: #DDF3E7; color: #16774A; display: flex; align-items: center; justify-content: center">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+      </div>
+      <span style="font-size: 26px; font-weight: 800">Pembayaran berhasil</span>
+      <span style="font-size: 16px; color: #51546F">{{doneSummary}}</span>
+      <div style="width: 100%; background: #DDF3E7; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 17px; font-weight: 700; color: #16774A">Kembalian untuk pelanggan</span>
+        <span style="font-size: 56px; font-weight: 800; font-variant-numeric: tabular-nums; color: #0F5C38; line-height: 1.1">{{doneChange}}</span>
+      </div>
+      <label for="wa-struk" style="width: 100%; display: flex; flex-direction: column; gap: 6px; text-align: left; font-size: 15px; font-weight: 700">Kirim struk ke WhatsApp pelanggan (opsional)
+        <div style="display: flex; gap: 10px">
+          <input id="wa-struk" type="tel" placeholder="08xx xxxx xxxx" style="flex: 1; height: 56px; border-radius: 12px; border: 1px solid #D9DBEA; padding: 0 14px; font-size: 18px; min-width: 0">
+          <button type="button" onClick="{{ sendWa }}" style="height: 56px; padding: 0 18px; border-radius: 12px; border: 2px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 16px">Kirim struk</button>
+        </div>
+      </label>
+      <sc-if value="{{ waNote }}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; color: #51546F">Demo: di aplikasi asli, struk digital terkirim lewat WhatsApp ke nomor ini.</span></sc-if>
+      <div style="width: 100%; display: flex; gap: 10px; margin-top: 6px">
+        <button type="button" style="flex: 1; height: 64px; border-radius: 14px; border: 2px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 17px">Cetak struk</button>
+        <button type="button" onClick="{{ newTx }}" style="flex: 1.4; height: 64px; border-radius: 14px; border: 0; background: {{accent}}; color: #FFFFFF; font-weight: 800; font-size: 18px">Transaksi baru</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#3B35B5","options":["#3B35B5","#0F766E","#C2410C","#1D4ED8"]},"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { cat: 'semua', q: '', cart: { ekopi: 2, pisang: 1, esteh: 1 }, order: 'dine', screen: 'jual', method: 'tunai', paid: '', size: 'normal', undo: null, done: null, waNote: false };
+  }
+  rp(n) { return 'Rp' + String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+  products() {
+    return [
+      { id: 'ekopi', name: 'Es Kopi Susu Aren', price: 18000, cat: 'kopi', fav: true },
+      { id: 'kopihitam', name: 'Kopi Hitam Tubruk', price: 10000, cat: 'kopi' },
+      { id: 'latte', name: 'Kopi Latte Panas', price: 22000, cat: 'kopi' },
+      { id: 'vietnam', name: 'Kopi Vietnam Drip', price: 20000, cat: 'kopi', stock: 3 },
+      { id: 'esteh', name: 'Es Teh Manis', price: 6000, cat: 'nonkopi', fav: true },
+      { id: 'tehtarik', name: 'Teh Tarik', price: 12000, cat: 'nonkopi' },
+      { id: 'jeruk', name: 'Es Jeruk Peras', price: 10000, cat: 'nonkopi' },
+      { id: 'coklat', name: 'Cokelat Panas', price: 16000, cat: 'nonkopi', stock: 0 },
+      { id: 'nasgor', name: 'Nasi Goreng Spesial', price: 25000, cat: 'makanan', fav: true },
+      { id: 'mie', name: 'Mie Goreng Jawa', price: 22000, cat: 'makanan' },
+      { id: 'geprek', name: 'Ayam Geprek Sambal Matah', price: 20000, cat: 'makanan' },
+      { id: 'soto', name: 'Soto Ayam Lamongan', price: 21000, cat: 'makanan' },
+      { id: 'pisang', name: 'Pisang Goreng Keju', price: 15000, cat: 'camilan', fav: true },
+      { id: 'roti', name: 'Roti Bakar Cokelat', price: 14000, cat: 'camilan' },
+      { id: 'kentang', name: 'Kentang Goreng', price: 15000, cat: 'camilan' },
+      { id: 'tahu', name: 'Tahu Cabai Garam', price: 13000, cat: 'camilan' }
+    ];
+  }
+  add(id) {
+    const cart = Object.assign({}, this.state.cart);
+    cart[id] = (cart[id] || 0) + 1;
+    this.setState({ cart: cart, undo: null });
+  }
+  dec(id, name) {
+    const cart = Object.assign({}, this.state.cart);
+    const q = (cart[id] || 0) - 1;
+    if (q <= 0) {
+      delete cart[id];
+      this.setState({ cart: cart, undo: { id: id, name: name } });
+      clearTimeout(this._undoTimer);
+      this._undoTimer = setTimeout(() => {
+        if (this.state.undo && this.state.undo.id === id) this.setState({ undo: null });
+      }, 5000);
+    } else {
+      cart[id] = q;
+      this.setState({ cart: cart });
+    }
+  }
+  componentWillUnmount() { clearTimeout(this._undoTimer); }
+  qrCells() {
+    if (this._qr) return this._qr;
+    const N = 25;
+    let seed = 11;
+    const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    const cells = [];
+    for (let r = 0; r < N; r++) {
+      for (let c = 0; c < N; c++) {
+        let corner = null;
+        if (r < 8 && c < 8) corner = [0, 0];
+        else if (r < 8 && c >= N - 8) corner = [0, N - 7];
+        else if (r >= N - 8 && c < 8) corner = [N - 7, 0];
+        let on;
+        if (corner) {
+          const rr = r - corner[0], cc = c - corner[1];
+          if (rr < 0 || cc < 0 || rr > 6 || cc > 6) on = false;
+          else { const ring = Math.max(Math.abs(rr - 3), Math.abs(cc - 3)); on = ring === 3 || ring <= 1; }
+        } else {
+          on = rnd() > 0.52;
+        }
+        cells.push({ c: on ? '#181A2E' : '#FFFFFF' });
+      }
+    }
+    this._qr = cells;
+    return cells;
+  }
+  renderVals() {
+    const accent = this.props.accent ?? '#3B35B5';
+    const s = this.state;
+    const rp = (n) => this.rp(n);
+    const SZ = {
+      normal: { name: 15, price: 17, body: 16, small: 14, total: 36, cat: 16, tileH: 128, cols: 4 },
+      besar: { name: 17, price: 19, body: 18, small: 15, total: 40, cat: 18, tileH: 142, cols: 4 },
+      sangat: { name: 19, price: 22, body: 20, small: 17, total: 44, cat: 19, tileH: 160, cols: 3 }
+    };
+    const sz = SZ[s.size];
+    const sizeBtn = (key) => {
+      const on = s.size === key;
+      return { on: on, pick: () => this.setState({ size: key }), bg: on ? accent : '#FFFFFF', fg: on ? '#FFFFFF' : '#181A2E', border: on ? accent : '#D9DBEA' };
+    };
+    const CAT = {
+      kopi: { label: 'Kopi', bg: '#F3E6DA', ink: '#6B3E1E' },
+      nonkopi: { label: 'Non-kopi', bg: '#DDF0EA', ink: '#11624A' },
+      makanan: { label: 'Makanan', bg: '#FCE3D6', ink: '#9A3412' },
+      camilan: { label: 'Camilan', bg: '#FFF0C7', ink: '#7A5200' }
+    };
+    const P = this.products();
+    const ojol = s.order === 'gofood' || s.order === 'grab';
+    const priceOf = (p) => ojol ? Math.ceil(p.price * 1.2 / 500) * 500 : p.price;
+
+    const catDefs = [
+      { key: 'semua', label: 'Semua menu', dot: '#FFFFFF', n: P.length },
+      { key: 'favorit', label: 'Favorit', dot: '#FFC23D', n: P.filter(p => p.fav).length },
+      { key: 'kopi', label: 'Kopi', dot: CAT.kopi.bg, n: P.filter(p => p.cat === 'kopi').length },
+      { key: 'nonkopi', label: 'Non-kopi', dot: CAT.nonkopi.bg, n: P.filter(p => p.cat === 'nonkopi').length },
+      { key: 'makanan', label: 'Makanan', dot: CAT.makanan.bg, n: P.filter(p => p.cat === 'makanan').length },
+      { key: 'camilan', label: 'Camilan', dot: CAT.camilan.bg, n: P.filter(p => p.cat === 'camilan').length }
+    ];
+    const cats = catDefs.map(c => {
+      const on = s.cat === c.key;
+      return { label: c.label, count: c.n, dot: c.dot, on: on, bg: on ? accent : '#F6F6FB', fg: on ? '#FFFFFF' : '#181A2E', pick: () => this.setState({ cat: c.key }) };
+    });
+
+    const q = s.q.trim().toLowerCase();
+    const visible = P.filter(p => (s.cat === 'semua' || (s.cat === 'favorit' ? p.fav : p.cat === s.cat)) && (!q || p.name.toLowerCase().indexOf(q) >= 0));
+    const products = visible.map(p => {
+      const qty = s.cart[p.id] || 0;
+      const soldOut = p.stock === 0;
+      const c = CAT[p.cat];
+      return {
+        name: p.name, priceTxt: rp(priceOf(p)), bg: c.bg, ink: c.ink,
+        isKopi: p.cat === 'kopi', isNon: p.cat === 'nonkopi', isMakan: p.cat === 'makanan', isCamil: p.cat === 'camilan',
+        qty: qty, inCart: qty > 0, soldOut: soldOut, low: p.stock > 0 && p.stock <= 3, lowTxt: 'Sisa ' + p.stock,
+        border: qty > 0 ? accent : '#D9DBEA', op: soldOut ? 0.55 : 1,
+        label: p.name + ', ' + rp(priceOf(p)) + (soldOut ? ', habis' : (qty ? ', di pesanan ' + qty : '')),
+        add: () => this.add(p.id)
+      };
+    });
+
+    const orderDefs = [
+      { key: 'dine', label: 'Makan di sini' },
+      { key: 'take', label: 'Bawa pulang' },
+      { key: 'gofood', label: 'GoFood' },
+      { key: 'grab', label: 'GrabFood' }
+    ];
+    const orders = orderDefs.map(o => {
+      const on = s.order === o.key;
+      return { label: o.label, on: on, bg: on ? '#FFFFFF' : '#FFFFFF', fg: on ? accent : '#51546F', border: on ? accent : '#D9DBEA', pick: () => this.setState({ order: o.key }) };
+    });
+    const orderLabel = orderDefs.find(o => o.key === s.order).label;
+
+    const lines = P.filter(p => s.cart[p.id] > 0).map(p => {
+      const qty = s.cart[p.id];
+      return { name: p.name, qty: qty, unitTxt: rp(priceOf(p)), lineTxt: rp(priceOf(p) * qty), inc: () => this.add(p.id), dec: () => this.dec(p.id, p.name) };
+    });
+    const sub = P.reduce((a, p) => a + (s.cart[p.id] || 0) * priceOf(p), 0);
+    const tax = Math.round(sub * 0.10);
+    const total = sub + tax;
+    const itemCount = lines.reduce((a, l) => a + l.qty, 0);
+    const cartEmpty = lines.length === 0;
+
+    const methodDefs = [
+      { key: 'tunai', label: 'Tunai' },
+      { key: 'qris', label: 'QRIS' },
+      { key: 'kartu', label: 'Kartu / EDC' },
+      { key: 'transfer', label: 'Transfer' }
+    ];
+    const methods = methodDefs.map(m => {
+      const on = s.method === m.key;
+      return { label: m.label, on: on, bg: on ? accent : '#FFFFFF', fg: on ? '#FFFFFF' : '#181A2E', border: on ? accent : '#D9DBEA', pick: () => this.setState({ method: m.key }) };
+    });
+
+    const paid = parseInt(s.paid || '0', 10);
+    const NOTE = {
+      20000: { bg: '#2E7D32', label: 'Rp20.000' },
+      50000: { bg: '#1565C0', label: 'Rp50.000' },
+      100000: { bg: '#C2185B', label: 'Rp100.000' },
+      150000: { bg: '#C2185B', label: 'Rp150.000' },
+      200000: { bg: '#C2185B', label: 'Rp200.000' }
+    };
+    const quick = [{ v: total, label: 'Uang pas', hint: rp(total), bg: '#FFFFFF', fg: accent, border: accent }];
+    [20000, 50000, 100000, 150000, 200000].forEach(v => {
+      if (v > total && quick.length < 4) quick.push({ v: v, label: NOTE[v].label, hint: 'kembali ' + rp(v - total), bg: NOTE[v].bg, fg: '#FFFFFF', border: NOTE[v].bg });
+    });
+    const quickBtns = quick.map(k => Object.assign({}, k, { pick: () => this.setState({ paid: String(k.v) }) }));
+
+    const keyDefs = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '000', '0', '⌫'];
+    const keys = keyDefs.map(k => ({
+      label: k,
+      aria: k === '⌫' ? 'Hapus satu angka' : 'Angka ' + k,
+      press: () => {
+        let v = this.state.paid;
+        if (k === '⌫') v = v.slice(0, -1);
+        else if (v.length < 9) v = (v === '' || v === '0') ? (k === '000' ? '' : k) : v + k;
+        this.setState({ paid: v });
+      }
+    }));
+
+    const enough = paid >= total && total > 0;
+    const change = paid - total;
+    const done = s.done;
+
+    return {
+      accent: accent,
+      sz: sz,
+      sizeN: sizeBtn('normal'), sizeB: sizeBtn('besar'), sizeS: sizeBtn('sangat'),
+      isJual: s.screen === 'jual', isBayar: s.screen === 'bayar', isSukses: s.screen === 'sukses',
+      cats: cats, products: products, noResult: products.length === 0,
+      q: s.q,
+      onSearch: (e) => this.setState({ q: e && e.target ? e.target.value : '' }),
+      orders: orders, ojol: ojol, orderLabel: orderLabel,
+      lines: lines, itemCount: itemCount, cartEmpty: cartEmpty,
+      subTxt: rp(sub), taxTxt: rp(tax), totalTxt: rp(total),
+      payBg: cartEmpty ? '#B9BCD3' : accent,
+      goPay: () => this.setState({ screen: 'bayar', paid: '', method: 'tunai' }),
+      hasUndo: !!s.undo,
+      undoTxt: s.undo ? s.undo.name + ' dihapus' : '',
+      doUndo: () => { if (this.state.undo) { const id = this.state.undo.id; this.setState({ undo: null }); this.add(id); } },
+      backToSell: () => this.setState({ screen: 'jual' }),
+      methods: methods,
+      isTunai: s.method === 'tunai', isQris: s.method === 'qris', isOther: s.method === 'kartu' || s.method === 'transfer',
+      otherTitle: s.method === 'kartu' ? 'Bayar pakai kartu di mesin EDC' : 'Bayar lewat transfer bank',
+      otherHelp: s.method === 'kartu' ? 'Masukkan nominal di mesin EDC, minta pelanggan tap atau gesek kartu, lalu tekan Konfirmasi setelah mesin mencetak bukti.' : 'Tunjukkan nomor rekening toko ke pelanggan. Tekan Konfirmasi setelah dana terlihat masuk di aplikasi bank.',
+      paidTxt: rp(paid),
+      changeLabel: paid === 0 ? 'Kembalian' : (enough ? 'Kembalian' : 'Uang masih kurang'),
+      changeTxt: paid === 0 ? '—' : (enough ? rp(change) : rp(total - paid)),
+      changeBg: paid === 0 ? '#EDEEF7' : (enough ? '#DDF3E7' : '#FBE3E0'),
+      changeFg: paid === 0 ? '#51546F' : (enough ? '#0F5C38' : '#B42318'),
+      quick: quickBtns, keys: keys,
+      cannotFinish: !enough,
+      finishBg: enough ? '#16774A' : '#B9BCD3',
+      finishLabel: enough ? 'Selesai · kembalian ' + rp(change) : 'Masukkan uang yang diterima',
+      finish: () => {
+        const st = this.state;
+        const p = st.method === 'tunai' ? parseInt(st.paid || '0', 10) : total;
+        const mLabel = methodDefs.find(m => m.key === st.method).label;
+        this.setState({ screen: 'sukses', done: { total: total, paid: p, change: Math.max(0, p - total), method: mLabel }, waNote: false });
+      },
+      qr: this.qrCells(),
+      doneSummary: done ? done.method + ' ' + rp(done.paid) + ' · Total ' + rp(done.total) : '',
+      doneChange: done ? rp(done.change) : 'Rp0',
+      sendWa: () => this.setState({ waNote: true }),
+      waNote: s.waNote,
+      newTx: () => this.setState({ cart: {}, screen: 'jual', paid: '', method: 'tunai', done: null, undo: null, waNote: false, q: '' })
+    };
+  }
+}
+</script>
+</body>
+</html>

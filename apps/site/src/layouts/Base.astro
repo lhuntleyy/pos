@@ -1,0 +1,45 @@
+---
+import "@pos/design-tokens/tokens.css";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Aplikasi kasir yang gampang dipakai semua umur, tetap jalan tanpa internet." } =
+  Astro.props;
+const productName = "POS Kita"; // nanti dari pengaturan super admin (B-06)
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    />
+    <title>{title} · {productName}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="/" class="brand"><span class="brand-mark">{productName.charAt(0)}</span>{productName}</a>
+      <nav aria-label="Menu situs">
+        <a href="/harga">Harga</a>
+        <a href="/kebijakan-privasi">Privasi</a>
+        <a class="button button-primary" href="/harga">Mulai gratis</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>© {new Date().getFullYear()} {productName}. Data toko Anda milik Anda.</p>
+    </footer>
+  </body>
+</html>

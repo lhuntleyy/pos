@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Kasir mode retail</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; box-sizing: border-box; position: relative; display: flex; flex-direction: column; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <header style="height: 64px; flex: none; display: flex; align-items: center; gap: 14px; padding: 0 20px; background: #FFFFFF; border-bottom: 1px solid #D9DBEA">
+    <div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div>
+    <div style="display: flex; flex-direction: column; line-height: 1.25"><span style="font-weight: 800; font-size: 16px">Toko Kelontong Berkah</span><span style="font-size: 13px; color: #51546F">Kasir: Bu Sri · Mode retail</span></div>
+    <span style="display: flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: #DDF3E7; color: #16774A; font-size: 14px; font-weight: 700">Scanner barcode tersambung</span>
+  </header>
+  <div style="flex: 1; min-height: 0; display: flex">
+    <main style="flex: 1; min-width: 0; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+      <label for="scan" style="height: 60px; display: flex; align-items: center; gap: 12px; padding: 0 16px; border: 3px solid #3B35B5; border-radius: 14px; background: #FFFFFF">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3B35B5" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3M7 8v8M10 8v8M13 8v8M17 8v8"></path></svg>
+        <input id="scan" type="search" placeholder="Scan barcode atau ketik nama barang" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font-size: 19px">
+        <span style="font-size: 14px; font-weight: 700; color: #51546F">Kamera</span>
+      </label>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap">
+        <span style="font-size: 14px; font-weight: 700; color: #51546F; align-self: center">Tanpa barcode:</span>
+        <sc-for list="{{ quick }}" as="q" hint-placeholder-count="5"><button type="button" style="height: 48px; padding: 0 14px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 15px">{{q.label}}</button></sc-for>
+      </div>
+      <div style="flex: 1; min-height: 0; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; overflow: auto">
+        <table style="width: 100%; border-collapse: collapse; font-size: 16px">
+          <thead><tr style="background: #F6F6FB; color: #51546F; font-size: 13px"><th scope="col" style="text-align: left; padding: 10px 14px">Barang</th><th scope="col" style="text-align: left; padding: 10px">Satuan</th><th scope="col" style="text-align: center; padding: 10px">Jumlah</th><th scope="col" style="text-align: right; padding: 10px">Harga</th><th scope="col" style="text-align: right; padding: 10px 14px">Subtotal</th></tr></thead>
+          <tbody>
+            <sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+              <tr style="border-top: 1px solid #EDEEF7; background: {{r.bg}}">
+                <td style="padding: 10px 14px"><span style="display: flex; flex-direction: column"><span style="font-weight: 700">{{r.name}}</span><span style="font-size: 13px; color: #51546F">{{r.code}}</span></span></td>
+                <td style="padding: 10px"><span style="display: inline-flex; align-items: center; height: 40px; padding: 0 12px; border: 1px solid #D9DBEA; border-radius: 10px; font-weight: 700; font-size: 15px">{{r.unit}} ▾</span></td>
+                <td style="padding: 10px; text-align: center; font-weight: 800; font-variant-numeric: tabular-nums; font-size: 18px">{{r.qty}}</td>
+                <td style="padding: 10px; text-align: right"><span style="display: flex; flex-direction: column; align-items: flex-end"><span style="font-variant-numeric: tabular-nums">{{r.price}}</span><sc-if value="{{ r.grosir }}" hint-placeholder-val="{{ false }}"><span style="padding: 1px 8px; border-radius: 999px; background: #FFF2D2; color: #6B4600; font-size: 12px; font-weight: 800">Harga grosir</span></sc-if></span></td>
+                <td style="padding: 10px 14px; text-align: right; font-weight: 800; font-variant-numeric: tabular-nums">{{r.sub}}</td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </main>
+    <aside style="width: 360px; flex: none; background: #FFFFFF; border-left: 1px solid #D9DBEA; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px">
+      <span style="font-size: 18px; font-weight: 800">Ringkasan</span>
+      <div style="display: flex; justify-content: space-between; font-size: 16px"><span>7 jenis barang</span><span>34 unit</span></div>
+      <div style="display: flex; justify-content: space-between; font-size: 16px; color: #16774A; font-weight: 700"><span>Hemat harga grosir</span><span>Rp11.000</span></div>
+      <div style="flex: 1"></div>
+      <span style="font-size: 14px; color: #51546F">Toko ini tidak memungut pajak. Diatur di Pengaturan › Pajak.</span>
+      <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 18px; font-weight: 700">Total</span><span style="font-size: 40px; font-weight: 800; font-variant-numeric: tabular-nums">Rp251.000</span></div>
+      <div style="display: flex; gap: 10px"><button type="button" style="width: 110px; height: 64px; border-radius: 14px; border: 2px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 16px">Simpan</button><button type="button" style="flex: 1; height: 64px; border-radius: 14px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 19px">Bayar</button></div>
+    </aside>
+  </div>
+
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(16,17,29,0.45)"></div>
+  <section role="dialog" aria-label="Pilih satuan Mi instan goreng" style="position: absolute; left: 260px; top: 150px; width: 520px; background: #FFFFFF; border-radius: 22px; padding: 22px 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+    <span style="font-size: 21px; font-weight: 800">Mi instan goreng · pilih satuan</span>
+    <span style="font-size: 15px; color: #51546F">Barcode 8 99xxxx 001 · stok 7 dus + 23 pcs</span>
+    <sc-for list="{{ units }}" as="u" hint-placeholder-count="3">
+      <button type="button" aria-pressed="{{u.on}}" style="min-height: 64px; border-radius: 14px; border: {{u.border}}; background: {{u.bg}}; color: #181A2E; display: flex; align-items: center; gap: 12px; padding: 0 16px; text-align: left">
+        <span style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 17px; font-weight: 800">{{u.name}}</span><span style="font-size: 14px; color: #51546F">{{u.note}}</span></span>
+        <span style="font-size: 18px; font-weight: 800; font-variant-numeric: tabular-nums">{{u.price}}</span>
+      </button>
+    </sc-for>
+    <div style="display: flex; gap: 10px; margin-top: 4px"><button type="button" style="width: 120px; height: 56px; border-radius: 14px; border: 2px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 16px">Batal</button><button type="button" style="flex: 1; height: 56px; border-radius: 14px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 17px">Tambah 1 dus · Rp115.000</button></div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const quick = ['Telur (kg)', 'Gula curah (kg)', 'Es batu', 'Gas 3 kg', 'Plastik'].map(l => ({ label: l }));
+    const R = [['Mi instan goreng', '8 99xxxx 001', 'pcs', 12, 'Rp3.000', 'Rp36.000', true, true], ['Air mineral 600 ml', '8 99xxxx 214', 'pcs', 6, 'Rp3.500', 'Rp21.000'], ['Gula pasir 1 kg', '8 99xxxx 520', 'pcs', 2, 'Rp18.000', 'Rp36.000'], ['Minyak goreng 2 L', '8 99xxxx 771', 'pcs', 1, 'Rp38.000', 'Rp38.000'], ['Telur ayam', 'tanpa barcode', 'kg', 2, 'Rp30.000', 'Rp60.000'], ['Kopi sachet', '8 99xxxx 340', 'renceng', 2, 'Rp15.000', 'Rp30.000', true], ['Sabun mandi batang', '8 99xxxx 905', 'pcs', 9, 'Rp3.333', 'Rp30.000', true]];
+    const rows = R.map(r => ({ name: r[0], code: r[1], unit: r[2], qty: r[3], price: r[4], sub: r[5], grosir: !!r[6], bg: r[7] ? '#F1F0FD' : '#FFFFFF' }));
+    const units = [
+      { name: 'Pcs', note: 'Rp3.500 · mulai 10 pcs jadi Rp3.000', price: 'Rp3.500', on: false },
+      { name: 'Renceng (isi 5)', note: 'Hemat Rp2.500', price: 'Rp15.000', on: false },
+      { name: 'Dus (isi 40)', note: 'Harga grosir · stok 7 dus', price: 'Rp115.000', on: true }
+    ].map(u => Object.assign(u, { border: u.on ? '3px solid #3B35B5' : '1px solid #D9DBEA', bg: u.on ? '#F1F0FD' : '#FFFFFF' }));
+    return { quick: quick, rows: rows, units: units };
+  }
+}
+</script>
+</body>
+</html>

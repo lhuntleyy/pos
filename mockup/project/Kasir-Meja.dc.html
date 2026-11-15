@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Denah meja</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <header style="height: 64px; flex: none; display: flex; align-items: center; gap: 16px; padding: 0 20px; background: #FFFFFF; border-bottom: 1px solid #D9DBEA">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div>
+      <div style="display: flex; flex-direction: column; line-height: 1.25">
+        <span style="font-weight: 800; font-size: 16px">Kedai Kopi Senja</span>
+        <span style="font-size: 13px; color: #51546F">Kasir: Dimas · Shift pagi</span>
+      </div>
+    </div>
+    <div role="tablist" aria-label="Tampilan kasir" style="display: flex; gap: 6px; margin-left: 12px; background: #EDEEF7; padding: 4px; border-radius: 12px">
+      <button type="button" role="tab" aria-selected="false" style="height: 40px; padding: 0 16px; border-radius: 9px; border: 0; background: transparent; color: #51546F; font-weight: 700; font-size: 15px">Jualan</button>
+      <button type="button" role="tab" aria-selected="true" style="height: 40px; padding: 0 16px; border-radius: 9px; border: 0; background: #FFFFFF; color: #3B35B5; font-weight: 800; font-size: 15px; box-shadow: 0 1px 2px rgba(24,26,46,0.12)">Meja</button>
+      <button type="button" role="tab" aria-selected="false" style="height: 40px; padding: 0 16px; border-radius: 9px; border: 0; background: transparent; color: #51546F; font-weight: 700; font-size: 15px">Pesanan online · 3</button>
+    </div>
+    <div style="flex: 1"></div>
+    <div style="display: flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: #FFF2D2; color: #6B4600; font-size: 14px; font-weight: 700">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0"></path><path d="M5.5 12a10 10 0 0 1 13 0"></path><path d="M12 18h.01"></path><path d="m3 3 18 18"></path></svg>
+      Offline · 3 transaksi menunggu dikirim
+    </div>
+  </header>
+
+  <div style="flex: 1; min-height: 0; display: flex">
+    <main style="flex: 1; min-width: 0; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap">
+        <div role="tablist" aria-label="Area" style="display: flex; gap: 8px">
+          <button type="button" role="tab" aria-selected="true" style="height: 48px; padding: 0 18px; border-radius: 12px; border: 2px solid #3B35B5; background: #FFFFFF; color: #3B35B5; font-weight: 800; font-size: 16px">Ruang dalam · 12</button>
+          <button type="button" role="tab" aria-selected="false" style="height: 48px; padding: 0 18px; border-radius: 12px; border: 2px solid #D9DBEA; background: #FFFFFF; color: #51546F; font-weight: 700; font-size: 16px">Teras · 6</button>
+          <button type="button" role="tab" aria-selected="false" style="height: 48px; padding: 0 18px; border-radius: 12px; border: 2px solid #D9DBEA; background: #FFFFFF; color: #51546F; font-weight: 700; font-size: 16px">Lantai 2 · 8</button>
+        </div>
+        <div style="display: flex; gap: 14px; font-size: 14px; color: #51546F; font-weight: 600; flex-wrap: wrap">
+          <span style="display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 14px; border-radius: 4px; border: 2px solid #B9BCD3; background: #FFFFFF"></span>Kosong · 4</span>
+          <span style="display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 14px; border-radius: 4px; border: 2px solid #3B35B5; background: #E6E5FA"></span>Terisi · 5</span>
+          <span style="display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 14px; border-radius: 4px; border: 2px solid #E39D00; background: #FFF2D2"></span>Minta bill · 1</span>
+          <span style="display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 14px; border-radius: 4px; border: 2px dashed #9A9DB8; background: #EDEEF7"></span>Perlu dibersihkan · 1</span>
+        </div>
+      </div>
+
+      <div style="flex: 1; min-height: 0; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 18px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(0, 1fr); gap: 14px">
+        <sc-for list="{{ tables }}" as="t" hint-placeholder-count="11">
+          <button type="button" aria-label="{{t.aria}}" style="grid-column: span {{t.span}}; border-radius: {{t.radius}}; border: {{t.border}}; background: {{t.bg}}; color: #181A2E; padding: 12px 14px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; text-align: left; box-shadow: {{t.shadow}}">
+            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center">
+              <span style="font-size: 22px; font-weight: 800">{{t.name}}</span>
+              <span style="font-size: 13px; color: #51546F; font-weight: 600">{{t.seats}}</span>
+            </div>
+            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: {{t.chipBg}}; color: {{t.chipFg}}; font-size: 13px; font-weight: 800">
+              <sc-if value="{{ t.isFree }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle></svg></sc-if>
+              <sc-if value="{{ t.isBusy }}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c1-3.5 3.5-5.5 6.5-5.5s5.5 2 6.5 5.5"></path><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c1.8.7 3 2.5 3.5 5.2"></path></svg></sc-if>
+              <sc-if value="{{ t.isBill }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2Z"></path><path d="M9 8h6M9 12h6"></path></svg></sc-if>
+              <sc-if value="{{ t.isClean }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"></path></svg></sc-if>
+              {{t.status}}
+            </span>
+            <div style="display: flex; flex-direction: column; gap: 2px">
+              <span style="font-size: 14px; color: #51546F; font-weight: 600">{{t.info}}</span>
+              <span style="font-size: 18px; font-weight: 800; font-variant-numeric: tabular-nums">{{t.amount}}</span>
+            </div>
+          </button>
+        </sc-for>
+      </div>
+    </main>
+
+    <aside aria-label="Detail Meja 5" style="width: 400px; flex: none; background: #FFFFFF; border-left: 1px solid #D9DBEA; display: flex; flex-direction: column">
+      <div style="padding: 18px 20px 14px; border-bottom: 1px solid #EDEEF7; display: flex; flex-direction: column; gap: 4px">
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <span style="font-size: 24px; font-weight: 800">Meja 5</span>
+          <span style="padding: 4px 10px; border-radius: 999px; background: #E6E5FA; color: #3B35B5; font-size: 13px; font-weight: 800">Terisi · 42 menit</span>
+        </div>
+        <span style="font-size: 15px; color: #51546F">3 tamu · dibuka 18.24 oleh Dimas</span>
+      </div>
+      <div style="flex: 1; min-height: 0; overflow: auto; padding: 6px 20px 0">
+        <div style="font-size: 13px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #51546F; padding: 10px 0 4px">Sudah dikirim ke dapur</div>
+        <sc-for list="{{ sent }}" as="i" hint-placeholder-count="5">
+          <div style="display: flex; gap: 10px; align-items: center; padding: 9px 0; border-bottom: 1px solid #EDEEF7">
+            <span style="width: 30px; font-weight: 800; font-variant-numeric: tabular-nums; font-size: 16px">{{i.qty}}×</span>
+            <div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+              <span style="font-size: 16px; font-weight: 700">{{i.name}}</span>
+              <span style="font-size: 13px; font-weight: 700; color: {{i.stFg}}">{{i.status}}</span>
+            </div>
+            <span style="font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums">{{i.price}}</span>
+          </div>
+        </sc-for>
+        <div style="font-size: 13px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #6B4600; padding: 14px 0 4px">Belum dikirim</div>
+        <div style="display: flex; gap: 10px; align-items: center; padding: 9px 0">
+          <span style="width: 30px; font-weight: 800; font-size: 16px">1×</span>
+          <div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 16px; font-weight: 700">Pisang Goreng Keju</span><span style="font-size: 13px; color: #51546F">Catatan: keju dibanyakin</span></div>
+          <span style="font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums">Rp15.000</span>
+        </div>
+        <button type="button" style="width: 100%; height: 48px; margin: 4px 0 12px; border-radius: 12px; border: 2px solid #E39D00; background: #FFF2D2; color: #6B4600; font-weight: 800; font-size: 15px">Kirim 1 item ke dapur</button>
+      </div>
+      <div style="padding: 14px 20px 18px; border-top: 1px solid #D9DBEA; display: flex; flex-direction: column; gap: 8px">
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+          <button type="button" style="height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 15px">+ Tambah pesanan</button>
+          <button type="button" style="height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 15px">Pindah meja</button>
+          <button type="button" style="height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 15px">Gabung meja</button>
+          <button type="button" style="height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 15px">Pisah tagihan</button>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 14px; color: #51546F; margin-top: 4px"><span>Subtotal · PBJT 10%</span><span style="font-variant-numeric: tabular-nums">Rp142.000 · Rp14.200</span></div>
+        <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 18px; font-weight: 700">Total</span><span style="font-size: 34px; font-weight: 800; font-variant-numeric: tabular-nums">Rp156.200</span></div>
+        <div style="display: flex; gap: 10px">
+          <button type="button" style="width: 130px; height: 64px; border-radius: 14px; border: 2px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 16px">Cetak tagihan</button>
+          <button type="button" style="flex: 1; height: 64px; border-radius: 14px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 19px">Bayar</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const ST = {
+      free: { status: 'Kosong', bg: '#FFFFFF', border: '2px solid #B9BCD3', chipBg: '#EDEEF7', chipFg: '#51546F' },
+      busy: { status: 'Terisi', bg: '#F1F0FD', border: '2px solid #3B35B5', chipBg: '#E6E5FA', chipFg: '#3B35B5' },
+      bill: { status: 'Minta bill', bg: '#FFF8E6', border: '2px solid #E39D00', chipBg: '#FFF2D2', chipFg: '#6B4600' },
+      clean: { status: 'Perlu dibersihkan', bg: '#F6F6FB', border: '2px dashed #9A9DB8', chipBg: '#EDEEF7', chipFg: '#51546F' }
+    };
+    const T = [
+      { name: 'Meja 1', seats: '2 kursi', st: 'free', round: true, info: 'Siap dipakai', amount: '' },
+      { name: 'Meja 2', seats: '2 kursi', st: 'busy', round: true, info: '2 tamu · 18 mnt', amount: 'Rp58.000' },
+      { name: 'Meja 3', seats: '4 kursi', st: 'free', info: 'Siap dipakai', amount: '' },
+      { name: 'Meja 4', seats: '4 kursi', st: 'bill', info: '4 tamu · 65 mnt', amount: 'Rp241.000' },
+      { name: 'Meja 5', seats: '4 kursi', st: 'busy', sel: true, info: '3 tamu · 42 mnt', amount: 'Rp156.200' },
+      { name: 'Meja 6', seats: '4 kursi', st: 'clean', info: 'Tamu pulang 3 mnt lalu', amount: '' },
+      { name: 'Meja 7', seats: '6 kursi', st: 'busy', info: '6 tamu · 25 mnt', amount: 'Rp312.000' },
+      { name: 'Meja 8', seats: '4 kursi', st: 'free', info: 'Siap dipakai', amount: '' },
+      { name: 'Meja 9', seats: '2 kursi', st: 'free', round: true, info: 'Reservasi 19.30', amount: '' },
+      { name: 'Meja 10', seats: '2 kursi', st: 'busy', round: true, info: '2 tamu · 8 mnt', amount: 'Rp34.000' },
+      { name: 'Meja 11 + 12', seats: '8 kursi', st: 'busy', span: 2, info: 'Digabung · 8 tamu · 31 mnt', amount: 'Rp468.500' }
+    ];
+    const tables = T.map(t => {
+      const s = ST[t.st];
+      return {
+        name: t.name, seats: t.seats, status: s.status, info: t.info, amount: t.amount,
+        bg: s.bg, border: t.sel ? '3px solid #3B35B5' : s.border, chipBg: s.chipBg, chipFg: s.chipFg,
+        radius: t.round ? '28px' : '14px', span: t.span || 1,
+        shadow: t.sel ? '0 0 0 4px rgba(59,53,181,0.18)' : 'none',
+        isFree: t.st === 'free', isBusy: t.st === 'busy', isBill: t.st === 'bill', isClean: t.st === 'clean',
+        aria: t.name + ', ' + s.status + (t.info ? ', ' + t.info : '') + (t.amount ? ', ' + t.amount : '')
+      };
+    });
+    const sent = [
+      { qty: 2, name: 'Nasi Goreng Spesial', status: 'Sudah diantar', stFg: '#16774A', price: 'Rp50.000' },
+      { qty: 1, name: 'Soto Ayam Lamongan', status: 'Sedang dimasak · 9 mnt', stFg: '#6B4600', price: 'Rp21.000' },
+      { qty: 1, name: 'Ayam Geprek Sambal Matah', status: 'Sudah diantar', stFg: '#16774A', price: 'Rp20.000' },
+      { qty: 3, name: 'Es Teh Manis', status: 'Sudah diantar', stFg: '#16774A', price: 'Rp18.000' },
+      { qty: 1, name: 'Es Kopi Susu Aren', status: 'Sudah diantar', stFg: '#16774A', price: 'Rp18.000' }
+    ];
+    return { tables: tables, sent: sent };
+  }
+}
+</script>
+</body>
+</html>

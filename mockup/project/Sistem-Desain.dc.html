@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Sistem desain</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 1280px; height: 1150px; box-sizing: border-box; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; padding: 40px 44px; display: flex; flex-direction: column; gap: 24px; overflow: hidden">
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; color: #51546F">SISTEM DESAIN · v0.1</span>
+      <h1 style="margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -0.01em">Aturan supaya bisa dipakai umur 17 sampai 70</h1>
+    </div>
+    <span style="font-size: 15px; color: #51546F; max-width: 420px; line-height: 1.5">Huruf: Plus Jakarta Sans, buatan desainer Indonesia untuk identitas kota Jakarta. Angka memakai digit tabular supaya kolom harga sejajar.</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; flex: 1; min-height: 0">
+    <!-- Warna -->
+    <section style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+      <h2 style="margin: 0; font-size: 18px; font-weight: 800">Warna &amp; kontras</h2>
+      <sc-for list="{{ colors }}" as="c" hint-placeholder-count="7">
+        <div style="display: flex; align-items: center; gap: 12px">
+          <span style="width: 52px; height: 44px; border-radius: 10px; background: {{c.hex}}; color: {{c.on}}; border: 1px solid rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; flex: none">Aa</span>
+          <span style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 700">{{c.name}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #51546F">{{c.hex}} · {{c.use}}</span></span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 999px; background: #DDF3E7; color: #16774A; white-space: nowrap">{{c.ratio}}</span>
+        </div>
+      </sc-for>
+      <span style="font-size: 13px; color: #51546F; line-height: 1.5">Kuning kunyit hanya dipakai dengan teks gelap. Kontrasnya dengan putih cuma 2,3:1.</span>
+    </section>
+
+    <!-- Tipografi -->
+    <section style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+      <h2 style="margin: 0; font-size: 18px; font-weight: 800">Tiga ukuran teks</h2>
+      <div style="overflow-x: auto">
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px">
+          <thead><tr style="color: #51546F; font-size: 12px"><th scope="col" style="text-align: left; padding: 6px 4px">Elemen</th><th scope="col" style="text-align: right; padding: 6px 4px">A</th><th scope="col" style="text-align: right; padding: 6px 4px">A+</th><th scope="col" style="text-align: right; padding: 6px 4px">A++</th></tr></thead>
+          <tbody>
+            <sc-for list="{{ type }}" as="t" hint-placeholder-count="5">
+              <tr style="border-top: 1px solid #EDEEF7"><th scope="row" style="text-align: left; padding: 8px 4px; font-weight: 700">{{t.el}}</th><td style="text-align: right; padding: 8px 4px; font-family: 'JetBrains Mono', monospace">{{t.a}}</td><td style="text-align: right; padding: 8px 4px; font-family: 'JetBrains Mono', monospace">{{t.b}}</td><td style="text-align: right; padding: 8px 4px; font-family: 'JetBrains Mono', monospace">{{t.c}}</td></tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px; padding: 14px; background: #F6F6FB; border-radius: 12px">
+        <span style="font-size: 15px; font-weight: 700">Es Kopi Susu Aren</span>
+        <span style="font-size: 18px; font-weight: 700">Es Kopi Susu Aren</span>
+        <span style="font-size: 21px; font-weight: 700">Es Kopi Susu Aren</span>
+        <span style="font-size: 36px; font-weight: 800; font-variant-numeric: tabular-nums">Rp62.700</span>
+      </div>
+    </section>
+
+    <!-- Ukuran sentuh -->
+    <section style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+      <h2 style="margin: 0; font-size: 18px; font-weight: 800">Ukuran sentuh</h2>
+      <div style="display: flex; align-items: flex-end; gap: 12px">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 48px; height: 48px; border-radius: 12px; border: 2px dashed #3B35B5; background: #F1F0FD"></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px">48 min</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 56px; height: 56px; border-radius: 12px; border: 2px dashed #3B35B5; background: #F1F0FD"></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px">56 kategori</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 120px; height: 64px; border-radius: 14px; border: 2px dashed #3B35B5; background: #F1F0FD"></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px">64 tombol utama</span></div>
+      </div>
+      <div style="display: flex; gap: 12px; align-items: center">
+        <span style="width: 120px; height: 96px; border-radius: 14px; border: 2px dashed #E39D00; background: #FFF8E6; flex: none"></span>
+        <span style="font-size: 14px; color: #51546F; line-height: 1.5">Kartu produk minimal 120×96 px dengan jarak 12 px. Kesalahan paling sering pada lansia adalah tap yang meleset, jadi jarak antar tombol sama pentingnya dengan ukuran tombol.</span>
+      </div>
+      <h3 style="margin: 4px 0 0; font-size: 15px; font-weight: 800">Uang cepat</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px">
+        <sc-for list="{{ money }}" as="m" hint-placeholder-count="6"><span style="padding: 8px 10px; border-radius: 10px; background: {{m.bg}}; color: #FFFFFF; font-weight: 800; font-size: 14px; font-variant-numeric: tabular-nums">{{m.label}}</span></sc-for>
+      </div>
+    </section>
+
+    <!-- Tombol -->
+    <section style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-size: 18px; font-weight: 800">Tombol</h2>
+      <button type="button" style="height: 64px; border-radius: 14px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 18px">Bayar · utama</button>
+      <button type="button" style="height: 56px; border-radius: 14px; border: 2px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 16px">Simpan pesanan · kedua</button>
+      <button type="button" style="height: 56px; border-radius: 14px; border: 2px solid #F1B5AE; background: #FDF1EF; color: #B42318; font-weight: 800; font-size: 16px">Batalkan transaksi · perlu PIN</button>
+      <button type="button" disabled style="height: 56px; border-radius: 14px; border: 0; background: #B9BCD3; color: #FFFFFF; font-weight: 800; font-size: 16px">Masukkan uang yang diterima</button>
+      <span style="font-size: 13px; color: #51546F; line-height: 1.5">Tombol nonaktif tetap terbaca dan menyebutkan apa yang kurang, bukan sekadar berwarna pucat.</span>
+    </section>
+
+    <!-- Status -->
+    <section style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-size: 18px; font-weight: 800">Status: warna + ikon + teks</h2>
+      <span style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 12px; background: #DDF3E7; color: #16774A; font-weight: 700; font-size: 15px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Online · semua data terkirim</span>
+      <span style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 12px; background: #FFF2D2; color: #6B4600; font-weight: 700; font-size: 15px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0"></path><path d="M5.5 12a10 10 0 0 1 13 0"></path><path d="M12 18h.01"></path><path d="m3 3 18 18"></path></svg>Offline · 3 transaksi menunggu dikirim</span>
+      <span style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 12px; background: #E6E5FA; color: #2A2590; font-weight: 700; font-size: 15px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-15.5 6.2M3 12a9 9 0 0 1 15.5-6.2"></path><path d="M21 4v5h-5M3 20v-5h5"></path></svg>Mengirim data… 2 dari 3</span>
+      <span style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 12px; background: #FBE3E0; color: #B42318; font-weight: 700; font-size: 15px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v6M12 16.5h.01"></path></svg>Printer tidak tersambung · nyalakan Bluetooth</span>
+    </section>
+
+    <!-- Kamus -->
+    <section style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-size: 18px; font-weight: 800">Kamus istilah</h2>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; font-size: 14px">
+        <span style="font-size: 12px; font-weight: 800; color: #16774A; padding: 4px 0">PAKAI</span>
+        <span style="font-size: 12px; font-weight: 800; color: #B42318; padding: 4px 0">HINDARI</span>
+        <sc-for list="{{ terms }}" as="t" hint-placeholder-count="8">
+          <span style="padding: 7px 0; border-top: 1px solid #EDEEF7; font-weight: 700">{{t.use}}</span>
+          <span style="padding: 7px 0; border-top: 1px solid #EDEEF7; color: #51546F; text-decoration: line-through">{{t.avoid}}</span>
+        </sc-for>
+      </div>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1150}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const colors = [
+      { name: 'Nila', hex: '#3B35B5', use: 'aksi utama', on: '#FFFFFF', ratio: '8,9:1' },
+      { name: 'Tinta', hex: '#181A2E', use: 'teks utama', on: '#FFFFFF', ratio: '17,1:1' },
+      { name: 'Abu tinta', hex: '#51546F', use: 'teks kedua', on: '#FFFFFF', ratio: '7,4:1' },
+      { name: 'Kunyit', hex: '#E39D00', use: 'sorotan', on: '#181A2E', ratio: '7,4:1 gelap' },
+      { name: 'Hijau', hex: '#16774A', use: 'berhasil', on: '#FFFFFF', ratio: '5,6:1' },
+      { name: 'Merah bata', hex: '#B42318', use: 'bahaya', on: '#FFFFFF', ratio: '6,6:1' },
+      { name: 'Latar', hex: '#F6F6FB', use: 'halaman', on: '#181A2E', ratio: '—' }
+    ];
+    const type = [
+      { el: 'Teks isi', a: '16', b: '18', c: '20' },
+      { el: 'Nama produk', a: '15', b: '17', c: '19' },
+      { el: 'Harga di kartu', a: '17', b: '19', c: '22' },
+      { el: 'Total', a: '36', b: '40', c: '44' },
+      { el: 'Kolom produk', a: '4', b: '4', c: '3' }
+    ];
+    const money = [['Rp100.000', '#C2185B'], ['Rp50.000', '#1565C0'], ['Rp20.000', '#2E7D32'], ['Rp10.000', '#6A1B9A'], ['Rp5.000', '#8D6E63'], ['Rp2.000', '#546E7A']].map(m => ({ label: m[0], bg: m[1] }));
+    const terms = [
+      ['Uang diterima', 'Cash tendered'],
+      ['Kembalian', 'Change'],
+      ['Simpan pesanan', 'Hold / Save order'],
+      ['Batalkan transaksi', 'Void'],
+      ['Kembalikan uang', 'Refund'],
+      ['Pindah meja', 'Move to table'],
+      ['Kirim ke dapur', 'Checker'],
+      ['Tutup kasir', 'Settlement']
+    ].map(t => ({ use: t[0], avoid: t[1] }));
+    return { colors: colors, type: type, money: money, terms: terms };
+  }
+}
+</script>
+</body>
+</html>

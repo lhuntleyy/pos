@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Bayar di HP</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <header style="padding: 14px 16px; background: #FFFFFF; border-bottom: 1px solid #D9DBEA; display: flex; align-items: center; gap: 10px">
+    <button type="button" aria-label="Kembali ke pesanan" style="width: 48px; height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: #181A2E"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+    <span style="font-size: 20px; font-weight: 800">Bayar</span>
+  </header>
+  <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; flex: 1; min-height: 0">
+    <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 16px; font-weight: 700; color: #51546F">Total · 9 barang</span><span style="font-size: 34px; font-weight: 800; font-variant-numeric: tabular-nums">Rp58.000</span></div>
+    <div role="group" aria-label="Cara bayar" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px">
+      <sc-for list="{{ methods }}" as="m" hint-placeholder-count="4"><button type="button" aria-pressed="{{m.on}}" style="height: 52px; border-radius: 12px; border: 2px solid {{m.border}}; background: {{m.bg}}; color: {{m.fg}}; font-weight: 800; font-size: 14px">{{m.label}}</button></sc-for>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+      <div style="background: #FFFFFF; border: 2px solid #3B35B5; border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700; color: #51546F">Uang diterima</span><span style="font-size: 26px; font-weight: 800; font-variant-numeric: tabular-nums">Rp100.000</span></div>
+      <div style="background: #DDF3E7; border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700; color: #0F5C38">Kembalian</span><span style="font-size: 26px; font-weight: 800; font-variant-numeric: tabular-nums; color: #0F5C38">Rp42.000</span></div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+      <sc-for list="{{ quick }}" as="q" hint-placeholder-count="4"><button type="button" style="height: 56px; border-radius: 12px; border: 2px solid {{q.border}}; background: {{q.bg}}; color: {{q.fg}}; font-weight: 800; font-size: 17px; font-variant-numeric: tabular-nums">{{q.label}}</button></sc-for>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+      <sc-for list="{{ keys }}" as="k" hint-placeholder-count="12"><button type="button" aria-label="{{k.aria}}" style="height: 52px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 21px">{{k.label}}</button></sc-for>
+    </div>
+  </div>
+  <div style="padding: 10px 16px 22px; background: #FFFFFF; border-top: 1px solid #D9DBEA"><button type="button" style="width: 100%; height: 60px; border-radius: 14px; border: 0; background: #16774A; color: #FFFFFF; font-weight: 800; font-size: 18px">Selesai · kembalian Rp42.000</button></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const methods = ['Tunai', 'QRIS', 'Transfer', 'Kasbon'].map((m, i) => ({ label: m, on: i === 0, border: i === 0 ? '#3B35B5' : '#D9DBEA', bg: i === 0 ? '#3B35B5' : '#FFFFFF', fg: i === 0 ? '#FFFFFF' : '#181A2E' }));
+    const quick = [['Uang pas', '#FFFFFF', '#3B35B5', '#3B35B5'], ['Rp60.000', '#FFFFFF', '#181A2E', '#D9DBEA'], ['Rp100.000', '#C2185B', '#FFFFFF', '#C2185B'], ['Rp70.000', '#FFFFFF', '#181A2E', '#D9DBEA']].map(q => ({ label: q[0], bg: q[1], fg: q[2], border: q[3] }));
+    const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '000', '0', '⌫'].map(k => ({ label: k, aria: k === '⌫' ? 'Hapus satu angka' : 'Angka ' + k }));
+    return { methods: methods, quick: quick, keys: keys };
+  }
+}
+</script>
+</body>
+</html>

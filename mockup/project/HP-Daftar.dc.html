@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Daftar dengan nomor HP</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden; padding: 24px 20px">
+  <div style="display: flex; justify-content: space-between; align-items: center">
+    <div style="display: flex; align-items: center; gap: 10px"><span style="width: 40px; height: 40px; border-radius: 12px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px">k</span><span style="font-size: 18px; font-weight: 800">POS Kita</span></div>
+    <span style="font-size: 15px; font-weight: 700; color: #51546F">Langkah 1 dari 4</span>
+  </div>
+  <div role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" aria-label="Langkah pendaftaran" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-top: 14px">
+    <span style="height: 6px; border-radius: 3px; background: #3B35B5"></span><span style="height: 6px; border-radius: 3px; background: #D9DBEA"></span><span style="height: 6px; border-radius: 3px; background: #D9DBEA"></span><span style="height: 6px; border-radius: 3px; background: #D9DBEA"></span>
+  </div>
+  <h1 style="margin: 28px 0 8px; font-size: 28px; font-weight: 800; line-height: 1.25">Mulai pakai gratis</h1>
+  <p style="margin: 0; font-size: 17px; color: #51546F; line-height: 1.5">Cukup nomor HP. Tidak perlu kartu kredit, tidak ada kontrak.</p>
+  <label for="no-hp" style="display: flex; flex-direction: column; gap: 8px; margin-top: 24px; font-size: 16px; font-weight: 700">Nomor HP (WhatsApp)
+    <div style="display: flex; height: 60px; border: 2px solid #3B35B5; border-radius: 14px; background: #FFFFFF; overflow: hidden">
+      <span style="display: flex; align-items: center; padding: 0 14px; background: #F1F0FD; font-size: 18px; font-weight: 800; color: #3B35B5">+62</span>
+      <input id="no-hp" type="tel" value="812 3456 7781" style="flex: 1; min-width: 0; border: 0; outline: none; padding: 0 14px; font-size: 20px; font-weight: 700; letter-spacing: 0.04em">
+    </div>
+  </label>
+  <div style="margin-top: 22px; display: flex; flex-direction: column; gap: 10px">
+    <span style="font-size: 16px; font-weight: 700">Kode dari WhatsApp</span>
+    <div aria-label="Kode 6 angka, 4 sudah terisi" style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px">
+      <sc-for list="{{ otp }}" as="o" hint-placeholder-count="6"><span style="height: 60px; border-radius: 12px; border: 2px solid {{o.border}}; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 800">{{o.v}}</span></sc-for>
+    </div>
+    <span style="font-size: 15px; color: #51546F">Kode dikirim ke WhatsApp 0812-3456-7781. Kirim ulang dalam 0:42.</span>
+  </div>
+  <div style="flex: 1"></div>
+  <button type="button" style="height: 60px; border-radius: 14px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 18px">Lanjut</button>
+  <button type="button" style="height: 52px; margin-top: 10px; border-radius: 14px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 16px">Tidak punya WhatsApp? Pakai email</button>
+  <span style="margin-top: 14px; font-size: 13px; color: #51546F; text-align: center; line-height: 1.5">Dengan lanjut, Anda setuju dengan Syarat Layanan dan Kebijakan Privasi.</span>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const otp = ['4', '8', '1', '9', '', ''].map((v, i) => ({ v: v, border: i === 4 ? '#3B35B5' : (v ? '#B9BCD3' : '#D9DBEA') }));
+    return { otp: otp };
+  }
+}
+</script>
+</body>
+</html>

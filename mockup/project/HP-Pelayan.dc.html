@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Mode pelayan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <!-- Latar: daftar menu meja 7 -->
+  <div aria-hidden="true" style="position: absolute; inset: 0; display: flex; flex-direction: column">
+    <div style="padding: 16px; background: #FFFFFF; border-bottom: 1px solid #D9DBEA; display: flex; justify-content: space-between; align-items: center">
+      <div style="display: flex; flex-direction: column"><span style="font-size: 20px; font-weight: 800">Meja 7</span><span style="font-size: 14px; color: #51546F">4 tamu · Pelayan: Ayu</span></div>
+      <span style="height: 44px; padding: 0 14px; border-radius: 12px; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 15px; display: flex; align-items: center">Kirim ke dapur · 3</span>
+    </div>
+    <div style="padding: 12px 16px; display: flex; flex-direction: column; gap: 10px">
+      <div style="height: 64px; border-radius: 12px; background: #FFFFFF; border: 1px solid #D9DBEA"></div>
+      <div style="height: 64px; border-radius: 12px; background: #FFFFFF; border: 1px solid #D9DBEA"></div>
+      <div style="height: 64px; border-radius: 12px; background: #FFFFFF; border: 1px solid #D9DBEA"></div>
+    </div>
+  </div>
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(16,17,29,0.55)"></div>
+
+  <!-- Lembar pilihan -->
+  <section role="dialog" aria-label="Pilihan Es Kopi Susu Aren" style="position: absolute; left: 0; right: 0; bottom: 0; height: 740px; background: #FFFFFF; border-radius: 24px 24px 0 0; display: flex; flex-direction: column">
+    <div style="padding: 10px 0 0; display: flex; justify-content: center"><span style="width: 44px; height: 5px; border-radius: 3px; background: #D9DBEA"></span></div>
+    <div style="padding: 12px 20px 14px; display: flex; gap: 12px; align-items: flex-start; border-bottom: 1px solid #EDEEF7">
+      <div style="flex: 1; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 22px; font-weight: 800; line-height: 1.25">Es Kopi Susu Aren</span>
+        <span style="font-size: 16px; color: #51546F; font-variant-numeric: tabular-nums">Rp18.000</span>
+      </div>
+      <button type="button" aria-label="Tutup" style="width: 48px; height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; display: flex; align-items: center; justify-content: center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+      </button>
+    </div>
+
+    <div style="flex: 1; min-height: 0; overflow: auto; padding: 4px 20px 12px; display: flex; flex-direction: column; gap: 6px">
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+        <fieldset style="border: 0; margin: 0; padding: 12px 0 4px; display: flex; flex-direction: column; gap: 8px">
+          <legend style="padding: 0; width: 100%; display: flex; justify-content: space-between; align-items: center">
+            <span style="font-size: 17px; font-weight: 800">{{g.title}}</span>
+            <span style="padding: 3px 10px; border-radius: 999px; background: {{g.ruleBg}}; color: {{g.ruleFg}}; font-size: 13px; font-weight: 800">{{g.rule}}</span>
+          </legend>
+          <sc-for list="{{ g.options }}" as="o" hint-placeholder-count="3">
+            <button type="button" aria-pressed="{{o.on}}" disabled="{{o.off}}" style="min-height: 52px; border-radius: 12px; border: {{o.border}}; background: {{o.bg}}; color: {{o.fg}}; display: flex; align-items: center; gap: 12px; padding: 0 14px; text-align: left; font-size: 16px; font-weight: 700">
+              <span style="width: 22px; height: 22px; border-radius: {{o.markRadius}}; border: 2px solid {{o.markBorder}}; background: {{o.markBg}}; flex: none; display: flex; align-items: center; justify-content: center; color: #FFFFFF">
+                <sc-if value="{{ o.on }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>
+              </span>
+              <span style="flex: 1">{{o.label}}</span>
+              <span style="font-size: 15px; font-variant-numeric: tabular-nums; color: {{o.extraFg}}">{{o.extra}}</span>
+            </button>
+          </sc-for>
+        </fieldset>
+      </sc-for>
+      <label for="catatan-item" style="display: flex; flex-direction: column; gap: 6px; padding-top: 10px; font-size: 17px; font-weight: 800">Catatan untuk dapur
+        <input id="catatan-item" type="text" placeholder="Contoh: pisah gula aren" style="height: 52px; border-radius: 12px; border: 1px solid #D9DBEA; padding: 0 14px; font-size: 16px; font-weight: 500">
+      </label>
+    </div>
+
+    <div style="padding: 12px 20px 22px; border-top: 1px solid #D9DBEA; display: flex; gap: 12px; align-items: center">
+      <div style="display: flex; align-items: center; gap: 4px">
+        <button type="button" aria-label="Kurangi jumlah" style="width: 48px; height: 52px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-size: 24px; font-weight: 700">−</button>
+        <span style="min-width: 32px; text-align: center; font-size: 20px; font-weight: 800">1</span>
+        <button type="button" aria-label="Tambah jumlah" style="width: 48px; height: 52px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-size: 24px; font-weight: 700">+</button>
+      </div>
+      <button type="button" style="flex: 1; height: 60px; border-radius: 14px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 17px; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.2">
+        <span>Tambah ke Meja 7</span>
+        <span style="font-size: 15px; font-variant-numeric: tabular-nums; opacity: 0.9">Rp23.000</span>
+      </button>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const opt = (label, on, extra, off, multi) => ({
+      label: label, on: !!on, off: !!off, extra: off ? 'Habis' : (extra || ''),
+      extraFg: off ? '#B42318' : '#51546F',
+      bg: on ? '#F1F0FD' : (off ? '#F6F6FB' : '#FFFFFF'),
+      fg: off ? '#8A8DA6' : '#181A2E',
+      border: on ? '2px solid #3B35B5' : '1px solid #D9DBEA',
+      markRadius: multi ? '6px' : '50%',
+      markBorder: on ? '#3B35B5' : '#9A9DB8',
+      markBg: on ? '#3B35B5' : '#FFFFFF'
+    });
+    const groups = [
+      { title: 'Tingkat manis', rule: 'Wajib · pilih 1', ruleBg: '#FBE3E0', ruleFg: '#B42318',
+        options: [opt('Normal', true), opt('Kurang manis'), opt('Tanpa gula')] },
+      { title: 'Es', rule: 'Wajib · pilih 1', ruleBg: '#FBE3E0', ruleFg: '#B42318',
+        options: [opt('Es normal', true), opt('Sedikit es')] },
+      { title: 'Tambahan', rule: 'Opsional · maks 2', ruleBg: '#EDEEF7', ruleFg: '#51546F',
+        options: [opt('Extra shot espresso', true, '+Rp5.000', false, true), opt('Ganti oat milk', false, '+Rp8.000', false, true), opt('Boba gula aren', false, '+Rp4.000', true, true)] }
+    ];
+    return { groups: groups };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  # Menentukan bagian mana yang berubah, supaya job lain hanya jalan kalau perlu.
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      go: ${{ steps.filter.outputs.go }}
+      node: ${{ steps.filter.outputs.node }}
+      flutter: ${{ steps.filter.outputs.flutter }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            spec: &spec
+              - 'packages/api-spec/**'
+            tokens: &tokens
+              - 'packages/design-tokens/**'
+            go:
+              - *spec
+              - 'apps/api/**'
+              - '.github/workflows/ci.yml'
+            node:
+              - *spec
+              - *tokens
+              - 'apps/web/**'
+              - 'apps/site/**'
+              - 'apps/wa-gateway/**'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - 'biome.json'
+              - 'tsconfig.base.json'
+              - '.github/workflows/ci.yml'
+            flutter:
+              - *tokens
+              - 'apps/kasir/**'
+              - '.github/workflows/ci.yml'
+
+  node:
+    name: Web, situs, gateway WA, spesifikasi
+    needs: changes
+    if: needs.changes.outputs.node == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Lint & format (Biome)
+        run: pnpm exec biome ci .
+      - name: File hasil generator sesuai sumbernya
+        run: |
+          pnpm gen:tokens
+          pnpm gen:api
+          git diff --exit-code -- packages apps/kasir/lib/core/theme \
+            || (echo "::error::Jalankan 'pnpm gen' lalu commit hasilnya." && exit 1)
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+
+  go:
+    name: API Go
+    needs: changes
+    if: needs.changes.outputs.go == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/api
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: pos
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d pos"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      TEST_MIGRATION_DATABASE_URL: postgres://postgres:postgres_ci@localhost:5432/pos?sslmode=disable
+      TEST_DATABASE_URL: postgres://pos_app:pos_app_ci@localhost:5432/pos?sslmode=disable
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: apps/api/go.mod
+          cache-dependency-path: apps/api/go.sum
+      - name: Kode hasil oapi-codegen sesuai openapi.yaml
+        run: |
+          go generate ./...
+          git diff --exit-code -- . || (echo "::error::Jalankan 'pnpm gen:go' lalu commit hasilnya." && exit 1)
+      - uses: sqlc-dev/setup-sqlc@v4
+        with:
+          sqlc-version: "1.31.1"
+      - name: Kode hasil sqlc sesuai query
+        run: sqlc diff
+      - run: go vet ./...
+      - uses: golangci/golangci-lint-action@v8
+        with:
+          version: latest
+          working-directory: apps/api
+      - name: Buat role aplikasi tanpa BYPASSRLS
+        run: |
+          PGPASSWORD=postgres_ci psql -h localhost -U postgres -d pos -v ON_ERROR_STOP=1 -c \
+            "CREATE ROLE pos_app LOGIN PASSWORD 'pos_app_ci' NOSUPERUSER NOBYPASSRLS; GRANT USAGE ON SCHEMA public TO pos_app;"
+      - name: Tes (termasuk tes integrasi RLS dengan Postgres)
+        run: go test -race -count=1 ./...
+      - name: Build
+        run: go build -trimpath -o bin/api ./cmd/api
+
+  flutter:
+    name: App kasir Flutter
+    needs: changes
+    if: needs.changes.outputs.flutter == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/kasir
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      # Info (saran gaya) belum dibuat fatal supaya kerangka awal tidak tertahan; error & warning tetap fatal.
+      - run: flutter analyze --no-fatal-infos
+      - run: flutter test

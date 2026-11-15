@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Super admin ringkasan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height: 1100px; box-sizing: border-box; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+  <nav aria-label="Menu super admin" style="flex: 1 1 232px; max-width: 100%; background: #181A2E; color: #ECECF6; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 6px 6px"><div style="width: 36px; height: 36px; border-radius: 10px; background: #FFC23D; color: #181A2E; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div><span style="font-size: 18px; font-weight: 800">POS Kita</span></div>
+    <span style="padding: 0 6px 16px; font-size: 13px; font-weight: 700; color: #FFD98A">Panel super admin · tim internal</span>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="8"><a href="#" aria-current="{{n.current}}" style="min-height: 46px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 12px; text-decoration: none; background: {{n.bg}}; color: {{n.fg}}; font-weight: {{n.weight}}; font-size: 15px">{{n.label}}<span style="margin-left: auto; font-size: 12px; font-weight: 800; color: #FFD98A">{{n.badge}}</span></a></sc-for>
+  </nav>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 24px clamp(16px, 3vw, 36px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px"><div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 28px; font-weight: 800">Ringkasan platform</h1><span style="font-size: 15px; color: #51546F">Minggu, 15 Nov 2026 · data contoh</span></div><button type="button" style="height: 48px; padding: 0 16px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 14px">Unduh laporan bulanan</button></div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px">
+      <sc-for list="{{ kpi }}" as="k" hint-placeholder-count="5"><div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #51546F">{{k.label}}</span><span style="font-size: 26px; font-weight: 800; font-variant-numeric: tabular-nums">{{k.v}}</span><span style="font-size: 13px; font-weight: 700; color: {{k.fg}}">{{k.d}}</span></div></sc-for>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 14px">
+      <section aria-label="MRR per bulan" style="flex: 2 1 480px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+        <h2 style="margin: 0; font-size: 18px; font-weight: 800">Pendapatan berulang bulanan (juta rupiah)</h2>
+        <div style="height: 180px; display: flex; align-items: flex-end; gap: 10px; border-bottom: 1px solid #D9DBEA">
+          <sc-for list="{{ mrr }}" as="m" hint-placeholder-count="8"><div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 4px; height: 100%"><span style="font-size: 12px; font-weight: 700; color: #51546F; font-variant-numeric: tabular-nums">{{m.v}}</span><div style="width: 100%; height: {{m.px}}px; background: {{m.bg}}; border-radius: 6px 6px 0 0"></div></div></sc-for>
+        </div>
+        <div style="display: flex; gap: 10px"><sc-for list="{{ mrr }}" as="m" hint-placeholder-count="8"><span style="flex: 1; text-align: center; font-size: 12px; color: #51546F">{{m.label}}</span></sc-for></div>
+      </section>
+      <section aria-label="Perlu tindakan" style="flex: 1 1 300px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 10px">
+        <h2 style="margin: 0; font-size: 18px; font-weight: 800">Perlu tindakan</h2>
+        <sc-for list="{{ alerts }}" as="a" hint-placeholder-count="4"><div style="padding: 10px 12px; border-radius: 12px; background: {{a.bg}}; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; font-weight: 800; color: {{a.fg}}">{{a.kind}}</span><span style="font-size: 14px; line-height: 1.45">{{a.text}}</span></div></sc-for>
+      </section>
+    </div>
+    <section aria-label="Daftar toko" style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; overflow-x: auto">
+      <table style="width: 100%; min-width: 900px; border-collapse: collapse; font-size: 14px">
+        <thead><tr style="background: #F6F6FB"><th scope="col" style="text-align: left; padding: 12px 16px; font-size: 12px; color: #51546F">Usaha</th><th scope="col" style="text-align: left; padding: 12px 10px; font-size: 12px; color: #51546F">Modul</th><th scope="col" style="text-align: left; padding: 12px 10px; font-size: 12px; color: #51546F">Paket</th><th scope="col" style="text-align: right; padding: 12px 10px; font-size: 12px; color: #51546F">Outlet</th><th scope="col" style="text-align: right; padding: 12px 10px; font-size: 12px; color: #51546F">MRR</th><th scope="col" style="text-align: left; padding: 12px 10px; font-size: 12px; color: #51546F">Sinkron</th><th scope="col" style="text-align: left; padding: 12px 10px; font-size: 12px; color: #51546F">WhatsApp</th><th scope="col" style="text-align: left; padding: 12px 16px; font-size: 12px; color: #51546F">Aksi</th></tr></thead>
+        <tbody><sc-for list="{{ tenants }}" as="t" hint-placeholder-count="6"><tr style="border-top: 1px solid #EDEEF7"><td style="padding: 12px 16px"><span style="display: flex; flex-direction: column"><b>{{t.name}}</b><span style="font-size: 12px; color: #51546F">{{t.city}}</span></span></td><td style="padding: 12px 10px; color: #51546F">{{t.mod}}</td><td style="padding: 12px 10px"><span style="padding: 2px 10px; border-radius: 999px; background: {{t.planBg}}; color: {{t.planFg}}; font-size: 12px; font-weight: 800">{{t.plan}}</span></td><td style="padding: 12px 10px; text-align: right">{{t.out}}</td><td style="padding: 12px 10px; text-align: right; font-variant-numeric: tabular-nums">{{t.mrr}}</td><td style="padding: 12px 10px; color: {{t.syncFg}}; font-weight: 700">{{t.sync}}</td><td style="padding: 12px 10px; color: {{t.waFg}}; font-weight: 700">{{t.wa}}</td><td style="padding: 12px 16px"><a href="#" style="font-weight: 700">Buka (minta izin)</a></td></tr></sc-for></tbody>
+      </table>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const N = [['Ringkasan', true], ['Toko & pengguna'], ['Paket & harga'], ['Branding'], ['Tagihan & pembayaran'], ['Sesi WhatsApp', false, '12 putus'], ['Dukungan', false, '7'], ['Log audit']];
+    const nav = N.map(n => ({ label: n[0], current: n[1] ? 'page' : 'false', bg: n[1] ? '#3B35B5' : 'transparent', fg: n[1] ? '#FFFFFF' : '#C9CBDE', weight: n[1] ? 800 : 600, badge: n[2] || '' }));
+    const kpi = [['MRR', 'Rp48.200.000', '▲ 14% dari Okt', '#16774A'], ['Toko berbayar', '403', '▲ 51', '#16774A'], ['Toko gratis aktif', '1.180', '▲ 210', '#16774A'], ['Konversi trial → bayar', '18%', 'target 15%', '#16774A'], ['Churn bulanan', '2,4%', 'target < 3%', '#16774A']].map(k => ({ label: k[0], v: k[1], d: k[2], fg: k[3] }));
+    const M = [['Apr', 6.1], ['Mei', 9.8], ['Jun', 14.2], ['Jul', 19.5], ['Agu', 26.0], ['Sep', 33.4], ['Okt', 42.3], ['Nov', 48.2]];
+    const mrr = M.map(m => ({ label: m[0], v: String(m[1]).replace('.', ','), px: Math.round(m[1] / 48.2 * 150), bg: m[0] === 'Nov' ? '#3B35B5' : '#B9B6EE' }));
+    const alerts = [['Sesi WhatsApp', '12 toko terputus lebih dari 1 jam. Notifikasi sudah dikirim ke pemilik.', '#FFF8E6', '#6B4600'], ['Sinkron', '3 perangkat gagal sinkron lebih dari 1 jam (versi aplikasi lama).', '#FDF1EF', '#B42318'], ['Tagihan', '9 tagihan gagal dibayar otomatis. Akan dicoba lagi besok 09.00.', '#FFF8E6', '#6B4600'], ['Dukungan', '7 tiket belum dibalas lebih dari 2 jam.', '#FDF1EF', '#B42318']].map(a => ({ kind: a[0], text: a[1], bg: a[2], fg: a[3] }));
+    const P = { Gratis: ['#EDEEF7', '#51546F'], Basic: ['#DDF3E7', '#16774A'], Pro: ['#E6E5FA', '#3B35B5'], Bisnis: ['#FFF2D2', '#6B4600'] };
+    const T = [['Kedai Kopi Senja', 'Jakarta Selatan', 'F&B, Retail', 'Pro', 3, 'Rp597.000', 'Baik', 'Tersambung'], ['Toko Kelontong Berkah', 'Bekasi', 'Retail', 'Basic', 1, 'Rp99.000', 'Baik', 'Tersambung'], ['Laundry Bersih Wangi', 'Depok', 'Jasa', 'Basic', 1, 'Rp99.000', 'Baik', 'Putus 3 jam'], ['Warung Bu Sri', 'Yogyakarta', 'F&B', 'Gratis', 1, 'Rp0', 'Baik', 'Pakai tombol bagikan'], ['Bakmi Ayam Pak Kumis', 'Bandung', 'F&B', 'Bisnis', 6, 'Rp2.394.000', 'Terlambat 1 jam', 'Tersambung'], ['Barbershop Rapi', 'Surabaya', 'Jasa', 'Pro', 1, 'Rp199.000', 'Baik', 'Tersambung']];
+    const tenants = T.map(t => ({ name: t[0], city: t[1], mod: t[2], plan: t[3], planBg: P[t[3]][0], planFg: P[t[3]][1], out: t[4], mrr: t[5], sync: t[6], syncFg: t[6] === 'Baik' ? '#16774A' : '#B42318', wa: t[7], waFg: t[7] === 'Tersambung' ? '#16774A' : (t[7].indexOf('Putus') === 0 ? '#B42318' : '#51546F') }));
+    return { nav: nav, kpi: kpi, mrr: mrr, alerts: alerts, tenants: tenants };
+  }
+}
+</script>
+</body>
+</html>

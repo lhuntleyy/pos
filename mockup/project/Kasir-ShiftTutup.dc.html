@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Tutup kasir</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <header style="height: 64px; flex: none; display: flex; align-items: center; gap: 14px; padding: 0 20px; background: #FFFFFF; border-bottom: 1px solid #D9DBEA">
+    <div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div>
+    <span style="font-weight: 800; font-size: 18px">Tutup kasir · Shift pagi</span>
+    <span style="font-size: 15px; color: #51546F">Dimas · 08.00–16.02 · 186 transaksi</span>
+  </header>
+  <div style="flex: 1; min-height: 0; display: flex; gap: 20px; padding: 20px">
+    <section aria-label="Ringkasan shift" style="width: 470px; flex: none; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 20px 22px; display: flex; flex-direction: column; gap: 8px">
+      <h2 style="margin: 0 0 4px; font-size: 18px; font-weight: 800">Penjualan per cara bayar</h2>
+      <sc-for list="{{ pay }}" as="p" hint-placeholder-count="5">
+        <div style="display: flex; justify-content: space-between; font-size: 16px; padding: 6px 0; border-bottom: 1px solid #EDEEF7"><span>{{p.label}}</span><span style="font-weight: 700; font-variant-numeric: tabular-nums">{{p.v}}</span></div>
+      </sc-for>
+      <div style="display: flex; justify-content: space-between; font-size: 17px; font-weight: 800; padding-top: 4px"><span>Total penjualan</span><span style="font-variant-numeric: tabular-nums">Rp4.300.000</span></div>
+      <h2 style="margin: 12px 0 4px; font-size: 18px; font-weight: 800">Kas masuk &amp; keluar</h2>
+      <div style="display: flex; justify-content: space-between; font-size: 16px"><span>Beli es batu (kas keluar)</span><span style="font-variant-numeric: tabular-nums; color: #B42318">−Rp45.000</span></div>
+      <div style="display: flex; justify-content: space-between; font-size: 16px"><span>Refund 1 transaksi (disetujui Pak Hendra)</span><span style="font-variant-numeric: tabular-nums; color: #B42318">−Rp18.000</span></div>
+      <div style="flex: 1"></div>
+      <div style="background: #F6F6FB; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; font-size: 15px">
+        <div style="display: flex; justify-content: space-between"><span>Modal awal</span><span style="font-variant-numeric: tabular-nums">Rp340.000</span></div>
+        <div style="display: flex; justify-content: space-between"><span>+ Penjualan tunai</span><span style="font-variant-numeric: tabular-nums">Rp2.140.000</span></div>
+        <div style="display: flex; justify-content: space-between"><span>− Kas keluar &amp; refund tunai</span><span style="font-variant-numeric: tabular-nums">Rp63.000</span></div>
+        <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: 800; padding-top: 4px"><span>Seharusnya di laci</span><span style="font-variant-numeric: tabular-nums">Rp2.417.000</span></div>
+      </div>
+    </section>
+
+    <section aria-label="Hitung uang di laci" style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+      <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px">
+        <h2 style="margin: 0; font-size: 18px; font-weight: 800">Uang yang ada di laci</h2>
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+          <sc-for list="{{ notes }}" as="n" hint-placeholder-count="8">
+            <div style="border: 1px solid #D9DBEA; border-radius: 12px; padding: 8px 10px; display: flex; flex-direction: column; gap: 4px">
+              <span style="height: 8px; border-radius: 4px; background: {{n.bg}}"></span>
+              <span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums">{{n.label}}</span>
+              <span style="font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums">× {{n.qty}}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+        <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 14px 18px; display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 700; color: #51546F">Dihitung</span><span style="font-size: 34px; font-weight: 800; font-variant-numeric: tabular-nums">Rp2.402.000</span></div>
+        <div style="background: #FBE3E0; border-radius: 16px; padding: 14px 18px; display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 700; color: #B42318">Selisih · uang kurang</span><span style="font-size: 34px; font-weight: 800; font-variant-numeric: tabular-nums; color: #B42318">−Rp15.000</span></div>
+      </div>
+      <label for="alasan-selisih" style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 700">Alasan selisih (wajib diisi kalau ada selisih)
+        <input id="alasan-selisih" type="text" value="Kembalian salah ke pelanggan jam 12-an" style="height: 52px; border-radius: 12px; border: 2px solid #B42318; padding: 0 14px; font-size: 16px; font-weight: 500">
+      </label>
+      <div style="display: flex; justify-content: space-between; font-size: 16px; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 14px; padding: 12px 16px"><span>Disetor ke pemilik</span><b style="font-variant-numeric: tabular-nums">Rp2.062.000</b><span>Ditinggal untuk modal besok</span><b style="font-variant-numeric: tabular-nums">Rp340.000</b></div>
+      <div style="flex: 1"></div>
+      <div style="display: flex; gap: 10px">
+        <button type="button" style="width: 220px; height: 64px; border-radius: 14px; border: 2px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 17px">Cetak laporan shift</button>
+        <button type="button" style="flex: 1; height: 64px; border-radius: 14px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 19px">Tutup kasir · kirim laporan ke WA pemilik</button>
+      </div>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const pay = [['Tunai', 'Rp2.140.000'], ['QRIS', 'Rp1.520.000'], ['Kartu / EDC', 'Rp375.000'], ['Transfer', 'Rp180.000'], ['Kasbon (belum dibayar)', 'Rp85.000']].map(p => ({ label: p[0], v: p[1] }));
+    const N = [['Rp100.000', 9, '#C2185B'], ['Rp50.000', 15, '#1565C0'], ['Rp20.000', 20, '#2E7D32'], ['Rp10.000', 21, '#6A1B9A'], ['Rp5.000', 16, '#8D6E63'], ['Rp2.000', 18, '#546E7A'], ['Rp1.000', 14, '#B0A27A'], ['Koin', 'Rp12.000', '#C9CCD8']];
+    const notes = N.map(n => ({ label: n[0], qty: n[1], bg: n[2] }));
+    return { pay: pay, notes: notes };
+  }
+}
+</script>
+</body>
+</html>

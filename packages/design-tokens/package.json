@@ -1,0 +1,16 @@
+{
+  "name": "@pos/design-tokens",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Warna, ukuran teks, dan ukuran sentuh untuk web, situs, dan app kasir",
+  "exports": {
+    "./tokens.json": "./tokens.json",
+    "./tokens.css": "./generated/tokens.css",
+    "./tailwind.css": "./generated/tailwind.css"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node build.mjs --check"
+  }
+}

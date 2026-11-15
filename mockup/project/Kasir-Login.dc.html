@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Masuk kasir</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; box-sizing: border-box; display: flex; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <aside style="width: 340px; flex: none; background: #3B35B5; color: #FFFFFF; padding: 40px 32px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; align-items: center; gap: 12px">
+      <div style="width: 48px; height: 48px; border-radius: 14px; background: #FFFFFF; color: #3B35B5; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 22px">k</div>
+      <div style="display: flex; flex-direction: column"><span style="font-size: 20px; font-weight: 800">Kedai Kopi Senja</span><span style="font-size: 15px; opacity: 0.85">Outlet Kemang · Kasir 1</span></div>
+    </div>
+    <div style="flex: 1"></div>
+    <span style="font-size: 72px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1">07.58</span>
+    <span style="font-size: 20px; font-weight: 600; opacity: 0.9">Sabtu, 15 November 2026</span>
+    <span style="display: flex; align-items: center; gap: 8px; align-self: flex-start; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,0.16); font-size: 15px; font-weight: 700">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+      Bisa masuk walau internet mati
+    </span>
+  </aside>
+
+  <main style="flex: 1; min-width: 0; padding: 40px 36px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+    <h1 style="margin: 0; font-size: 30px; font-weight: 800">Siapa yang bertugas?</h1>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px">
+      <sc-for list="{{ people }}" as="p" hint-placeholder-count="6">
+        <button type="button" aria-pressed="{{p.on}}" style="min-height: 120px; border-radius: 18px; border: {{p.border}}; background: {{p.bg}}; color: #181A2E; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 12px">
+          <span style="width: 56px; height: 56px; border-radius: 50%; background: {{p.avBg}}; color: {{p.avFg}}; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px">{{p.ini}}</span>
+          <span style="font-size: 18px; font-weight: 800">{{p.name}}</span>
+          <span style="font-size: 14px; color: #51546F; font-weight: 600">{{p.role}}</span>
+        </button>
+      </sc-for>
+    </div>
+    <div style="flex: 1"></div>
+    <button type="button" style="align-self: flex-start; height: 48px; padding: 0 16px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 15px">Masuk dengan email pemilik</button>
+  </main>
+
+  <section aria-label="Masukkan PIN" style="width: 400px; flex: none; background: #FFFFFF; border-left: 1px solid #D9DBEA; padding: 40px 36px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 18px">
+    <span style="font-size: 22px; font-weight: 800">PIN Dimas</span>
+    <div aria-label="3 dari 6 angka terisi" style="display: flex; gap: 14px">
+      <sc-for list="{{ dots }}" as="d" hint-placeholder-count="6"><span style="width: 20px; height: 20px; border-radius: 50%; background: {{d.bg}}; border: 2px solid #3B35B5"></span></sc-for>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; width: 100%; margin-top: 8px">
+      <sc-for list="{{ keys }}" as="k" hint-placeholder-count="12">
+        <button type="button" aria-label="{{k.aria}}" style="height: 76px; border-radius: 16px; border: 1px solid #D9DBEA; background: {{k.bg}}; color: #181A2E; font-weight: 800; font-size: 28px">{{k.label}}</button>
+      </sc-for>
+    </div>
+    <span style="font-size: 15px; color: #51546F; text-align: center; line-height: 1.5">Lupa PIN? Minta pemilik atau kepala toko mengatur ulang dari aplikasi pemilik.</span>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const P = [['Dimas', 'Kasir', 'DM', true], ['Lala', 'Kasir', 'LL'], ['Rudi', 'Kasir', 'RD'], ['Ayu', 'Pelayan', 'AY'], ['Bayu', 'Dapur', 'BY'], ['Pak Hendra', 'Pemilik', 'PH']];
+    const people = P.map(p => ({ name: p[0], role: p[1], ini: p[2], on: !!p[3], border: p[3] ? '3px solid #3B35B5' : '1px solid #D9DBEA', bg: p[3] ? '#F1F0FD' : '#FFFFFF', avBg: p[3] ? '#3B35B5' : '#FFF2D2', avFg: p[3] ? '#FFFFFF' : '#6B4600' }));
+    const dots = [1, 1, 1, 0, 0, 0].map(v => ({ bg: v ? '#3B35B5' : 'transparent' }));
+    const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'Hapus', '0', 'Masuk'].map(k => ({ label: k, aria: k.length > 1 ? k : 'Angka ' + k, bg: k === 'Masuk' ? '#E6E5FA' : '#FFFFFF' }));
+    return { people: people, dots: dots, keys: keys };
+  }
+}
+</script>
+</body>
+</html>

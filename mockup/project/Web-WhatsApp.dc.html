@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>WhatsApp toko</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height: 1000px; box-sizing: border-box; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+  <nav aria-label="Menu utama" style="flex: 1 1 232px; max-width: 100%; background: #FFFFFF; border-right: 1px solid #D9DBEA; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 6px 18px"><div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div><span style="font-size: 18px; font-weight: 800">POS Kita</span></div>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7"><a href="#" aria-current="{{n.current}}" style="min-height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 12px; text-decoration: none; background: {{n.bg}}; color: {{n.fg}}; font-weight: {{n.weight}}; font-size: 15px"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{n.dot}}; flex: none"></span>{{n.label}}</a></sc-for>
+  </nav>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 24px clamp(16px, 3vw, 36px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; color: #51546F; font-weight: 600">Pengaturan › WhatsApp</span><h1 style="margin: 0; font-size: 28px; font-weight: 800">WhatsApp toko</h1></div>
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+      <section aria-label="Sambungan" style="flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+        <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px">
+          <span style="display: flex; align-items: center; gap: 8px; align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #DDF3E7; color: #16774A; font-weight: 800; font-size: 14px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Tersambung</span>
+          <span style="font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums">0812-****-1234</span>
+          <span style="font-size: 14px; color: #51546F">Nomor khusus toko · tersambung sejak 12 Nov · perangkat tertaut: server POS Kita</span>
+          <div style="display: flex; justify-content: space-between; font-size: 15px; padding-top: 6px; border-top: 1px solid #EDEEF7"><span>Terkirim hari ini</span><b style="font-variant-numeric: tabular-nums">38 dari batas aman 300</b></div>
+          <div style="height: 8px; border-radius: 4px; background: #EDEEF7"><div style="width: 13%; height: 100%; border-radius: 4px; background: #16774A"></div></div>
+          <div style="display: flex; gap: 8px; margin-top: 4px"><button type="button" style="flex: 1; height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 14px">Kirim pesan tes</button><button type="button" style="flex: 1; height: 48px; border-radius: 12px; border: 2px solid #F1B5AE; background: #FDF1EF; color: #B42318; font-weight: 800; font-size: 14px">Putuskan</button></div>
+        </div>
+        <div style="background: #FFF8E6; border: 1px solid #F0D08A; border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; line-height: 1.55">
+          <b style="color: #6B4600; font-size: 15px">Supaya nomor tidak diblokir WhatsApp</b>
+          <span>Pakai nomor khusus toko, jangan nomor pribadi. Kirim hanya ke pelanggan yang pernah belanja dan setuju menerima struk. Jangan kirim promosi massal dari sini. Kalau sambungan putus, kasir otomatis memakai tombol "bagikan ke WhatsApp".</span>
+        </div>
+        <div style="background: #FFFFFF; border: 1px dashed #B9BCD3; border-radius: 16px; padding: 16px 18px; display: flex; gap: 14px; align-items: center">
+          <div role="img" aria-label="Contoh kode QR untuk menautkan WhatsApp" style="width: 96px; height: 96px; flex: none; border-radius: 8px; background: repeating-conic-gradient(#181A2E 0% 25%, #FFFFFF 0% 50%) 0 0 / 16px 16px; border: 6px solid #FFFFFF; outline: 1px solid #D9DBEA"></div>
+          <span style="font-size: 14px; color: #51546F; line-height: 1.5">Ganti nomor: buka WhatsApp di HP toko › Perangkat tertaut › Tautkan perangkat, lalu scan kode ini.</span>
+        </div>
+      </section>
+      <section aria-label="Pesan otomatis" style="flex: 1.4 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+        <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 4px">
+          <h2 style="margin: 0 0 6px; font-size: 19px; font-weight: 800">Pesan otomatis</h2>
+          <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="5"><div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid #EDEEF7"><span style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 700">{{m.label}}</span><span style="font-size: 13px; color: #51546F">{{m.help}}</span></span><span role="switch" aria-checked="{{m.on}}" aria-label="{{m.label}}" style="display: inline-flex; width: 52px; height: 30px; border-radius: 999px; background: {{m.sw}}; padding: 3px; box-sizing: border-box; justify-content: {{m.j}}"><span style="width: 24px; height: 24px; border-radius: 50%; background: #FFFFFF"></span></span></div></sc-for>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px">
+          <h2 style="margin: 0; font-size: 17px; font-weight: 800">Contoh laporan harian ke pemilik</h2>
+          <div style="align-self: flex-start; max-width: 420px; background: #EEF0F7; border-radius: 14px 14px 14px 4px; padding: 12px 14px; font-size: 14px; line-height: 1.6; white-space: pre-line">{{report}}</div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const N = [['Beranda'], ['Penjualan'], ['Produk & Stok'], ['Pelanggan & Promo'], ['Karyawan'], ['Laporan'], ['Pengaturan', true]];
+    const nav = N.map(n => ({ label: n[0], current: n[1] ? 'page' : 'false', bg: n[1] ? '#3B35B5' : 'transparent', fg: n[1] ? '#FFFFFF' : '#181A2E', weight: n[1] ? 800 : 600, dot: n[1] ? '#FFC23D' : '#D9DBEA' }));
+    const msgs = [['Struk digital ke pelanggan', 'Kalau kasir mengisi nomor pelanggan', true], ['Laporan harian ke pemilik', 'Setiap hari pukul 22.00', true], ['Laporan tutup kasir', 'Langsung setelah shift ditutup', true], ['Pengingat kasbon', '3 hari sebelum dan saat jatuh tempo', true], ['Laundry siap diambil', 'Butuh modul Jasa', false]].map(m => ({ label: m[0], help: m[1], on: m[2], sw: m[2] ? '#3B35B5' : '#B9BCD3', j: m[2] ? 'flex-end' : 'flex-start' }));
+    const report = 'Laporan Sabtu, 15 Nov · Kedai Kopi Senja\nPenjualan bersih: Rp12.480.000 (naik 8%)\nTransaksi: 412 · rata-rata Rp30.291\nTerlaris: Es Kopi Susu Aren (96)\nPerlu dicek: 2 void di Senopati, susu UHT Kemang tinggal 4 L\nSelisih kas: Tebet −Rp15.000';
+    return { nav: nav, msgs: msgs, report: report };
+  }
+}
+</script>
+</body>
+</html>

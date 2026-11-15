@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Produk dan stok</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height: 1100px; box-sizing: border-box; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+  <nav aria-label="Menu utama" style="flex: 1 1 232px; max-width: 100%; background: #FFFFFF; border-right: 1px solid #D9DBEA; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 6px 18px">
+      <div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div>
+      <span style="font-size: 18px; font-weight: 800">POS Kita</span>
+    </div>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7">
+      <a href="#" aria-current="{{n.current}}" style="min-height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 12px; text-decoration: none; background: {{n.bg}}; color: {{n.fg}}; font-weight: {{n.weight}}; font-size: 15px">
+        <span style="width: 10px; height: 10px; border-radius: 3px; background: {{n.dot}}; flex: none"></span>{{n.label}}
+      </a>
+    </sc-for>
+  </nav>
+
+  <main style="flex: 999 1 560px; min-width: 0; padding: 24px clamp(16px, 3vw, 36px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <h1 style="margin: 0; font-size: 28px; font-weight: 800">Produk &amp; Stok</h1>
+        <span style="font-size: 15px; color: #51546F">48 produk · 2 stok menipis · 1 habis</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px">
+        <button type="button" style="height: 48px; padding: 0 16px; border-radius: 12px; border: 2px solid #E39D00; background: #FFF8E6; color: #6B4600; font-weight: 800; font-size: 14px">Impor dari foto atau Excel</button>
+        <button type="button" style="height: 48px; padding: 0 18px; border-radius: 12px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 15px">+ Tambah produk</button>
+      </div>
+    </div>
+
+    <div role="tablist" aria-label="Bagian" style="display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid #D9DBEA">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+        <button type="button" role="tab" aria-selected="{{t.on}}" style="height: 48px; padding: 0 16px; border: 0; border-bottom: 3px solid {{t.line}}; background: transparent; color: {{t.fg}}; font-weight: {{t.weight}}; font-size: 15px">{{t.label}}</button>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+      <label for="cari-produk" style="flex: 1 1 280px; height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 14px; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 12px; box-sizing: border-box">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#51546F" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <input id="cari-produk" type="search" placeholder="Cari nama produk atau barcode" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font-size: 15px">
+      </label>
+      <button type="button" style="height: 48px; padding: 0 14px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 14px">Kategori: Semua</button>
+      <button type="button" style="height: 48px; padding: 0 14px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 14px">Stok: Semua</button>
+      <button type="button" style="height: 48px; padding: 0 14px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 14px">Outlet: Kemang</button>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+      <div style="flex: 2 1 560px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; overflow-x: auto">
+        <table style="width: 100%; min-width: 760px; border-collapse: collapse; font-size: 15px">
+          <thead>
+            <tr style="background: #F6F6FB">
+              <th scope="col" style="text-align: left; padding: 12px 16px; font-size: 13px; color: #51546F; font-weight: 800">Produk</th>
+              <th scope="col" style="text-align: left; padding: 12px 10px; font-size: 13px; color: #51546F; font-weight: 800">Kategori</th>
+              <th scope="col" style="text-align: right; padding: 12px 10px; font-size: 13px; color: #51546F; font-weight: 800">Harga jual</th>
+              <th scope="col" style="text-align: right; padding: 12px 10px; font-size: 13px; color: #51546F; font-weight: 800">HPP</th>
+              <th scope="col" style="text-align: right; padding: 12px 10px; font-size: 13px; color: #51546F; font-weight: 800">Margin</th>
+              <th scope="col" style="text-align: left; padding: 12px 10px; font-size: 13px; color: #51546F; font-weight: 800">Stok</th>
+              <th scope="col" style="text-align: left; padding: 12px 16px; font-size: 13px; color: #51546F; font-weight: 800">Di kasir</th>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{ rows }}" as="r" hint-placeholder-count="9">
+              <tr style="border-top: 1px solid #EDEEF7; background: {{r.rowBg}}">
+                <td style="padding: 12px 16px">
+                  <div style="display: flex; align-items: center; gap: 12px">
+                    <span style="width: 40px; height: 40px; border-radius: 10px; background: {{r.swatch}}; color: {{r.swatchFg}}; display: flex; align-items: center; justify-content: center; font-weight: 800; flex: none">{{r.initial}}</span>
+                    <span style="display: flex; flex-direction: column"><span style="font-weight: 700">{{r.name}}</span><span style="font-size: 13px; color: #51546F">{{r.variants}}</span></span>
+                  </div>
+                </td>
+                <td style="padding: 12px 10px; color: #51546F">{{r.cat}}</td>
+                <td style="padding: 12px 10px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 700">{{r.price}}</td>
+                <td style="padding: 12px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #51546F">{{r.hpp}}</td>
+                <td style="padding: 12px 10px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; color: {{r.marginFg}}">{{r.margin}}</td>
+                <td style="padding: 12px 10px"><span style="padding: 3px 10px; border-radius: 999px; background: {{r.stockBg}}; color: {{r.stockFg}}; font-size: 13px; font-weight: 800; white-space: nowrap">{{r.stock}}</span></td>
+                <td style="padding: 12px 16px">
+                  <span role="switch" aria-checked="{{r.shown}}" aria-label="Tampilkan {{r.name}} di kasir" style="display: inline-flex; width: 48px; height: 28px; border-radius: 999px; background: {{r.toggleBg}}; padding: 3px; box-sizing: border-box; justify-content: {{r.toggleJustify}}"><span style="width: 22px; height: 22px; border-radius: 50%; background: #FFFFFF"></span></span>
+                </td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+
+      <aside aria-label="Edit cepat Es Kopi Susu Aren" style="flex: 1 1 320px; min-width: 0; background: #FFFFFF; border: 2px solid #3B35B5; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+        <div style="display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 18px; font-weight: 800">Edit cepat</h2><span style="font-size: 13px; color: #51546F">Tersimpan otomatis</span></div>
+        <label for="nama-produk" style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700">Nama produk
+          <input id="nama-produk" type="text" value="Es Kopi Susu Aren" style="height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; padding: 0 12px; font-size: 16px; font-weight: 600">
+        </label>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 14px; font-weight: 700">Harga per varian (Ukuran × Suhu)</span>
+          <div style="overflow-x: auto">
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px">
+              <thead><tr><th scope="col" style="text-align: left; padding: 6px; color: #51546F; font-size: 12px"></th><th scope="col" style="text-align: left; padding: 6px; color: #51546F; font-size: 12px">Panas</th><th scope="col" style="text-align: left; padding: 6px; color: #51546F; font-size: 12px">Es</th></tr></thead>
+              <tbody>
+                <tr><th scope="row" style="text-align: left; padding: 6px; font-weight: 700">Reguler</th><td style="padding: 4px"><span style="display: block; height: 40px; line-height: 40px; border: 1px solid #D9DBEA; border-radius: 10px; padding: 0 10px; font-variant-numeric: tabular-nums">Rp17.000</span></td><td style="padding: 4px"><span style="display: block; height: 40px; line-height: 40px; border: 2px solid #3B35B5; border-radius: 10px; padding: 0 10px; font-variant-numeric: tabular-nums">Rp18.000</span></td></tr>
+                <tr><th scope="row" style="text-align: left; padding: 6px; font-weight: 700">Large</th><td style="padding: 4px"><span style="display: block; height: 40px; line-height: 40px; border: 1px solid #D9DBEA; border-radius: 10px; padding: 0 10px; font-variant-numeric: tabular-nums">Rp22.000</span></td><td style="padding: 4px"><span style="display: block; height: 40px; line-height: 40px; border: 1px solid #D9DBEA; border-radius: 10px; padding: 0 10px; font-variant-numeric: tabular-nums">Rp23.000</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 14px; font-weight: 700">Resep per gelas (untuk HPP &amp; stok)</span>
+          <sc-for list="{{ recipe }}" as="b" hint-placeholder-count="4">
+            <div style="display: flex; justify-content: space-between; font-size: 14px; padding: 6px 0; border-bottom: 1px solid #EDEEF7"><span>{{b.name}}</span><span style="color: #51546F; font-variant-numeric: tabular-nums">{{b.qty}} · {{b.cost}}</span></div>
+          </sc-for>
+          <div style="display: flex; justify-content: space-between; font-size: 15px; font-weight: 800"><span>HPP per gelas</span><span style="font-variant-numeric: tabular-nums">Rp7.400 · margin 59%</span></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <span style="font-size: 14px; font-weight: 700">Harga per kanal</span>
+          <div style="display: flex; justify-content: space-between; font-size: 14px"><span>Toko</span><span style="font-variant-numeric: tabular-nums">Rp18.000</span></div>
+          <div style="display: flex; justify-content: space-between; font-size: 14px"><span>GoFood / GrabFood (+20%)</span><span style="font-variant-numeric: tabular-nums">Rp21.500</span></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const N = [['Beranda'], ['Penjualan'], ['Produk & Stok', true], ['Pelanggan & Promo'], ['Karyawan'], ['Laporan'], ['Pengaturan']];
+    const nav = N.map(n => ({ label: n[0], current: n[1] ? 'page' : 'false', bg: n[1] ? '#3B35B5' : 'transparent', fg: n[1] ? '#FFFFFF' : '#181A2E', weight: n[1] ? 800 : 600, dot: n[1] ? '#FFC23D' : '#D9DBEA' }));
+    const tabs = [['Produk', true], ['Kategori'], ['Stok'], ['Bahan baku'], ['Stok opname']].map(t => ({ label: t[0], on: !!t[1], line: t[1] ? '#3B35B5' : 'transparent', fg: t[1] ? '#3B35B5' : '#51546F', weight: t[1] ? 800 : 600 }));
+    const C = { Kopi: ['#F3E6DA', '#6B3E1E'], 'Non-kopi': ['#DDF0EA', '#11624A'], Makanan: ['#FCE3D6', '#9A3412'], Camilan: ['#FFF0C7', '#7A5200'] };
+    const R = [
+      ['Es Kopi Susu Aren', 'Kopi', '4 varian', 'Rp18.000', 'Rp7.400', 59, 'ok', '±64 gelas', true, true],
+      ['Kopi Vietnam Drip', 'Kopi', '—', 'Rp20.000', 'Rp6.900', 66, 'low', 'Sisa 3', true],
+      ['Kopi Latte Panas', 'Kopi', '2 varian', 'Rp22.000', 'Rp8.100', 63, 'ok', '±40 gelas', true],
+      ['Cokelat Panas', 'Non-kopi', '—', 'Rp16.000', 'Rp6.200', 61, 'out', 'Habis', false],
+      ['Es Teh Manis', 'Non-kopi', '—', 'Rp6.000', 'Rp1.300', 78, 'ok', '±120 gelas', true],
+      ['Nasi Goreng Spesial', 'Makanan', 'Level pedas', 'Rp25.000', 'Rp11.800', 53, 'ok', '±30 porsi', true],
+      ['Ayam Geprek Sambal Matah', 'Makanan', 'Level pedas', 'Rp20.000', 'Rp10.900', 46, 'low', 'Sisa 6', true],
+      ['Pisang Goreng Keju', 'Camilan', '—', 'Rp15.000', 'Rp5.600', 63, 'ok', '±22 porsi', true],
+      ['Roti Bakar Cokelat', 'Camilan', '2 varian', 'Rp14.000', 'Rp4.900', 65, 'ok', '±18 porsi', true]
+    ];
+    const S = { ok: ['#DDF3E7', '#16774A'], low: ['#FFF2D2', '#6B4600'], out: ['#FBE3E0', '#B42318'] };
+    const rows = R.map(r => ({
+      name: r[0], cat: r[1], variants: r[2], price: r[3], hpp: r[4], margin: r[5] + '%', marginFg: r[5] < 50 ? '#B42318' : '#16774A',
+      stock: r[7], stockBg: S[r[6]][0], stockFg: S[r[6]][1], shown: r[8], toggleBg: r[8] ? '#3B35B5' : '#B9BCD3', toggleJustify: r[8] ? 'flex-end' : 'flex-start',
+      swatch: C[r[1]][0], swatchFg: C[r[1]][1], initial: r[0].charAt(0), rowBg: r[9] ? '#F1F0FD' : '#FFFFFF'
+    }));
+    const recipe = [
+      { name: 'Espresso (biji house blend)', qty: '18 g', cost: 'Rp3.100' },
+      { name: 'Susu UHT full cream', qty: '150 ml', cost: 'Rp2.700' },
+      { name: 'Gula aren cair', qty: '25 ml', cost: 'Rp1.100' },
+      { name: 'Gelas + tutup + sedotan', qty: '1 set', cost: 'Rp500' }
+    ];
+    return { nav: nav, tabs: tabs, rows: rows, recipe: recipe };
+  }
+}
+</script>
+</body>
+</html>

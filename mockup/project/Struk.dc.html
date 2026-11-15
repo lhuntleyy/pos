@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Struk thermal</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+</style>
+</helmet>
+<div style="width: 420px; height: 1000px; box-sizing: border-box; background: #E4E5EF; padding: 24px 18px; display: flex; flex-direction: column; align-items: center; gap: 12px; font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace; color: #1A1A1A">
+  <span style="font-family: system-ui, sans-serif; font-size: 13px; color: #51546F; font-weight: 600">Lebar kertas 58 mm · 384 titik · 32 karakter per baris</span>
+  <div style="width: 384px; display: flex; flex-direction: column">
+    <div style="background: #FFFFFF; padding: 22px 18px 18px; display: flex; flex-direction: column; gap: 10px; font-size: 13px; line-height: 1.5; box-shadow: 0 1px 2px rgba(0,0,0,0.08)">
+      <div style="text-align: center; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 17px; font-weight: 800; letter-spacing: 0.04em">KEDAI KOPI SENJA</span>
+        <span>Jl. Kemang Raya No. 12</span>
+        <span>Jakarta Selatan</span>
+        <span>NPWPD: [isi NPWPD toko]</span>
+      </div>
+      <div style="border-top: 1px dashed #1A1A1A"></div>
+      <div style="display: flex; justify-content: space-between"><span>No. S-0412</span><span>14/11/2026 15:42</span></div>
+      <div style="display: flex; justify-content: space-between"><span>Kasir: Dimas</span><span>Makan di sini</span></div>
+      <div style="border-top: 1px dashed #1A1A1A"></div>
+      <sc-for list="{{ items }}" as="i" hint-placeholder-count="3">
+        <div style="display: flex; flex-direction: column">
+          <span style="font-weight: 700">{{i.name}}</span>
+          <div style="display: flex; justify-content: space-between; padding-left: 16px"><span>{{i.qty}} x {{i.unit}}</span><span>{{i.total}}</span></div>
+        </div>
+      </sc-for>
+      <div style="border-top: 1px dashed #1A1A1A"></div>
+      <div style="display: flex; justify-content: space-between"><span>Subtotal</span><span>57.000</span></div>
+      <div style="display: flex; justify-content: space-between"><span>PBJT Makan-Minum 10%</span><span>5.700</span></div>
+      <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: 800"><span>TOTAL</span><span>Rp62.700</span></div>
+      <div style="display: flex; justify-content: space-between"><span>Tunai</span><span>100.000</span></div>
+      <div style="display: flex; justify-content: space-between; font-weight: 800"><span>Kembalian</span><span>37.300</span></div>
+      <div style="border-top: 1px dashed #1A1A1A"></div>
+      <div style="display: flex; gap: 12px; align-items: center">
+        <div role="img" aria-label="Contoh kode QR struk digital" style="display: grid; grid-template-columns: repeat(21, 4px); width: 84px; height: 84px; flex: none">
+          <sc-for list="{{ qr }}" as="cell" hint-placeholder-count="441"><div style="width: 4px; height: 4px; background: {{cell.c}}"></div></sc-for>
+        </div>
+        <span style="font-size: 12px; line-height: 1.5">Scan untuk struk digital dan cek poin member. Poin hari ini: +6.</span>
+      </div>
+      <div style="text-align: center; display: flex; flex-direction: column; gap: 2px; padding-top: 4px">
+        <span style="font-weight: 700">Terima kasih, sampai jumpa lagi!</span>
+        <span>Kritik &amp; saran: WA [nomor toko]</span>
+        <span style="font-size: 11px; color: #555555">Struk ini dicetak oleh POS Kita</span>
+      </div>
+    </div>
+    <div aria-hidden="true" style="height: 10px; background-image: linear-gradient(135deg, #FFFFFF 50%, transparent 50%), linear-gradient(225deg, #FFFFFF 50%, transparent 50%); background-size: 14px 14px; background-repeat: repeat-x; background-position: 0 0"></div>
+  </div>
+  <div style="width: 384px; font-family: system-ui, sans-serif; font-size: 13px; color: #51546F; line-height: 1.5; display: flex; flex-direction: column; gap: 4px">
+    <span><b style="color: #181A2E">Catatan pajak:</b> restoran objek PBJT tidak menulis PPN. Usaha yang kena PPN memakai baris "PPN 12% (DPP 11/12)".</span>
+    <span>Logo, alamat, NPWPD, dan footer diatur pemilik dari menu Pengaturan › Struk.</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":420,"height":1000}}'>
+class Component extends DCLogic {
+  qrCells() {
+    if (this._qr) return this._qr;
+    const N = 21;
+    let seed = 5;
+    const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    const cells = [];
+    for (let r = 0; r < N; r++) {
+      for (let c = 0; c < N; c++) {
+        let corner = null;
+        if (r < 8 && c < 8) corner = [0, 0];
+        else if (r < 8 && c >= N - 8) corner = [0, N - 7];
+        else if (r >= N - 8 && c < 8) corner = [N - 7, 0];
+        let on;
+        if (corner) {
+          const rr = r - corner[0], cc = c - corner[1];
+          if (rr < 0 || cc < 0 || rr > 6 || cc > 6) on = false;
+          else { const ring = Math.max(Math.abs(rr - 3), Math.abs(cc - 3)); on = ring === 3 || ring <= 1; }
+        } else { on = rnd() > 0.5; }
+        cells.push({ c: on ? '#1A1A1A' : '#FFFFFF' });
+      }
+    }
+    this._qr = cells;
+    return cells;
+  }
+  renderVals() {
+    const items = [
+      { name: 'Es Kopi Susu Aren', qty: 2, unit: '18.000', total: '36.000' },
+      { name: 'Es Teh Manis', qty: 1, unit: '6.000', total: '6.000' },
+      { name: 'Pisang Goreng Keju', qty: 1, unit: '15.000', total: '15.000' }
+    ];
+    return { items: items, qr: this.qrCells() };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Super admin branding</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height: 1000px; box-sizing: border-box; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+  <nav aria-label="Menu super admin" style="flex: 1 1 232px; max-width: 100%; background: #181A2E; color: #ECECF6; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 6px 6px"><div style="width: 36px; height: 36px; border-radius: 10px; background: #FFC23D; color: #181A2E; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">{{initial}}</div><span style="font-size: 18px; font-weight: 800">{{name}}</span></div>
+    <span style="padding: 0 6px 16px; font-size: 13px; font-weight: 700; color: #FFD98A">Panel super admin · tim internal</span>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="8"><a href="#" aria-current="{{n.current}}" style="min-height: 46px; display: flex; align-items: center; padding: 0 12px; border-radius: 12px; text-decoration: none; background: {{n.bg}}; color: {{n.fg}}; font-weight: {{n.weight}}; font-size: 15px">{{n.label}}</a></sc-for>
+  </nav>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 24px clamp(16px, 3vw, 36px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px"><div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 28px; font-weight: 800">Branding produk</h1><span style="font-size: 15px; color: #51546F">Nama, logo, dan warna dipakai di aplikasi kasir, back office, struk, email, dan pesan WA. Coba ketik nama baru.</span></div><button type="button" style="height: 48px; padding: 0 16px; border-radius: 12px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 14px">Terbitkan ke semua aplikasi</button></div>
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+      <section aria-label="Pengaturan branding" style="flex: 1 1 420px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px">
+        <label for="brand-name" style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700">Nama produk<input id="brand-name" type="text" value="{{ name }}" onChange="{{ onName }}" style="height: 52px; border-radius: 12px; border: 2px solid #3B35B5; padding: 0 14px; font-size: 18px; font-weight: 700"></label>
+        <label for="brand-tagline" style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700">Slogan singkat<input id="brand-tagline" type="text" value="Kasir gampang untuk semua usaha" style="height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; padding: 0 14px; font-size: 15px"></label>
+        <div style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 14px; font-weight: 700">Logo</span><div style="display: flex; gap: 10px; flex-wrap: wrap"><span style="flex: 1 1 150px; height: 72px; border: 1px dashed #B9BCD3; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #51546F">Logo latar terang (SVG/PNG)</span><span style="flex: 1 1 150px; height: 72px; border: 1px dashed #B9BCD3; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #C9CBDE; background: #181A2E">Logo latar gelap</span><span style="flex: 0 0 72px; height: 72px; border: 1px dashed #B9BCD3; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #51546F; text-align: center">Ikon app</span></div></div>
+        <div style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 14px; font-weight: 700">Warna utama</span>
+          <div role="group" aria-label="Warna utama" style="display: flex; flex-wrap: wrap; gap: 10px">
+            <sc-for list="{{ colors }}" as="c" hint-placeholder-count="4"><button type="button" onClick="{{ c.pick }}" aria-pressed="{{c.on}}" aria-label="{{c.label}}" style="width: 56px; height: 56px; border-radius: 14px; border: {{c.ring}}; background: {{c.hex}}"></button></sc-for>
+          </div>
+          <span style="font-size: 13px; font-weight: 700; color: {{contrastFg}}">{{contrastTxt}}</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+          <label for="domain-app" style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700">Domain aplikasi<input id="domain-app" type="text" value="app.[domain-anda]" style="height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; padding: 0 12px; font-size: 15px"></label>
+          <label for="wa-support" style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700">Nomor WA bantuan<input id="wa-support" type="text" value="[nomor bantuan]" style="height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; padding: 0 12px; font-size: 15px"></label>
+        </div>
+      </section>
+      <section aria-label="Pratinjau" style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+        <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; overflow: hidden">
+          <div style="height: 56px; display: flex; align-items: center; gap: 10px; padding: 0 16px; border-bottom: 1px solid #D9DBEA"><span style="width: 32px; height: 32px; border-radius: 9px; background: {{accent}}; color: {{accentFg}}; display: flex; align-items: center; justify-content: center; font-weight: 800">{{initial}}</span><b>{{name}}</b><span style="margin-left: auto; font-size: 13px; color: #51546F">Pratinjau header kasir</span></div>
+          <div style="padding: 16px; display: flex; gap: 10px"><span style="flex: 1; height: 56px; border-radius: 12px; border: 2px solid #D9DBEA; display: flex; align-items: center; justify-content: center; font-weight: 800">Simpan</span><span style="flex: 2; height: 56px; border-radius: 12px; background: {{accent}}; color: {{accentFg}}; display: flex; align-items: center; justify-content: center; font-weight: 800">Bayar</span></div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 14px">
+          <div style="flex: 1 1 200px; background: {{accent}}; color: {{accentFg}}; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 8px; min-height: 180px"><span style="width: 44px; height: 44px; border-radius: 12px; background: #FFFFFF; color: {{accent}}; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px">{{initial}}</span><span style="font-size: 22px; font-weight: 800">{{name}}</span><span style="font-size: 14px; opacity: 0.9">Pratinjau layar masuk</span></div>
+          <div style="flex: 1 1 200px; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.6; display: flex; flex-direction: column"><span style="text-align: center; font-weight: 700">KEDAI KOPI SENJA</span><span>------------------------</span><span>TOTAL          Rp62.700</span><span>------------------------</span><span style="text-align: center">Struk dicetak oleh {{name}}</span></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { name: 'POS Kita', color: '#3B35B5' }; }
+  renderVals() {
+    const s = this.state;
+    const N = [['Ringkasan'], ['Toko & pengguna'], ['Paket & harga'], ['Branding', true], ['Tagihan & pembayaran'], ['Sesi WhatsApp'], ['Dukungan'], ['Log audit']];
+    const nav = N.map(n => ({ label: n[0], current: n[1] ? 'page' : 'false', bg: n[1] ? '#3B35B5' : 'transparent', fg: n[1] ? '#FFFFFF' : '#C9CBDE', weight: n[1] ? 800 : 600 }));
+    const C = [['#3B35B5', 'Nila', '8,9:1', true], ['#0F766E', 'Hijau toska', '5,5:1', true], ['#C2410C', 'Jingga bata', '5,2:1', true], ['#F2A900', 'Kunyit terang', '1,9:1', false]];
+    const colors = C.map(c => ({ hex: c[0], label: c[1], on: s.color === c[0], ring: s.color === c[0] ? '4px solid #181A2E' : '1px solid #D9DBEA', pick: () => this.setState({ color: c[0] }) }));
+    const cur = C.find(c => c[0] === s.color);
+    const name = (s.name || '').trim() || 'Nama produk';
+    return {
+      nav: nav, colors: colors, name: name, initial: name.charAt(0).toLowerCase(), accent: s.color, accentFg: cur[3] ? '#FFFFFF' : '#181A2E',
+      onName: (e) => this.setState({ name: e && e.target ? e.target.value : '' }),
+      contrastTxt: cur[3] ? 'Kontras teks putih ' + cur[2] + ' · lulus WCAG AA' : 'Kontras teks putih ' + cur[2] + ' · tidak lulus, tombol akan memakai teks gelap',
+      contrastFg: cur[3] ? '#16774A' : '#B42318'
+    };
+  }
+}
+</script>
+</body>
+</html>

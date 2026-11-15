@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Stok opname di HP</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <header style="padding: 14px 16px 12px; background: #FFFFFF; border-bottom: 1px solid #D9DBEA; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <button type="button" aria-label="Kembali" style="width: 48px; height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: #181A2E"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+      <div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 19px; font-weight: 800">Stok opname</span><span style="font-size: 14px; color: #51546F">Rak minuman · oleh Bayu</span></div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 700"><span>18 dari 42 barang dihitung</span><span style="color: #B42318">3 selisih</span></div>
+      <div role="progressbar" aria-valuemin="0" aria-valuemax="42" aria-valuenow="18" aria-label="Progres hitung" style="height: 10px; border-radius: 5px; background: #EDEEF7"><div style="width: 43%; height: 100%; border-radius: 5px; background: #3B35B5"></div></div>
+    </div>
+    <label for="scan-opname" style="height: 52px; display: flex; align-items: center; gap: 10px; padding: 0 14px; border: 1px solid #D9DBEA; border-radius: 12px; background: #F6F6FB"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B35B5" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3M7 8v8M10 8v8M13 8v8M17 8v8"></path></svg><input id="scan-opname" type="search" placeholder="Scan atau cari barang" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font-size: 17px"></label>
+  </header>
+  <ul style="flex: 1; min-height: 0; overflow: auto; list-style: none; margin: 0; padding: 6px 16px">
+    <sc-for list="{{ items }}" as="i" hint-placeholder-count="7">
+      <li style="padding: 12px 0; border-bottom: 1px solid #E4E5F0; display: flex; flex-direction: column; gap: 8px">
+        <div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 17px; font-weight: 700">{{i.name}}</span><span style="padding: 2px 10px; border-radius: 999px; background: {{i.chipBg}}; color: {{i.chipFg}}; font-size: 13px; font-weight: 800; white-space: nowrap; align-self: flex-start">{{i.diff}}</span></div>
+        <div style="display: flex; align-items: center; gap: 10px">
+          <span style="font-size: 15px; color: #51546F; flex: 1">Sistem: <b style="color: #181A2E">{{i.sys}}</b></span>
+          <span style="font-size: 14px; font-weight: 700; color: #51546F">Fisik</span>
+          <button type="button" aria-label="Kurangi {{i.name}}" style="width: 44px; height: 44px; border-radius: 10px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-size: 22px; font-weight: 700">−</button>
+          <span style="min-width: 40px; text-align: center; font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums">{{i.act}}</span>
+          <button type="button" aria-label="Tambah {{i.name}}" style="width: 44px; height: 44px; border-radius: 10px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-size: 22px; font-weight: 700">+</button>
+        </div>
+      </li>
+    </sc-for>
+  </ul>
+  <div style="padding: 10px 16px 22px; background: #FFFFFF; border-top: 1px solid #D9DBEA; display: flex; flex-direction: column; gap: 8px">
+    <span style="font-size: 13px; color: #51546F">Kasir tetap bisa jualan. Penjualan selama hitung ikut diperhitungkan otomatis.</span>
+    <div style="display: flex; gap: 10px"><button type="button" style="flex: 1; height: 56px; border-radius: 14px; border: 2px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 16px">Simpan draf</button><button type="button" style="flex: 1.4; height: 56px; border-radius: 14px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 16px">Kirim untuk dicek</button></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const I = [['Susu UHT full cream 1 L', 12, 12], ['Gula aren cair 1 L', 6, 4], ['Air mineral 600 ml', 48, 48], ['Sirup leci 750 ml', 5, 6], ['Teh celup (kotak)', 9, 9], ['Biji kopi house blend 1 kg', 4, 3], ['Es batu kristal (kantong)', 10, '—']];
+    const items = I.map(i => {
+      if (i[2] === '—') return { name: i[0], sys: i[1], act: '—', diff: 'Belum dihitung', chipBg: '#EDEEF7', chipFg: '#51546F' };
+      const d = i[2] - i[1];
+      return { name: i[0], sys: i[1], act: i[2], diff: d === 0 ? 'Cocok' : (d > 0 ? 'Lebih ' + d : 'Kurang ' + (-d)), chipBg: d === 0 ? '#DDF3E7' : (d > 0 ? '#FFF2D2' : '#FBE3E0'), chipFg: d === 0 ? '#16774A' : (d > 0 ? '#6B4600' : '#B42318') };
+    });
+    return { items: items };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+/* Dibuat otomatis dari packages/design-tokens/tokens.json. Jangan diedit manual; jalankan `pnpm gen:tokens`. */
+:root {
+  --color-brand: #3B35B5; /* Nila: aksi utama; bawaan, bisa diganti super admin */
+  --color-brand-strong: #2A2590; /* Nila tua: hover/tekan tombol utama, tautan */
+  --color-brand-soft: #F1F0FD; /* Nila muda: latar pilihan aktif */
+  --color-brand-line: #E6E5FA; /* Nila garis: garis pilihan aktif */
+  --color-on-brand: #FFFFFF; /* Putih: teks di atas warna brand */
+  --color-ink: #181A2E; /* Tinta: teks utama */
+  --color-ink-muted: #51546F; /* Abu tinta: teks kedua */
+  --color-ink-faint: #B9BCD3; /* Abu muda: teks nonaktif, placeholder ikon */
+  --color-line: #D9DBEA; /* Garis: garis kartu dan kolom */
+  --color-line-soft: #EDEEF7; /* Garis halus: pemisah baris */
+  --color-canvas: #F6F6FB; /* Latar: latar halaman */
+  --color-surface: #FFFFFF; /* Permukaan: kartu, panel */
+  --color-highlight: #E39D00; /* Kunyit: sorotan; selalu dengan teks gelap */
+  --color-highlight-soft: #FFF2D2; /* Kunyit muda: latar peringatan */
+  --color-highlight-ink: #6B4600; /* Kunyit tua: teks di latar kunyit muda */
+  --color-focus: #E39D00; /* Fokus: garis fokus keyboard */
+  --color-success: #16774A; /* Hijau: berhasil, online */
+  --color-success-soft: #DDF3E7; /* Hijau muda: latar status berhasil */
+  --color-danger: #B42318; /* Merah bata: bahaya, batalkan, selisih */
+  --color-danger-soft: #FBE3E0; /* Merah muda: latar status bahaya */
+  --color-money-100000: #C2185B;
+  --color-money-50000: #1565C0;
+  --color-money-20000: #2E7D32;
+  --color-money-10000: #6A1B9A;
+  --color-money-5000: #8D6E63;
+  --color-money-2000: #546E7A;
+  --touch-min: 48px;
+  --touch-category: 56px;
+  --touch-primary: 64px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --text-body: 16px;
+  --text-product-name: 15px;
+  --text-card-price: 17px;
+  --text-total: 36px;
+  --product-columns: 4;
+}
+
+[data-text-size="large"] {
+  --text-body: 18px;
+  --text-product-name: 17px;
+  --text-card-price: 19px;
+  --text-total: 40px;
+  --product-columns: 4;
+}
+
+[data-text-size="xlarge"] {
+  --text-body: 20px;
+  --text-product-name: 19px;
+  --text-card-price: 22px;
+  --text-total: 44px;
+  --product-columns: 3;
+}

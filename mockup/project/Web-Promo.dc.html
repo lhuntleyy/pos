@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Buat promo</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height: 1000px; box-sizing: border-box; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+  <nav aria-label="Menu utama" style="flex: 1 1 232px; max-width: 100%; background: #FFFFFF; border-right: 1px solid #D9DBEA; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 6px 18px"><div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div><span style="font-size: 18px; font-weight: 800">POS Kita</span></div>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7"><a href="#" aria-current="{{n.current}}" style="min-height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 12px; text-decoration: none; background: {{n.bg}}; color: {{n.fg}}; font-weight: {{n.weight}}; font-size: 15px"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{n.dot}}; flex: none"></span>{{n.label}}</a></sc-for>
+  </nav>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 24px clamp(16px, 3vw, 36px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; color: #51546F; font-weight: 600">Pelanggan &amp; Promo › Promo baru</span><h1 style="margin: 0; font-size: 28px; font-weight: 800">Buat promo dalam 3 langkah</h1></div>
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+      <section aria-label="Pengaturan promo" style="flex: 2 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+        <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+          <h2 style="margin: 0; font-size: 17px; font-weight: 800">1. Jenis promo</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px">
+            <sc-for list="{{ types }}" as="t" hint-placeholder-count="5"><button type="button" aria-pressed="{{t.on}}" style="min-height: 88px; border-radius: 14px; border: {{t.border}}; background: {{t.bg}}; color: #181A2E; text-align: left; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; justify-content: center"><span style="font-size: 15px; font-weight: 800">{{t.title}}</span><span style="font-size: 13px; color: #51546F">{{t.ex}}</span></button></sc-for>
+          </div>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+          <h2 style="margin: 0; font-size: 17px; font-weight: 800">2. Aturan</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px">
+            <label for="produk-promo" style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700">Produk<input id="produk-promo" type="text" value="Es Kopi Susu Aren" style="height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; padding: 0 12px; font-size: 15px"></label>
+            <label for="harga-paket" style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700">Beli 2 jadi<input id="harga-paket" type="text" value="Rp30.000" style="height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; padding: 0 12px; font-size: 15px"></label>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px">
+            <sc-for list="{{ days }}" as="d" hint-placeholder-count="7"><span style="min-width: 52px; height: 44px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; background: {{d.bg}}; color: {{d.fg}}; border: {{d.border}}">{{d.label}}</span></sc-for>
+            <span style="height: 44px; padding: 0 14px; border-radius: 12px; display: inline-flex; align-items: center; font-weight: 800; font-size: 14px; border: 2px solid #3B35B5; color: #3B35B5">14.00–17.00</span>
+          </div>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+          <h2 style="margin: 0; font-size: 17px; font-weight: 800">3. Kapan &amp; di mana</h2>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px">
+            <span style="height: 44px; padding: 0 14px; border-radius: 12px; display: inline-flex; align-items: center; font-weight: 700; font-size: 14px; border: 1px solid #D9DBEA">17 Nov – 31 Des 2026</span>
+            <span style="height: 44px; padding: 0 14px; border-radius: 12px; display: inline-flex; align-items: center; font-weight: 700; font-size: 14px; border: 1px solid #D9DBEA">Outlet: Kemang, Senopati</span>
+            <span style="height: 44px; padding: 0 14px; border-radius: 12px; display: inline-flex; align-items: center; font-weight: 700; font-size: 14px; border: 1px solid #D9DBEA">Kanal: Makan di sini &amp; bawa pulang</span>
+          </div>
+        </div>
+      </section>
+      <aside aria-label="Pratinjau" style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+        <div style="background: #FFFFFF; border: 2px solid #3B35B5; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 10px">
+          <h2 style="margin: 0; font-size: 17px; font-weight: 800">Tampil di kasir sebagai</h2>
+          <div style="border: 1px dashed #E39D00; border-radius: 12px; background: #FFF8E6; padding: 12px 14px; font-size: 15px; font-weight: 700; color: #6B4600">Happy hour: 2 Es Kopi Susu Aren Rp30.000</div>
+          <span style="font-size: 14px; color: #51546F; line-height: 1.5">Kasir cukup menekan "Pakai". Kalau syarat terpenuhi, promo juga bisa langsung terpasang otomatis.</span>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 6px; font-size: 15px">
+          <b>Perkiraan dampak</b>
+          <div style="display: flex; justify-content: space-between"><span>Harga normal 2 cup</span><span>Rp36.000</span></div>
+          <div style="display: flex; justify-content: space-between"><span>HPP 2 cup</span><span>Rp14.800</span></div>
+          <div style="display: flex; justify-content: space-between; font-weight: 800; color: #16774A"><span>Margin saat promo</span><span>51%</span></div>
+        </div>
+        <button type="button" style="height: 56px; border-radius: 14px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 16px">Aktifkan promo</button>
+      </aside>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const N = [['Beranda'], ['Penjualan'], ['Produk & Stok'], ['Pelanggan & Promo', true], ['Karyawan'], ['Laporan'], ['Pengaturan']];
+    const nav = N.map(n => ({ label: n[0], current: n[1] ? 'page' : 'false', bg: n[1] ? '#3B35B5' : 'transparent', fg: n[1] ? '#FFFFFF' : '#181A2E', weight: n[1] ? 800 : 600, dot: n[1] ? '#FFC23D' : '#D9DBEA' }));
+    const T = [['Diskon persen', 'Semua kopi 10%'], ['Potongan rupiah', 'Belanja Rp100rb potong Rp10rb'], ['Beli X gratis Y', 'Beli 2 roti gratis 1'], ['Harga paket jam tertentu', '2 kopi Rp30rb jam 14–17', true], ['Khusus member', 'Poin dobel hari Jumat']];
+    const types = T.map(t => ({ title: t[0], ex: t[1], on: !!t[2], border: t[2] ? '3px solid #3B35B5' : '1px solid #D9DBEA', bg: t[2] ? '#F1F0FD' : '#FFFFFF' }));
+    const days = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'].map((d, i) => ({ label: d, bg: i < 5 ? '#3B35B5' : '#FFFFFF', fg: i < 5 ? '#FFFFFF' : '#51546F', border: i < 5 ? '0' : '1px solid #D9DBEA' }));
+    return { nav: nav, types: types, days: days };
+  }
+}
+</script>
+</body>
+</html>

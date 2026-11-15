@@ -1,0 +1,21 @@
+# Caddy mengurus HTTPS (Let's Encrypt) otomatis untuk ketiga domain.
+
+{$API_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy api:8080
+}
+
+{$APP_DOMAIN} {
+	encode zstd gzip
+	root * /srv/app
+	# Single page app: semua path yang bukan file diarahkan ke index.html
+	try_files {path} /index.html
+	file_server
+	header /assets/* Cache-Control "public, max-age=31536000, immutable"
+}
+
+{$SITE_DOMAIN} {
+	encode zstd gzip
+	root * /srv/site
+	file_server
+}

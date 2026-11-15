@@ -1,0 +1,50 @@
+# --- Dependensi & hasil build ---
+node_modules/
+dist/
+build/
+.astro/
+coverage/
+*.tsbuildinfo
+.vite/
+
+# --- Go ---
+apps/api/bin/
+*.test
+*.out
+coverage.txt
+
+# --- Flutter / Dart ---
+apps/kasir/.dart_tool/
+apps/kasir/build/
+apps/kasir/.flutter-plugins
+apps/kasir/.flutter-plugins-dependencies
+apps/kasir/.packages
+apps/kasir/pubspec_overrides.yaml
+*.iml
+
+# --- Rahasia & env (jangan pernah di-commit) ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.keystore
+*.jks
+key.properties
+
+# --- Data sesi WhatsApp (berisi kredensial) ---
+apps/wa-gateway/.sessions/
+
+# --- OS & editor ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# --- Screenshot kompetitor & foto toko teman (bisa berisi data internal) ---
+# Hapus baris di bawah kalau memang mau ikut di-push ke repo private.
+/majoo/
+/olsera/
+/esb/

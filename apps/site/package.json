@@ -1,0 +1,23 @@
+{
+  "name": "@pos/site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Situs publik: beranda, harga paket, kebijakan privasi",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "typecheck": "astro check"
+  },
+  "dependencies": {
+    "@pos/design-tokens": "workspace:*",
+    "astro": "^7.4.11"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@emnapi/core": "^1.11.3",
+    "@emnapi/runtime": "^1.11.3",
+    "typescript": "~5.9.3"
+  }
+}

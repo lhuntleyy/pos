@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Karyawan dan hak akses</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height: 1000px; box-sizing: border-box; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+  <nav aria-label="Menu utama" style="flex: 1 1 232px; max-width: 100%; background: #FFFFFF; border-right: 1px solid #D9DBEA; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 6px 18px"><div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div><span style="font-size: 18px; font-weight: 800">POS Kita</span></div>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7"><a href="#" aria-current="{{n.current}}" style="min-height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 12px; text-decoration: none; background: {{n.bg}}; color: {{n.fg}}; font-weight: {{n.weight}}; font-size: 15px"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{n.dot}}; flex: none"></span>{{n.label}}</a></sc-for>
+  </nav>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 24px clamp(16px, 3vw, 36px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 28px; font-weight: 800">Karyawan &amp; hak akses</h1><span style="font-size: 15px; color: #51546F">8 karyawan · 3 outlet · paket Pro (tidak dibatasi)</span></div>
+      <button type="button" style="height: 48px; padding: 0 16px; border-radius: 12px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 14px">+ Tambah karyawan</button>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+      <section aria-label="Daftar karyawan" style="flex: 1 1 380px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 10px 16px">
+        <sc-for list="{{ staff }}" as="s" hint-placeholder-count="8">
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #EDEEF7">
+            <span style="width: 40px; height: 40px; border-radius: 50%; background: #FFF2D2; color: #6B4600; display: flex; align-items: center; justify-content: center; font-weight: 800; flex: none">{{s.ini}}</span>
+            <span style="flex: 1; display: flex; flex-direction: column"><b style="font-size: 15px">{{s.name}}</b><span style="font-size: 13px; color: #51546F">{{s.where}}</span></span>
+            <span style="padding: 3px 10px; border-radius: 999px; background: {{s.chipBg}}; color: {{s.chipFg}}; font-size: 13px; font-weight: 800">{{s.role}}</span>
+          </div>
+        </sc-for>
+      </section>
+      <section aria-label="Hak akses peran Kasir" style="flex: 1.4 1 480px; min-width: 0; background: #FFFFFF; border: 2px solid #3B35B5; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px"><h2 style="margin: 0; font-size: 19px; font-weight: 800">Peran: Kasir</h2>
+          <div role="tablist" aria-label="Peran" style="display: flex; flex-wrap: wrap; gap: 6px">
+            <sc-for list="{{ roles }}" as="r" hint-placeholder-count="5"><button type="button" role="tab" aria-selected="{{r.on}}" style="height: 40px; padding: 0 12px; border-radius: 999px; border: {{r.border}}; background: {{r.bg}}; color: {{r.fg}}; font-weight: 700; font-size: 13px">{{r.label}}</button></sc-for>
+          </div>
+        </div>
+        <span style="font-size: 14px; color: #51546F; margin-bottom: 4px">Berlaku untuk 4 orang. Perubahan langsung terkirim ke semua perangkat kasir.</span>
+        <sc-for list="{{ perms }}" as="p" hint-placeholder-count="8">
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid #EDEEF7">
+            <span style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 700">{{p.label}}</span><span style="font-size: 13px; color: #51546F">{{p.help}}</span></span>
+            <span style="padding: 6px 12px; border-radius: 10px; background: {{p.bg}}; color: {{p.fg}}; font-size: 13px; font-weight: 800; white-space: nowrap">{{p.v}}</span>
+          </div>
+        </sc-for>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const N = [['Beranda'], ['Penjualan'], ['Produk & Stok'], ['Pelanggan & Promo'], ['Karyawan', true], ['Laporan'], ['Pengaturan']];
+    const nav = N.map(n => ({ label: n[0], current: n[1] ? 'page' : 'false', bg: n[1] ? '#3B35B5' : 'transparent', fg: n[1] ? '#FFFFFF' : '#181A2E', weight: n[1] ? 800 : 600, dot: n[1] ? '#FFC23D' : '#D9DBEA' }));
+    const RC = { Pemilik: ['#3B35B5', '#FFFFFF'], 'Kepala toko': ['#E6E5FA', '#3B35B5'], Kasir: ['#DDF3E7', '#16774A'], Pelayan: ['#FFF2D2', '#6B4600'], Dapur: ['#EDEEF7', '#51546F'], Gudang: ['#EDEEF7', '#51546F'] };
+    const S = [['PH', 'Pak Hendra', 'Semua outlet', 'Pemilik'], ['LL', 'Lala', 'Kemang · PIN aktif', 'Kepala toko'], ['DM', 'Dimas', 'Kemang · shift pagi', 'Kasir'], ['RD', 'Rudi', 'Senopati · shift malam', 'Kasir'], ['NA', 'Nadia', 'Tebet', 'Kasir'], ['AY', 'Ayu', 'Kemang', 'Pelayan'], ['BY', 'Bayu', 'Kemang', 'Gudang'], ['SN', 'Sani', 'Senopati', 'Dapur']];
+    const staff = S.map(s => ({ ini: s[0], name: s[1], where: s[2], role: s[3], chipBg: RC[s[3]][0], chipFg: RC[s[3]][1] }));
+    const roles = ['Kepala toko', 'Kasir', 'Pelayan', 'Dapur', 'Gudang'].map(r => ({ label: r, on: r === 'Kasir', border: r === 'Kasir' ? '0' : '1px solid #D9DBEA', bg: r === 'Kasir' ? '#3B35B5' : '#FFFFFF', fg: r === 'Kasir' ? '#FFFFFF' : '#181A2E' }));
+    const V = { boleh: ['Boleh', '#DDF3E7', '#16774A'], pin: ['Perlu PIN', '#FFF2D2', '#6B4600'], tidak: ['Tidak boleh', '#FBE3E0', '#B42318'] };
+    const P = [['Kurangi jumlah sebelum bayar', 'Tanpa PIN, karena belum jadi transaksi', 'boleh'], ['Diskon sampai 10%', 'Di atas 10% perlu PIN kepala toko', 'boleh'], ['Batalkan transaksi & refund', 'Alasan wajib diisi', 'pin'], ['Ubah harga saat jualan', 'Termasuk harga bebas di atas harga menu', 'pin'], ['Lihat total omzet harian', 'Kasir hanya melihat penjualan shift-nya sendiri', 'tidak'], ['Buka laci tanpa transaksi', 'Tercatat di log aktivitas', 'pin'], ['Hitung stok opname', 'Hanya mengisi hitungan, tidak bisa menyetujui', 'boleh'], ['Ubah produk & harga di back office', '', 'tidak']];
+    const perms = P.map(p => ({ label: p[0], help: p[1], v: V[p[2]][0], bg: V[p[2]][1], fg: V[p[2]][2] }));
+    return { nav: nav, staff: staff, roles: roles, perms: perms };
+  }
+}
+</script>
+</body>
+</html>

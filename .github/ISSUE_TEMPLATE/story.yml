@@ -1,0 +1,32 @@
+name: Story baru
+description: Fitur atau pekerjaan baru di luar backlog awal
+labels: ["fase:1"]
+body:
+  - type: input
+    id: id
+    attributes:
+      label: ID story
+      description: Lanjutkan nomor di epic yang sama, misalnya ST-05
+    validations:
+      required: true
+  - type: textarea
+    id: cerita
+    attributes:
+      label: Cerita pengguna
+      placeholder: Sebagai pemilik warung, saya ingin ... supaya ...
+    validations:
+      required: true
+  - type: textarea
+    id: kriteria
+    attributes:
+      label: Kriteria terima
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+  - type: input
+    id: mockup
+    attributes:
+      label: Layar mockup terkait
+      placeholder: "Halaman Web back office › Stok opname"

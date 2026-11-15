@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Kasir mode jasa laundry</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <header style="height: 64px; flex: none; display: flex; align-items: center; gap: 14px; padding: 0 20px; background: #FFFFFF; border-bottom: 1px solid #D9DBEA">
+    <div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div>
+    <div style="display: flex; flex-direction: column; line-height: 1.25"><span style="font-weight: 800; font-size: 16px">Laundry Bersih Wangi</span><span style="font-size: 13px; color: #51546F">Kasir: Mbak Nia · Mode jasa</span></div>
+  </header>
+  <div style="flex: 1; min-height: 0; display: flex; gap: 16px; padding: 16px">
+    <section aria-label="Order baru" style="width: 470px; flex: none; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+      <h2 style="margin: 0; font-size: 20px; font-weight: 800">Order baru</h2>
+      <div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid #D9DBEA; border-radius: 12px"><span style="width: 40px; height: 40px; border-radius: 50%; background: #FFF2D2; color: #6B4600; display: flex; align-items: center; justify-content: center; font-weight: 800">BW</span><span style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 16px; font-weight: 800">Bu Wati</span><span style="font-size: 13px; color: #51546F">0813-****-2290 · notifikasi WA aktif</span></span></div>
+      <span style="font-size: 15px; font-weight: 700">Layanan</span>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+        <sc-for list="{{ services }}" as="s" hint-placeholder-count="4"><button type="button" aria-pressed="{{s.on}}" style="min-height: 64px; border-radius: 12px; border: {{s.border}}; background: {{s.bg}}; color: #181A2E; text-align: left; padding: 8px 12px; display: flex; flex-direction: column; justify-content: center"><span style="font-size: 15px; font-weight: 800">{{s.name}}</span><span style="font-size: 13px; color: #51546F; font-variant-numeric: tabular-nums">{{s.price}}</span></button></sc-for>
+      </div>
+      <div style="display: flex; gap: 10px">
+        <label for="berat" style="flex: 1; display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 700">Berat (kg)<input id="berat" type="text" value="4,5" style="height: 56px; border-radius: 12px; border: 2px solid #3B35B5; padding: 0 14px; font-size: 24px; font-weight: 800"></label>
+        <label for="selesai" style="flex: 1.3; display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 700">Selesai<input id="selesai" type="text" value="Sen, 17 Nov · 17.00" style="height: 56px; border-radius: 12px; border: 1px solid #D9DBEA; padding: 0 14px; font-size: 17px; font-weight: 700"></label>
+      </div>
+      <label for="cat-laundry" style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 700">Catatan<input id="cat-laundry" type="text" value="Kemeja putih dipisah" style="height: 52px; border-radius: 12px; border: 1px solid #D9DBEA; padding: 0 14px; font-size: 16px; font-weight: 500"></label>
+      <div style="flex: 1"></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 16px; color: #51546F">4,5 kg × Rp8.000</span><span style="font-size: 34px; font-weight: 800; font-variant-numeric: tabular-nums">Rp36.000</span></div>
+      <div style="display: flex; gap: 10px"><button type="button" style="flex: 1; height: 60px; border-radius: 14px; border: 2px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 16px">Bayar saat ambil</button><button type="button" style="flex: 1; height: 60px; border-radius: 14px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 16px">Bayar sekarang</button></div>
+    </section>
+    <section aria-label="Papan pengerjaan" style="flex: 1; min-width: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+      <sc-for list="{{ cols }}" as="c" hint-placeholder-count="3">
+        <div style="background: #EDEEF7; border-radius: 18px; padding: 12px; display: flex; flex-direction: column; gap: 10px; min-height: 0">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 2px 4px"><span style="font-size: 17px; font-weight: 800">{{c.title}}</span><span style="padding: 2px 10px; border-radius: 999px; background: {{c.chipBg}}; color: {{c.chipFg}}; font-size: 13px; font-weight: 800">{{c.count}}</span></div>
+          <sc-for list="{{ c.cards }}" as="k" hint-placeholder-count="3">
+            <div style="background: #FFFFFF; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 4px; border-left: 0">
+              <div style="display: flex; justify-content: space-between"><span style="font-size: 15px; font-weight: 800">{{k.no}}</span><span style="font-size: 13px; font-weight: 700; color: {{k.dueFg}}">{{k.due}}</span></div>
+              <span style="font-size: 16px; font-weight: 700">{{k.name}}</span>
+              <span style="font-size: 14px; color: #51546F">{{k.meta}}</span>
+              <sc-if value="{{ k.hasBtn }}" hint-placeholder-val="{{ false }}"><button type="button" style="height: 44px; margin-top: 4px; border-radius: 10px; border: 0; background: {{k.btnBg}}; color: #FFFFFF; font-weight: 800; font-size: 14px">{{k.btn}}</button></sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const services = [['Cuci kering setrika', 'Rp8.000/kg', true], ['Setrika saja', 'Rp6.000/kg'], ['Bed cover', 'Rp35.000/pcs'], ['Kilat 6 jam', '+50% dari harga']].map(s => ({ name: s[0], price: s[1], on: !!s[2], border: s[2] ? '3px solid #3B35B5' : '1px solid #D9DBEA', bg: s[2] ? '#F1F0FD' : '#FFFFFF' }));
+    const card = (no, name, meta, due, dueFg, btn, btnBg) => ({ no: no, name: name, meta: meta, due: due, dueFg: dueFg, hasBtn: !!btn, btn: btn || '', btnBg: btnBg || '#3B35B5' });
+    const cols = [
+      { title: 'Diterima', count: '5', chipBg: '#FFFFFF', chipFg: '#51546F', cards: [card('L-1182', 'Pak Darto', '3 kg · cuci setrika', 'Sen 10.00', '#51546F', 'Mulai cuci'), card('L-1183', 'Rina', 'Bed cover × 2', 'Sel 12.00', '#51546F', 'Mulai cuci')] },
+      { title: 'Dicuci & disetrika', count: '3', chipBg: '#E6E5FA', chipFg: '#3B35B5', cards: [card('L-1175', 'Mas Seno', '6 kg · kilat 6 jam', 'Hari ini 18.00', '#B42318', 'Tandai siap', '#16774A'), card('L-1177', 'Bu Dewi', '5,5 kg', 'Besok 09.00', '#51546F', 'Tandai siap', '#16774A')] },
+      { title: 'Siap diambil', count: '4', chipBg: '#DDF3E7', chipFg: '#16774A', cards: [card('L-1168', 'Toni', '4 kg · belum bayar Rp32.000', 'WA terkirim 13.10', '#16774A', 'Diambil & bayar'), card('L-1170', 'Arif', '2 kg · lunas', 'WA terkirim 14.02', '#16774A', 'Tandai diambil')] }
+    ];
+    return { services: services, cols: cols };
+  }
+}
+</script>
+</body>
+</html>

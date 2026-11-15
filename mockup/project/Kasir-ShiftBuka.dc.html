@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Buka kasir</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <header style="height: 64px; flex: none; display: flex; align-items: center; gap: 14px; padding: 0 20px; background: #FFFFFF; border-bottom: 1px solid #D9DBEA">
+    <div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div>
+    <span style="font-weight: 800; font-size: 18px">Buka kasir · Shift pagi</span>
+    <span style="font-size: 15px; color: #51546F">Dimas · Kasir 1 · 07.59</span>
+  </header>
+  <div style="flex: 1; min-height: 0; display: flex; gap: 20px; padding: 20px">
+    <section aria-label="Hitung modal awal" style="flex: 1; min-width: 0; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 20px 24px; display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 2px"><h1 style="margin: 0; font-size: 22px; font-weight: 800">Hitung uang modal di laci</h1><span style="font-size: 15px; color: #51546F">Isi jumlah lembar atau keping. Total dihitung otomatis.</span></div>
+        <button type="button" style="height: 48px; padding: 0 14px; border-radius: 12px; border: 2px solid #3B35B5; background: #FFFFFF; color: #3B35B5; font-weight: 800; font-size: 15px">Sama dengan kemarin</button>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; margin-top: 6px">
+        <sc-for list="{{ notes }}" as="n" hint-placeholder-count="8">
+          <div style="display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #EDEEF7">
+            <span style="width: 120px; height: 44px; border-radius: 10px; background: {{n.bg}}; color: {{n.fg}}; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; font-variant-numeric: tabular-nums; flex: none">{{n.label}}</span>
+            <div style="display: flex; align-items: center; gap: 4px">
+              <button type="button" aria-label="Kurangi {{n.label}}" style="width: 48px; height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-size: 22px; font-weight: 700">−</button>
+              <span style="min-width: 40px; text-align: center; font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums">{{n.qty}}</span>
+              <button type="button" aria-label="Tambah {{n.label}}" style="width: 48px; height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-size: 22px; font-weight: 700">+</button>
+            </div>
+            <span style="flex: 1; text-align: right; font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; color: #51546F">{{n.sum}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+    <aside style="width: 400px; flex: none; display: flex; flex-direction: column; gap: 14px">
+      <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 4px">
+        <span style="font-size: 16px; font-weight: 700; color: #51546F">Modal awal</span>
+        <span style="font-size: 44px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.15">Rp340.000</span>
+        <span style="font-size: 14px; color: #51546F">Kemarin: Rp340.000 · sama</span>
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 16px 20px; display: flex; flex-direction: column; gap: 6px; font-size: 15px">
+        <span style="font-weight: 800">Shift sebelumnya</span>
+        <span style="color: #51546F">Ditutup Rudi, Jumat 22.10. Setoran Rp4.120.000, selisih Rp0.</span>
+      </div>
+      <label for="catatan-shift" style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 700">Catatan untuk shift ini (opsional)
+        <input id="catatan-shift" type="text" placeholder="Contoh: es batu belum datang" style="height: 52px; border-radius: 12px; border: 1px solid #D9DBEA; padding: 0 14px; font-size: 16px; font-weight: 500">
+      </label>
+      <div style="flex: 1"></div>
+      <button type="button" style="height: 68px; border-radius: 16px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 20px">Buka kasir &amp; mulai jualan</button>
+    </aside>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const rp = n => 'Rp' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    const N = [[100000, 0, '#C2185B'], [50000, 2, '#1565C0'], [20000, 5, '#2E7D32'], [10000, 5, '#6A1B9A'], [5000, 10, '#8D6E63'], [2000, 10, '#546E7A'], [1000, 10, '#B0A27A'], [500, 20, '#C9CCD8']];
+    const notes = N.map(n => ({ label: rp(n[0]), qty: n[1], sum: rp(n[0] * n[1]), bg: n[2], fg: n[0] <= 1000 ? '#181A2E' : '#FFFFFF' }));
+    return { notes: notes };
+  }
+}
+</script>
+</body>
+</html>

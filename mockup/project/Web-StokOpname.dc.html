@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Stok opname web</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+select{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height: 1000px; box-sizing: border-box; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+  <nav aria-label="Menu utama" style="flex: 1 1 232px; max-width: 100%; background: #FFFFFF; border-right: 1px solid #D9DBEA; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 6px 18px"><div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div><span style="font-size: 18px; font-weight: 800">POS Kita</span></div>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7"><a href="#" aria-current="{{n.current}}" style="min-height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 12px; text-decoration: none; background: {{n.bg}}; color: {{n.fg}}; font-weight: {{n.weight}}; font-size: 15px"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{n.dot}}; flex: none"></span>{{n.label}}</a></sc-for>
+  </nav>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 24px clamp(16px, 3vw, 36px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; color: #51546F; font-weight: 600">Produk &amp; Stok › Stok opname</span><h1 style="margin: 0; font-size: 28px; font-weight: 800">Opname bulanan November · Outlet Kemang</h1><span style="font-size: 15px; color: #51546F">Dimulai Sabtu 15 Nov 07.30 oleh Bayu &amp; Lala · menunggu persetujuan pemilik</span></div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px"><button type="button" style="height: 48px; padding: 0 16px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 14px">Unduh lembar hitung</button><button type="button" style="height: 48px; padding: 0 16px; border-radius: 12px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 14px">+ Opname baru</button></div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+      <sc-for list="{{ kpi }}" as="k" hint-placeholder-count="4"><div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #51546F">{{k.label}}</span><span style="font-size: 26px; font-weight: 800; font-variant-numeric: tabular-nums; color: {{k.fg}}">{{k.v}}</span></div></sc-for>
+    </div>
+    <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; overflow-x: auto">
+      <table style="width: 100%; min-width: 860px; border-collapse: collapse; font-size: 15px">
+        <thead><tr style="background: #F6F6FB"><th scope="col" style="text-align: left; padding: 12px 16px; font-size: 13px; color: #51546F">Barang</th><th scope="col" style="text-align: right; padding: 12px 10px; font-size: 13px; color: #51546F">Sistem</th><th scope="col" style="text-align: right; padding: 12px 10px; font-size: 13px; color: #51546F">Fisik</th><th scope="col" style="text-align: right; padding: 12px 10px; font-size: 13px; color: #51546F">Selisih</th><th scope="col" style="text-align: right; padding: 12px 10px; font-size: 13px; color: #51546F">Nilai selisih</th><th scope="col" style="text-align: left; padding: 12px 10px; font-size: 13px; color: #51546F">Alasan</th><th scope="col" style="text-align: left; padding: 12px 16px; font-size: 13px; color: #51546F">Dihitung oleh</th></tr></thead>
+        <tbody>
+          <sc-for list="{{ rows }}" as="r" hint-placeholder-count="8">
+            <tr style="border-top: 1px solid #EDEEF7; background: {{r.bg}}">
+              <td style="padding: 12px 16px; font-weight: 700">{{r.name}}</td>
+              <td style="padding: 12px 10px; text-align: right; font-variant-numeric: tabular-nums">{{r.sys}}</td>
+              <td style="padding: 12px 10px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 800">{{r.act}}</td>
+              <td style="padding: 12px 10px; text-align: right"><span style="padding: 2px 10px; border-radius: 999px; background: {{r.chipBg}}; color: {{r.chipFg}}; font-size: 13px; font-weight: 800; font-variant-numeric: tabular-nums">{{r.diff}}</span></td>
+              <td style="padding: 12px 10px; text-align: right; font-variant-numeric: tabular-nums; color: {{r.valFg}}; font-weight: 700">{{r.val}}</td>
+              <td style="padding: 12px 10px; color: #51546F">{{r.reason}}</td>
+              <td style="padding: 12px 16px; color: #51546F">{{r.by}}</td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start">
+      <div style="flex: 2 1 420px; min-width: 0; background: #FFF8E6; border: 1px solid #F0D08A; border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; font-size: 15px; line-height: 1.5"><b style="color: #6B4600">Cara kerja penyesuaian stok</b><span>Saat disetujui, stok sistem disesuaikan dengan hasil hitung fisik. Selisihnya tercatat sebagai riwayat stok dengan alasan, jadi stok lama tidak ditimpa diam-diam. Penjualan yang terjadi selama proses hitung sudah ikut diperhitungkan.</span></div>
+      <div style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 10px"><button type="button" style="height: 56px; border-radius: 14px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 16px">Setujui &amp; sesuaikan stok</button><button type="button" style="height: 52px; border-radius: 14px; border: 2px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 15px">Minta hitung ulang 3 barang</button></div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const N = [['Beranda'], ['Penjualan'], ['Produk & Stok', true], ['Pelanggan & Promo'], ['Karyawan'], ['Laporan'], ['Pengaturan']];
+    const nav = N.map(n => ({ label: n[0], current: n[1] ? 'page' : 'false', bg: n[1] ? '#3B35B5' : 'transparent', fg: n[1] ? '#FFFFFF' : '#181A2E', weight: n[1] ? 800 : 600, dot: n[1] ? '#FFC23D' : '#D9DBEA' }));
+    const kpi = [['Barang dihitung', '42 / 42', '#181A2E'], ['Cocok', '35 barang', '#16774A'], ['Selisih', '7 barang', '#B42318'], ['Nilai selisih', '−Rp186.400', '#B42318']].map(k => ({ label: k[0], v: k[1], fg: k[2] }));
+    const R = [['Gula aren cair 1 L', 6, 4, -2, '−Rp76.000', 'Tumpah saat isi ulang', 'Bayu'], ['Biji kopi house blend 1 kg', 4, 3, -1, '−Rp165.000', 'Belum diketahui', 'Bayu'], ['Sirup leci 750 ml', 5, 6, 1, '+Rp54.600', 'Stok masuk belum dicatat', 'Lala'], ['Susu UHT full cream 1 L', 12, 12, 0, 'Rp0', '—', 'Bayu'], ['Cup plastik 16 oz (pak)', 18, 17, -1, '−Rp28.000', 'Rusak', 'Lala'], ['Pisang kepok (sisir)', 7, 8, 1, '+Rp28.000', 'Salah hitung pagi', 'Lala'], ['Air mineral 600 ml', 48, 48, 0, 'Rp0', '—', 'Bayu'], ['Keju cheddar 2 kg', 2, 2, 0, 'Rp0', '—', 'Lala']];
+    const rows = R.map(r => ({ name: r[0], sys: r[1], act: r[2], diff: r[3] === 0 ? '0' : (r[3] > 0 ? '+' + r[3] : String(r[3])), val: r[4], reason: r[5], by: r[6], chipBg: r[3] === 0 ? '#DDF3E7' : (r[3] > 0 ? '#FFF2D2' : '#FBE3E0'), chipFg: r[3] === 0 ? '#16774A' : (r[3] > 0 ? '#6B4600' : '#B42318'), valFg: r[3] < 0 ? '#B42318' : (r[3] > 0 ? '#6B4600' : '#51546F'), bg: r[3] === 0 ? '#FFFFFF' : '#FFFCF5' }));
+    return { nav: nav, kpi: kpi, rows: rows };
+  }
+}
+</script>
+</body>
+</html>

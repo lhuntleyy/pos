@@ -1,0 +1,3 @@
+# Konfigurasi longgar khusus generator. Lint ketat ada di ../redocly.yaml (`pnpm lint:spec`).
+extends:
+  - minimal

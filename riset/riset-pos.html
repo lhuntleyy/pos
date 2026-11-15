@@ -1,0 +1,786 @@
+<title>Riset POS Indonesia</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: laporan riset dua kolom — daftar isi lengket di kiri, isi 860px di kanan; satu kolom di HP */
+:root{
+  --bg:#F6F6FB; --surface:#FFFFFF; --surface-2:#EDEEF7; --fg:#181A2E; --muted:#51546F; --line:#D9DBEA;
+  --nila:#3B35B5; --nila-soft:#E6E5FA; --on-nila:#FFFFFF;
+  --kunyit:#E39D00; --kunyit-soft:#FFF2D2; --kunyit-ink:#6B4600;
+  --good:#16774A; --good-soft:#DDF3E7; --bad:#B42318; --bad-soft:#FBE3E0; --warn-soft:#FFF2D2;
+  --font-ui:"Plus Jakarta Sans",ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10111D; --surface:#191A2B; --surface-2:#222439; --fg:#ECECF6; --muted:#A6A9C4; --line:#32354E;
+  --nila:#A39EFF; --nila-soft:#29285C; --on-nila:#10111D;
+  --kunyit:#FFC23D; --kunyit-soft:#3A2D0E; --kunyit-ink:#FFD98A;
+  --good:#63D49C; --good-soft:#163A29; --bad:#FF8F84; --bad-soft:#44201C; --warn-soft:#3A2D0E;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10111D; --surface:#191A2B; --surface-2:#222439; --fg:#ECECF6; --muted:#A6A9C4; --line:#32354E;
+  --nila:#A39EFF; --nila-soft:#29285C; --on-nila:#10111D;
+  --kunyit:#FFC23D; --kunyit-soft:#3A2D0E; --kunyit-ink:#FFD98A;
+  --good:#63D49C; --good-soft:#163A29; --bad:#FF8F84; --bad-soft:#44201C; --warn-soft:#3A2D0E;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-ui);font-size:16px;line-height:1.6;margin:0}
+a{color:var(--nila);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--kunyit);outline-offset:2px;border-radius:4px}
+h1,h2,h3,h4{line-height:1.2;text-wrap:balance;margin:0}
+h2{font-size:1.75rem;font-weight:800;letter-spacing:-.01em}
+h3{font-size:1.2rem;font-weight:700}
+p{margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font-family:var(--font-mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+
+/* Header */
+.top{border-bottom:1px solid var(--line);background:var(--surface)}
+.top .wrap{padding-block:48px 36px;display:grid;gap:20px}
+.top h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;letter-spacing:-.02em;max-width:18ch}
+.top h1 span{color:var(--nila)}
+.lede{font-size:1.15rem;color:var(--muted);max-width:64ch}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:.9rem;color:var(--muted)}
+.meta b{color:var(--fg);font-weight:600}
+
+/* Body layout */
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:48px;padding-block:40px 80px}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start;display:grid;gap:2px;font-size:.92rem}
+.toc a{color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:8px;display:block}
+.toc a:hover{background:var(--surface-2);color:var(--fg)}
+.toc .eyebrow{padding:0 10px 8px}
+main{min-width:0;display:grid;gap:72px;max-width:880px}
+section{display:grid;gap:20px;scroll-margin-top:24px}
+section > p,.prose{max-width:68ch}
+.muted{color:var(--muted)}
+@media (max-width:980px){.layout{grid-template-columns:minmax(0,1fr)}.toc{display:none}}
+
+/* Ringkasan */
+.findings{display:grid;gap:12px;counter-reset:f;padding:0;margin:0;list-style:none}
+.findings li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;padding:16px 18px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.findings li::before{counter-increment:f;content:counter(f);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--nila-soft);color:var(--nila);font-weight:800}
+.findings b{font-weight:700}
+.thesis{background:var(--nila);color:var(--on-nila);border-radius:16px;padding:28px;display:grid;gap:10px}
+.thesis .eyebrow{color:inherit;opacity:.8}
+.thesis p{font-size:1.35rem;font-weight:700;line-height:1.35;max-width:40ch}
+
+/* Stat strip */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:4px;align-content:start}
+.stat strong{font-size:1.6rem;font-weight:800;font-variant-numeric:tabular-nums}
+.stat span{font-size:.88rem;color:var(--muted)}
+
+/* Tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:720px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:700;background:var(--surface-2);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.num,th.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.us td{background:var(--kunyit-soft)}
+.note{font-size:.85rem;color:var(--muted)}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.78rem;font-weight:700;white-space:nowrap}
+.y{background:var(--good-soft);color:var(--good)}
+.p{background:var(--warn-soft);color:var(--kunyit-ink)}
+.n{background:var(--bad-soft);color:var(--bad)}
+.q{background:var(--surface-2);color:var(--muted)}
+
+/* Chart */
+figure{margin:0;display:grid;gap:10px}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;overflow-x:auto}
+.chart svg{display:block;width:100%;min-width:560px;height:auto}
+.chart .grid{stroke:var(--line);stroke-width:1}
+.chart .axis{fill:var(--muted);font:500 11px var(--font-mono)}
+.chart .lbl{fill:var(--fg);font:600 12.5px var(--font-ui)}
+.chart .dot{fill:var(--muted)}
+.chart .dot-us{fill:var(--kunyit);stroke:var(--fg);stroke-width:1.5}
+.chart .zone{fill:var(--nila-soft)}
+.chart .zone-lbl{fill:var(--nila);font:700 11px var(--font-mono);letter-spacing:.06em}
+figcaption{font-size:.85rem;color:var(--muted)}
+
+/* Competitor cards */
+.comp-group{display:grid;gap:14px}
+.comp{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:14px}
+.comp header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;align-items:baseline}
+.comp .seg{font-size:.85rem;color:var(--muted)}
+.pc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.pc h4{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.pc .plus h4{color:var(--good)}
+.pc .minus h4{color:var(--bad)}
+.pc ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:.94rem}
+.lesson{border-top:1px dashed var(--line);padding-top:12px;font-size:.95rem}
+.lesson b{color:var(--nila)}
+@media (max-width:640px){.pc{grid-template-columns:minmax(0,1fr)}}
+.mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.mini{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:8px;align-content:start}
+.mini h3{font-size:1.05rem}
+.mini p{font-size:.93rem}
+.mini .lesson{font-size:.9rem}
+
+/* Screenshot findings */
+.obs{display:grid;gap:14px}
+.obs-item{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;padding:16px 0;border-top:1px solid var(--line)}
+.obs-item:first-child{border-top:0}
+.obs-item .tag{font-weight:800;font-size:1.05rem}
+.obs-item ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.ref{font-family:var(--font-mono);font-size:.75rem;color:var(--muted);white-space:nowrap}
+@media (max-width:640px){.obs-item{grid-template-columns:minmax(0,1fr);gap:6px}}
+
+/* Pain/opportunity */
+.pairs{display:grid;gap:10px}
+.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.pair > div{padding:14px 16px;display:grid;gap:4px;align-content:start}
+.pair .pain{border-right:1px solid var(--line)}
+.pair .opp{background:var(--nila-soft)}
+.pair .k{font-size:.72rem;font-family:var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pair .opp .k{color:var(--nila)}
+.pair p{font-size:.95rem}
+@media (max-width:640px){.pair{grid-template-columns:minmax(0,1fr)}.pair .pain{border-right:0;border-bottom:1px solid var(--line)}}
+
+/* Personas */
+.personas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.persona{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:8px;align-content:start}
+.persona .who{display:flex;gap:12px;align-items:center}
+.avatar{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--kunyit-soft);color:var(--kunyit-ink);flex:none}
+.persona .role{font-size:.85rem;color:var(--muted)}
+.persona p{font-size:.92rem}
+
+/* Principles */
+.principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.pr{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:8px;align-content:start}
+.pr h3{font-size:1.02rem}
+.pr p{font-size:.93rem;color:var(--muted)}
+.pr .spec{font-family:var(--font-mono);font-size:.8rem;color:var(--fg);background:var(--surface-2);padding:6px 8px;border-radius:6px}
+.money{display:flex;flex-wrap:wrap;gap:8px}
+.money span{padding:8px 14px;border-radius:10px;font-weight:800;font-variant-numeric:tabular-nums;color:#fff;font-size:.95rem}
+.ia{display:flex;flex-wrap:wrap;gap:8px}
+.ia span{padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-weight:600;font-size:.92rem}
+
+/* Pricing */
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.tier{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:10px;align-content:start}
+.tier.hl{border:2px solid var(--nila)}
+.tier .name{font-weight:800;font-size:1.1rem}
+.tier .price{font-size:1.7rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+.tier .price small{font-size:.85rem;font-weight:600;color:var(--muted)}
+.tier ul{margin:0;padding-left:18px;font-size:.9rem;display:grid;gap:4px}
+.tier .for{font-size:.88rem;color:var(--muted)}
+
+.themes{display:grid;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
+.theme{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 52px;gap:12px;align-items:center;font-size:.92rem}
+.theme .bar{height:12px;border-radius:6px;background:var(--surface-2);overflow:hidden}
+.theme .bar i{display:block;height:100%;background:var(--nila);border-radius:6px}
+.theme b{text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:640px){.theme{grid-template-columns:minmax(0,1fr) 52px}.theme .bar{grid-column:1 / -1;grid-row:2}}
+.rows{display:grid;gap:12px}
+.row-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:8px}
+.row-card h3{font-size:1.05rem}
+.row-card ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:.94rem}
+.risk{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.75rem;font-weight:800;background:var(--bad-soft);color:var(--bad)}
+.callout{background:var(--kunyit-soft);border-radius:12px;padding:16px 18px;display:grid;gap:6px}
+.callout b{color:var(--kunyit-ink)}
+.steps{display:grid;gap:10px;padding:0;margin:0;list-style:none;counter-reset:s}
+.steps li{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start}
+.steps li::before{counter-increment:s;content:counter(s);width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:var(--surface-2);font-weight:800;font-size:.9rem}
+.sources{columns:2 320px;column-gap:28px;font-size:.88rem;padding-left:18px;margin:0}
+.sources li{break-inside:avoid;margin-bottom:6px}
+footer{border-top:1px solid var(--line);padding-block:24px;color:var(--muted);font-size:.85rem}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Riset pasar &amp; UX · Tahap 1 sebelum PRD</div>
+    <h1>Riset POS Indonesia: <span>apa yang kurang</span> dari kasir yang ada sekarang</h1>
+    <p class="lede">Bedah 13 aplikasi kasir (Indonesia dan luar negeri), ditambah ±220 screenshot Majoo, Olsera, dan ESB yang kita kumpulkan. Hasilnya: celah pasar, prinsip UI/UX yang bisa dipakai semua umur, dan draft paket langganan bulanan.</p>
+    <div class="meta">
+      <span><b>Revisi 2:</b> 15 November 2026</span>
+      <span><b>Nama produk:</b> POS Kita (nama sementara, nanti diatur dari panel admin)</span>
+      <span><b>Status:</b> Dasar untuk PRD</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <nav class="toc" aria-label="Daftar isi">
+    <div class="eyebrow">Daftar isi</div>
+    <a href="#ringkasan">Ringkasan</a>
+    <a href="#konteks">Konteks pasar 2026</a>
+    <a href="#peta">Peta posisi</a>
+    <a href="#harga">Perbandingan harga</a>
+    <a href="#fitur">Matriks fitur</a>
+    <a href="#lokal">Profil POS Indonesia</a>
+    <a href="#global">Referensi luar negeri</a>
+    <a href="#screenshot">Temuan dari screenshot</a>
+    <a href="#ulasan">Suara pengguna Play Store</a>
+    <a href="#celah">Masalah → peluang</a>
+    <a href="#lanjutan">Riset lanjutan</a>
+    <a href="#segmen">Semua segmen &amp; fitur</a>
+    <a href="#persona">Persona pengguna</a>
+    <a href="#uiux">Prinsip UI/UX semua umur</a>
+    <a href="#paket">Draft paket bulanan</a>
+    <a href="#lanjut">Langkah berikutnya</a>
+    <a href="#sumber">Sumber</a>
+  </nav>
+
+  <main>
+    <!-- RINGKASAN -->
+    <section id="ringkasan">
+      <div class="eyebrow">Ringkasan</div>
+      <h2>Delapan temuan utama</h2>
+      <ol class="findings">
+        <li><p><b>Fitur bukan lagi pembeda.</b> Majoo, Olsera, Moka, dan ESB sudah punya hampir semua fitur. Bedanya ada di <b>seberapa gampang</b> fitur itu dipakai. Dari screenshot, laporan Majoo terpecah jadi lebih dari 25 halaman dan Olsera punya 15+ jenis laporan produk saja.</p></li>
+        <li><p><b>Harga sering tidak "jujur bulanan".</b> Majoo mensyaratkan minimal 12 bulan dan menjual add-on Rp499rb/outlet satu per satu. Olsera dan Qasir dibayar tahunan di muka. ESB, iSeller, dan Majoo Prime+ harus lewat sales.</p></li>
+        <li><p><b>Celah di tengah:</b> paket gratis (Kasir Pintar, Pawoon Free, Loyverse) terlalu terbatas. Paket "lengkap" mulai Rp249–299rb/outlet/bulan. Segmen <b>Rp79–199rb bulanan, lengkap tapi simpel</b> masih kosong.</p></li>
+        <li><p><b>Keandalan offline &amp; sinkron jadi keluhan berulang.</b> Contohnya data kasir beda dengan dashboard, order GoFood telat masuk, dan gagal login setelah update (ulasan Moka), lalu bug dan lambat (ulasan Majoo).</p></li>
+        <li><p><b>UI belum ramah semua umur.</b> Teks tabel kecil dan abu-abu, label Inggris-Indonesia campur (Olsera: "Special Type", "Look Book"; ESB: "Checker", "Move Item"), dan banyak ikon tanpa label.</p></li>
+        <li><p><b>QRIS sekarang gratis untuk transaksi kecil.</b> Sejak 1 Okt 2026, MDR QRIS 0% berlaku untuk semua merchant (≤Rp100rb, atau ≤Rp500rb untuk usaha mikro). Pemasukan dari biaya transaksi makin kecil, jadi langganan harus jadi sumber pendapatan utama.</p></li>
+        <li><p><b>AI asisten mulai jadi standar.</b> Qashier memasukkan "AI general manager" ke semua paket. Majoo menjual AURA AI sebagai add-on Rp499rb/outlet. Kalau AI kita lewat WhatsApp dan sudah termasuk di paket, itu bisa jadi pembeda.</p></li>
+        <li><p><b>Pengguna paling kecewa pada layanan, bukan fitur.</b> Dari ±110 ulasan bintang 1–2 Majoo, Moka, dan Olsera, keluhan terbanyak adalah purna jual lambat (±28%), error atau lambat setelah update (±23%), sales yang janji berlebihan lalu minta bayar di muka (±21%), dan stok atau laporan tidak akurat (±17%).</p></li>
+      </ol>
+      <div class="thesis">
+        <div class="eyebrow">Usulan posisi produk</div>
+        <p>Kasir paling gampang di Indonesia. Bisa dipakai umur 17 sampai 70 tahun, harga bulanan tanpa kontrak, dan tetap jalan tanpa internet.</p>
+      </div>
+    </section>
+
+    <!-- KONTEKS -->
+    <section id="konteks">
+      <div class="eyebrow">Konteks</div>
+      <h2>Pasar dan aturan yang memengaruhi produk (2026)</h2>
+      <div class="stats">
+        <div class="stat"><strong class="num">±66 juta</strong><span>unit UMKM di Indonesia (kajian yang dimuat Kompas, Apr 2026), baru ±10 juta yang punya NIB</span></div>
+        <div class="stat"><strong class="num">44,86 juta</strong><span>merchant menerima QRIS (Juni 2026), 96,68% di antaranya UMKM</span></div>
+        <div class="stat"><strong class="num">0%</strong><span>MDR QRIS mulai 1 Okt 2026: usaha mikro ≤Rp500rb, usaha lain ≤Rp100rb. Di atas itu 0,3% (mikro) / 0,7%</span></div>
+        <div class="stat"><strong class="num">≤10%</strong><span>PBJT makanan-minuman (dulu "pajak restoran"), tarifnya ditentukan pemda</span></div>
+      </div>
+      <div class="prose" style="display:grid;gap:12px">
+        <p><b>Artinya buat produk:</b> hampir semua UMKM sudah familiar dengan QRIS, tapi baru sebagian kecil yang pakai aplikasi kasir. Pasar terbesar ada di pengguna <b>pertama kali</b>, dan mereka butuh onboarding yang sangat mudah.</p>
+        <p><b>Pajak harus benar sejak awal.</b> Restoran yang jadi objek PBJT tidak dikenai PPN atas makanannya. Struk perlu bisa menampilkan PBJT (tarif per daerah), service charge, dan PPN 12% dengan DPP nilai lain 11/12 (efektif 11%) untuk usaha yang memang kena PPN. Kebanyakan POS menyebut semuanya "pajak", sehingga pemilik usaha sering bingung.</p>
+      </div>
+    </section>
+
+    <!-- PETA -->
+    <section id="peta">
+      <div class="eyebrow">Peta posisi</div>
+      <h2>Di mana pemain sekarang berdiri</h2>
+      <figure>
+        <div class="chart">
+          <svg viewBox="0 0 640 400" role="img" aria-label="Peta posisi POS: sumbu horizontal kedalaman fitur, sumbu vertikal harga paket berbayar termurah per bulan. Area kosong ada di fitur menengah dengan harga di bawah Rp200 ribu.">
+            <rect class="zone" x="313" y="200" width="162" height="120" rx="10"/>
+            <text class="zone-lbl" x="321" y="218">CELAH: SIMPEL + LENGKAP</text>
+            <text class="zone-lbl" x="321" y="232">Rp79–199RB BULANAN</text>
+            <line class="grid" x1="70" y1="340" x2="610" y2="340"/>
+            <line class="grid" x1="70" y1="254" x2="610" y2="254"/>
+            <line class="grid" x1="70" y1="169" x2="610" y2="169"/>
+            <line class="grid" x1="70" y1="83" x2="610" y2="83"/>
+            <line class="grid" x1="70" y1="40" x2="70" y2="340"/>
+            <text class="axis" x="62" y="344" text-anchor="end">Rp0</text>
+            <text class="axis" x="62" y="258" text-anchor="end">100rb</text>
+            <text class="axis" x="62" y="173" text-anchor="end">200rb</text>
+            <text class="axis" x="62" y="87" text-anchor="end">300rb</text>
+            <text class="axis" x="178" y="362" text-anchor="middle">Dasar</text>
+            <text class="axis" x="340" y="362" text-anchor="middle">Menengah</text>
+            <text class="axis" x="502" y="362" text-anchor="middle">Sangat lengkap</text>
+            <text class="axis" x="340" y="388" text-anchor="middle">KEDALAMAN FITUR (penilaian kami) →</text>
+            <text class="axis" x="14" y="190" transform="rotate(-90 14 190)" text-anchor="middle">HARGA PAKET BERBAYAR TERMURAH / BULAN →</text>
+            <!-- points -->
+            <circle class="dot" cx="232" cy="340" r="7"/><text class="lbl" x="242" y="334">Loyverse (gratis)</text>
+            <circle class="dot" cx="259" cy="293" r="7"/><text class="lbl" x="196" y="285">Kasir Pintar</text>
+            <circle class="dot" cx="286" cy="290" r="7"/><text class="lbl" x="296" y="304">Qasir</text>
+            <circle class="dot" cx="421" cy="248" r="7"/><text class="lbl" x="431" y="252">Olsera</text>
+            <circle class="dot" cx="340" cy="84" r="7"/><text class="lbl" x="276" y="72">Pawoon</text>
+            <circle class="dot" cx="421" cy="84" r="7"/><text class="lbl" x="384" y="104">Moka</text>
+            <circle class="dot" cx="475" cy="83" r="7"/><text class="lbl" x="466" y="70">iSeller</text>
+            <circle class="dot" cx="556" cy="127" r="7"/><text class="lbl" x="530" y="113">Majoo</text>
+            <circle class="dot" cx="583" cy="44" r="7"/><text class="lbl" x="490" y="48">ESB (custom)</text>
+            <circle class="dot-us" cx="394" cy="255" r="9"/><text class="lbl" x="323" y="276">POS Kita</text>
+          </svg>
+        </div>
+        <figcaption>Harga = paket berbayar termurah per bulan; untuk paket tahunan sudah dibagi 12. ESB tidak mempublikasikan harga. Posisi horizontal adalah penilaian kualitatif kami dari halaman fitur dan screenshot, bukan angka resmi.</figcaption>
+      </figure>
+    </section>
+
+    <!-- HARGA -->
+    <section id="harga">
+      <div class="eyebrow">Harga</div>
+      <h2>Perbandingan harga langganan</h2>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>POS</th><th>Termurah</th><th>Menengah</th><th>Atas</th><th>Skema</th><th>Coba gratis</th></tr></thead>
+          <tbody>
+            <tr><td><b>Majoo</b></td><td class="num">Starter Rp249rb</td><td class="num">Advance Rp499rb</td><td class="num">Prime Rp999rb · Prime+ via sales</td><td>Per outlet/bulan, minimal 12 bulan. Add-on Rp499rb/outlet per modul, lisensi terminal Rp59rb</td><td>Trial 14 hari · majoolite (app terpisah)</td></tr>
+            <tr><td><b>Moka</b></td><td class="num">Basic Rp299rb</td><td class="num">Pro Rp499rb</td><td class="num">Enterprise Rp799rb</td><td>Per outlet/bulan</td><td>Trial 14 hari</td></tr>
+            <tr><td><b>Olsera</b></td><td class="num">Basic Rp1,288jt/thn (≈107rb)</td><td class="num">Premium Rp1,988jt/thn (≈166rb)</td><td class="num">Pro Rp2,688jt/thn (≈224rb)</td><td>Tahunan di muka</td><td>Trial 14 hari</td></tr>
+            <tr><td><b>Pawoon</b></td><td>Gratis (7 transaksi/hari)</td><td class="num">Pro Rp299rb</td><td>—</td><td>Per outlet/bulan</td><td>Gratis terbatas</td></tr>
+            <tr><td><b>Qasir</b></td><td class="num">Pro Rp699rb/thn (≈58rb)</td><td class="num">Pro Plus Rp1,199jt/thn (≈100rb)</td><td>Enterprise custom</td><td>Tahunan di muka</td><td>Trial 7 hari</td></tr>
+            <tr><td><b>Kasir Pintar</b></td><td>Gratis</td><td class="num">Pro mulai Rp55rb</td><td>—</td><td>Bulanan, tanpa biaya per cabang</td><td>Gratis selamanya</td></tr>
+            <tr><td><b>iSeller</b></td><td class="num">≈Rp300rb*</td><td>—</td><td class="num">Rp1jt+*</td><td>Tidak dipublikasikan</td><td>—</td></tr>
+            <tr><td><b>ESB</b></td><td colspan="3">Tidak dipublikasikan (demo &amp; sales)</td><td>Kontrak per brand/outlet</td><td>"Coba gratis" via form</td></tr>
+            <tr><td><b>Loyverse</b></td><td class="num">$0</td><td class="num">Add-on $5–25</td><td>—</td><td>Per toko/karyawan, USD</td><td>Gratis</td></tr>
+            <tr><td><b>Square</b></td><td class="num">$0</td><td class="num">Plus $49</td><td class="num">Premium $149</td><td>Per lokasi + biaya kartu</td><td>Gratis</td></tr>
+            <tr><td><b>Shopify POS</b></td><td class="num">Basic $39 (POS Lite)</td><td class="num">+ POS Pro $89/lokasi</td><td>—</td><td>Langganan Shopify + per lokasi</td><td>Trial</td></tr>
+            <tr><td><b>Toast</b></td><td class="num">Starter $0*</td><td class="num">≈$69*</td><td class="num">Essentials ≈$165*</td><td>Paket + hardware</td><td>—</td></tr>
+            <tr class="us"><td><b>POS Kita (usulan)</b></td><td class="num">Gratis · Basic Rp99rb</td><td class="num">Pro Rp199rb</td><td class="num">Bisnis Rp399rb</td><td>Bulanan, bisa berhenti kapan saja</td><td>Pro gratis 30 hari</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">* Estimasi pihak ketiga, harga resmi tidak tersedia. Harga belum termasuk PPN dan bisa berubah karena promo. Sebelum dipakai untuk materi pemasaran, cek ulang ke halaman resmi masing-masing.</p>
+    </section>
+
+    <!-- FITUR -->
+    <section id="fitur">
+      <div class="eyebrow">Fitur</div>
+      <h2>Matriks fitur kunci</h2>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Fitur</th><th>Majoo</th><th>Olsera</th><th>Moka</th><th>Pawoon</th><th>Kasir Pintar</th><th>ESB</th><th>Loyverse</th><th>POS Kita</th></tr></thead>
+          <tbody>
+            <tr><td>Paket gratis permanen</td><td><span class="pill p">App terpisah</span></td><td><span class="pill n">Tidak</span></td><td><span class="pill n">Tidak</span></td><td><span class="pill p">7 trx/hari</span></td><td><span class="pill y">Ya</span></td><td><span class="pill n">Tidak</span></td><td><span class="pill y">Ya</span></td><td><span class="pill y">Ya</span></td></tr>
+            <tr><td>Bayar bulanan tanpa kontrak</td><td><span class="pill n">Min. 12 bln</span></td><td><span class="pill n">Tahunan</span></td><td><span class="pill y">Ya</span></td><td><span class="pill y">Ya</span></td><td><span class="pill y">Ya</span></td><td><span class="pill q">Kontrak</span></td><td><span class="pill y">Ya</span></td><td><span class="pill y">Ya</span></td></tr>
+            <tr><td>Jalan tanpa internet</td><td><span class="pill y">Ya</span></td><td><span class="pill y">Ya</span></td><td><span class="pill p">Terbatas</span></td><td><span class="pill p">Semi</span></td><td><span class="pill y">Ya</span></td><td><span class="pill y">Ya</span></td><td><span class="pill y">Ya</span></td><td><span class="pill y">Offline-first</span></td></tr>
+            <tr><td>Meja &amp; open bill</td><td><span class="pill p">Advance+</span></td><td><span class="pill y">Ya</span></td><td><span class="pill p">Enterprise</span></td><td><span class="pill y">Ya</span></td><td><span class="pill q">?</span></td><td><span class="pill y">Ya</span></td><td><span class="pill y">Ya</span></td><td><span class="pill p">Pro</span></td></tr>
+            <tr><td>Layar dapur (KDS)</td><td><span class="pill p">Prime</span></td><td><span class="pill y">Ya</span></td><td><span class="pill q">?</span></td><td><span class="pill y">Ya</span></td><td><span class="pill q">?</span></td><td><span class="pill y">Ya</span></td><td><span class="pill y">Gratis</span></td><td><span class="pill p">Pro</span></td></tr>
+            <tr><td>Order ojol masuk ke POS</td><td><span class="pill p">Prime/add-on</span></td><td><span class="pill y">GrabFood</span></td><td><span class="pill y">GoFood</span></td><td><span class="pill y">Ya</span></td><td><span class="pill q">?</span></td><td><span class="pill y">Go/Grab/Shopee</span></td><td><span class="pill n">Tidak</span></td><td><span class="pill p">Add-on</span></td></tr>
+            <tr><td>Resep, bahan baku &amp; HPP</td><td><span class="pill p">Advance+</span></td><td><span class="pill y">Ya</span></td><td><span class="pill p">Pro</span></td><td><span class="pill y">Ya</span></td><td><span class="pill p">Plugin</span></td><td><span class="pill y">Sangat dalam</span></td><td><span class="pill p">Add-on</span></td><td><span class="pill p">Pro</span></td></tr>
+            <tr><td>Laba-rugi / akuntansi</td><td><span class="pill y">Advance+</span></td><td><span class="pill p">Premium+</span></td><td><span class="pill n">Tidak</span></td><td><span class="pill p">Integrasi</span></td><td><span class="pill p">Dasar</span></td><td><span class="pill y">ERP</span></td><td><span class="pill n">Tidak</span></td><td><span class="pill y">L/R sederhana</span></td></tr>
+            <tr><td>Absensi &amp; payroll</td><td><span class="pill y">Prime</span></td><td><span class="pill p">Absensi</span></td><td><span class="pill n">Tidak</span></td><td><span class="pill p">Dasar</span></td><td><span class="pill p">Dasar</span></td><td><span class="pill q">?</span></td><td><span class="pill p">Add-on</span></td><td><span class="pill p">Absensi (Pro)</span></td></tr>
+            <tr><td>Toko online / QR menu</td><td><span class="pill y">Ya</span></td><td><span class="pill y">Website</span></td><td><span class="pill p">Moka Order</span></td><td><span class="pill q">?</span></td><td><span class="pill q">?</span></td><td><span class="pill y">ESB Order</span></td><td><span class="pill n">Tidak</span></td><td><span class="pill p">QR menu (Pro)</span></td></tr>
+            <tr><td>Laporan &amp; asisten via WhatsApp</td><td><span class="pill p">Add-on Rp499rb</span></td><td><span class="pill p">Ulasan WA</span></td><td><span class="pill p">Struk WA</span></td><td><span class="pill q">?</span></td><td><span class="pill q">?</span></td><td><span class="pill p">AI OLIN</span></td><td><span class="pill n">Tidak</span></td><td><span class="pill y">Semua paket</span></td></tr>
+            <tr><td>Ukuran teks bisa diatur</td><td><span class="pill q">Tidak terlihat</span></td><td><span class="pill q">Tidak terlihat</span></td><td><span class="pill q">?</span></td><td><span class="pill q">?</span></td><td><span class="pill q">?</span></td><td><span class="pill q">Tidak terlihat</span></td><td><span class="pill q">?</span></td><td><span class="pill y">3 ukuran</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Disusun dari halaman resmi, artikel pembanding, dan screenshot. "?" berarti kami belum menemukan bukti, bukan berarti fiturnya tidak ada. Sebagian artikel pembanding ditulis oleh pesaing, jadi cek ulang sebelum dipakai di luar tim.</p>
+    </section>
+
+    <!-- LOKAL -->
+    <section id="lokal">
+      <div class="eyebrow">Kompetitor Indonesia</div>
+      <h2>Profil POS Indonesia</h2>
+      <div class="comp-group">
+        <article class="comp">
+          <header><h3>Majoo</h3><span class="seg">"Super-app" bisnis · UMKM–menengah · 45rb+ pengguna kasir online</span></header>
+          <div class="pc">
+            <div class="plus"><h4>Kelebihan</h4><ul>
+              <li>Paling lengkap: POS, inventori, akuntansi, payroll, CRM, toko online, WhatsApp, dan Satu Sehat untuk klinik.</li>
+              <li>Empat tipe tampilan kasir sesuai jenis usaha. Jalan di Android, iOS, Windows, dan Mac, dan tetap bisa dipakai offline.</li>
+              <li>Ada checklist "Langkah Mudah Buka Outlet", support 24 jam, dan teknisi yang bisa datang ke lokasi.</li>
+              <li>Pembayaran kaya: pisah bayar, invoice jatuh tempo, deposit, komplimen.</li>
+            </ul></div>
+            <div class="minus"><h4>Kekurangan</h4><ul>
+              <li>Harga berlapis: per outlet, minimal 12 bulan, add-on Rp499rb per modul, plus lisensi terminal dan karyawan.</li>
+              <li>Navigasinya berat: 7 modul di atas plus sidebar bersarang, dengan laporan tersebar di 25+ halaman.</li>
+              <li>Dashboard diselingi banner pinjaman (majoo Capital) dan bar trial merah yang selalu tampil.</li>
+              <li>Ulasan pengguna menyebut error, lambat, dan susah masuk akun.</li>
+            </ul></div>
+          </div>
+          <p class="lesson"><b>Pelajaran:</b> kelengkapan fiturnya tidak salah, yang salah cara menyajikannya. Cakupan fitur Majoo bisa kita kejar bertahap, tapi tampilannya harus jauh lebih sederhana.</p>
+        </article>
+
+        <article class="comp">
+          <header><h3>Olsera</h3><span class="seg">POS + website toko + marketplace · retail &amp; F&amp;B · harga tahunan</span></header>
+          <div class="pc">
+            <div class="plus"><h4>Kelebihan</h4><ul>
+              <li>Murah kalau dihitung per bulan (±Rp107–224rb). Premium tidak membatasi jumlah karyawan dan perangkat.</li>
+              <li>Website toko bawaan (tema, domain, SEO), integrasi marketplace dan GrabFood, akuntansi (Accurate, Jurnal.id).</li>
+              <li>"Pencari Pintar" untuk cari apa saja dari mana saja, 12 preset peran staf, dan empty state yang ramah dengan maskot beruang.</li>
+            </ul></div>
+            <div class="minus"><h4>Kekurangan</h4><ul>
+              <li>Harus bayar setahun di muka, dan paket dasarnya dibatasi.</li>
+              <li>Bahasa campur dan istilahnya teknis: Special Type, Look Book, Settlement List, Production Cost.</li>
+              <li>Masih ada tombol "Kembali ke menu lama", tanda redesign belum tuntas sehingga ada dua sistem navigasi.</li>
+              <li>Form promo panjang dengan belasan toggle. Pengguna baru perlu pelatihan.</li>
+            </ul></div>
+          </div>
+          <p class="lesson"><b>Pelajaran:</b> fitur cari global dan preset peran layak ditiru. Bahasa harus konsisten sejak hari pertama, karena mengganti navigasi belakangan itu mahal.</p>
+        </article>
+
+        <article class="comp">
+          <header><h3>ESB</h3><span class="seg">Platform operasional F&amp;B · menengah–enterprise · klaim 30rb+ restoran</span></header>
+          <div class="pc">
+            <div class="plus"><h4>Kelebihan</h4><ul>
+              <li>Sangat kuat untuk chain: produksi dan central kitchen, purchasing, transfer stok, manufaktur sederhana.</li>
+              <li>Integrasi GoFood, GrabFood, dan ShopeeFood, ada anti-fraud, dan aplikasi desktop (Windows/Linux) tetap jalan saat koneksi buruk.</li>
+              <li>Ada mode penjualan per kanal (Takeaway, ojol, Qpon, TikTok) dan aturan paket/topping dengan batas minimal–maksimal.</li>
+              <li>Kliennya brand besar: Starbucks, Marugame Udon, Hanamasa, Wingstop.</li>
+            </ul></div>
+            <div class="minus"><h4>Kekurangan</h4><ul>
+              <li>UI padat, dibuat untuk staf terlatih: tile teks biru seragam, font kecil, tombol nonaktif yang pucat, berbahasa Inggris.</li>
+              <li>Harga tidak transparan, dan terlalu berat untuk UMKM.</li>
+              <li>Back office bergaya ERP: Production punya 7 sub-menu dan Inventory 9.</li>
+            </ul></div>
+          </div>
+          <p class="lesson"><b>Pelajaran:</b> modifier/paket dan harga per kanal wajib ada untuk F&amp;B, tapi tampilkan dengan foto, warna, dan bahasa sehari-hari.</p>
+        </article>
+
+        <article class="comp">
+          <header><h3>Moka POS</h3><span class="seg">POS UMKM ekosistem GoTo · per outlet</span></header>
+          <div class="pc">
+            <div class="plus"><h4>Kelebihan</h4><ul>
+              <li>Setup cepat (±1 hari) dan pelatihan 1–2 jam.</li>
+              <li>Integrasi GoFood, GoPay, dan EDC GoBiz Plus langsung dari ekosistemnya.</li>
+              <li>Pemilik bisa memantau dari HP atau browser.</li>
+            </ul></div>
+            <div class="minus"><h4>Kekurangan</h4><ul>
+              <li>Mulai Rp299rb/outlet, dan fitur meja baru ada di Enterprise.</li>
+              <li>Tidak ada laporan laba-rugi atau neraca, juga tidak ada modul HR.</li>
+              <li>Keluhan yang dikutip artikel pesaing: data kasir beda dengan dashboard, order GoFood telat berjam-jam, gagal login setelah update.</li>
+            </ul></div>
+          </div>
+          <p class="lesson"><b>Pelajaran:</b> integrasi ekosistem memang menarik pengguna, tapi yang membuat mereka bertahan adalah sinkronisasi yang bisa dipercaya.</p>
+        </article>
+      </div>
+
+      <div class="mini-grid">
+        <div class="mini"><h3>Pawoon</h3><p>Ada paket gratis permanen (7 transaksi/hari) dan Pro Rp299rb/outlet. Bisa menerima order ojol &amp; e-commerce, terintegrasi Jurnal/Accurate, punya KDS dan split bill. Kekurangannya, paket gratis terlalu sempit untuk dipakai sungguhan, dan data offline kadang tidak langsung tersinkron.</p><p class="lesson"><b>Pelajaran:</b> paket gratis harus cukup untuk warung kecil sehari-hari, supaya mereka mau naik ke paket berbayar.</p></div>
+        <div class="mini"><h3>Qasir</h3><p>Pro Rp699rb/tahun (±Rp58rb/bulan) dengan produk dan staf tidak terbatas. Pro Plus menambah meja, antrean, dan tiket dapur. Kekurangannya, harus bayar tahunan di muka, trial hanya 7 hari, dan menurut pembanding mode offline-nya terbatas.</p><p class="lesson"><b>Pelajaran:</b> harga murah memang menarik, tapi bayar setahun di muka jadi penghalang. Kita bulanan.</p></div>
+        <div class="mini"><h3>Kasir Pintar</h3><p>Gratis seumur hidup, Pro mulai Rp55rb/bulan. Kamera HP bisa jadi scanner barcode, bisa offline, dan multi-cabang tanpa biaya per cabang. Kekurangannya, fitur lanjutan lewat plugin dan integrasinya sedikit.</p><p class="lesson"><b>Pelajaran:</b> untuk usaha mikro, HP Android adalah perangkat utama, bukan tablet.</p></div>
+        <div class="mini"><h3>iSeller</h3><p>Desain modern, webstore bermerek plus POS, sanggup menangani ribuan varian, loyalty bertingkat, dan gift card. Harga tidak dipublikasikan (estimasi Rp300rb–1jt+), dan sasarannya brand menengah–besar.</p><p class="lesson"><b>Pelajaran:</b> desain yang rapi membuat produk terasa premium, dan itu bisa dicapai tanpa harga premium.</p></div>
+      </div>
+    </section>
+
+    <!-- GLOBAL -->
+    <section id="global">
+      <div class="eyebrow">Luar negeri</div>
+      <h2>Referensi luar negeri yang patut dicontoh</h2>
+      <div class="mini-grid">
+        <div class="mini"><h3>Square (AS)</h3><p>Gratis per lokasi, Plus $49, Premium $149. Pendaftaran bisa dilakukan sendiri tanpa sales, dan checkout-nya minimalis. Pendapatan utamanya dari biaya kartu (±2,6% + 15¢), model yang sulit diterapkan di Indonesia karena QRIS kecil sekarang 0%.</p><p class="lesson"><b>Ambil:</b> pendaftaran mandiri 5 menit dan layar bayar yang bersih.</p></div>
+        <div class="mini"><h3>Shopify POS</h3><p>"Smart grid": layar utama kasir berisi tile yang bisa ditambah, diurutkan, dan diwarnai pemilik. Tile bisa berubah sesuai isi keranjang, dan satu tata letak bisa dipakai di semua cabang.</p><p class="lesson"><b>Ambil:</b> layar kasir yang bisa diatur pemilik tanpa ngoding, misalnya tombol favorit dan pintasan promo.</p></div>
+        <div class="mini"><h3>Toast (AS)</h3><p>Spesialis restoran. Pelayan mencatat pesanan di meja pakai perangkat genggam, lalu pesanan langsung muncul di layar dapur. Ada paket starter gratis dengan syarat hardware tertentu.</p><p class="lesson"><b>Ambil:</b> mode pelayan di HP. Pesanan dicatat di meja dan langsung dikirim ke dapur.</p></div>
+        <div class="mini"><h3>Loyverse (global)</h3><p>POS inti gratis, KDS dan layar pelanggan juga gratis, add-on murah. Pengguna memujinya karena sangat mudah dan bisa offline. Kekurangannya, inventori lemah, integrasi lokal minim, dan tidak ada dukungan telepon.</p><p class="lesson"><b>Ambil:</b> model gratis inti plus add-on murah, dan kesan "bisa langsung pakai".</p></div>
+        <div class="mini"><h3>Qashier &amp; StoreHub (Asia Tenggara)</h3><p>Qashier punya paket Lite gratis, dan "QashierGM" (AI general manager) sudah termasuk di semua paket. StoreHub kuat di inventori dan multi-outlet dengan 18rb+ bisnis, tapi harganya lewat penawaran.</p><p class="lesson"><b>Ambil:</b> AI sebagai bagian dari paket, bukan add-on mahal.</p></div>
+        <div class="mini"><h3>Lightspeed &amp; Odoo POS</h3><p>Lightspeed unggul di retail dengan varian rumit (ukuran/warna), sementara Odoo POS menyatu dengan ERP modular. Keduanya cocok untuk usaha yang tumbuh, tapi kurva belajarnya tinggi.</p><p class="lesson"><b>Ambil:</b> matriks varian (ukuran × warna) yang diisi seperti tabel, bukan satu per satu.</p></div>
+      </div>
+    </section>
+
+    <!-- SCREENSHOT -->
+    <section id="screenshot">
+      <div class="eyebrow">Bedah screenshot tim</div>
+      <h2>Temuan dari 220 screenshot Majoo, Olsera, dan ESB</h2>
+      <div class="obs">
+        <div class="obs-item"><div><div class="tag">Majoo</div><div class="ref">74 + 2 file</div></div><ul>
+          <li><b>Kasir:</b> kategori di kiri, grid produk berfoto, dan keranjang di kanan dengan tombol Bayar besar di bawah. Badge "Hampir Habis", "Stok Habis", "Grosir", dan "Varian" langsung di kartu produk sangat membantu. <span class="ref">kasir-online-s1</span></li>
+          <li><b>Pembayaran:</b> Total / Sisa / Kembalian tampil besar di atas, ada Pisah Bayar, Jadikan Invoice, dan Catatan. Tapi pilihan QRIS terpecah jadi 6 istilah (QRIS Online, QRIS majoo Statis, payGo Dinamis, payGo Statis, QRIS Lainnya), sehingga kasir harus menebak. <span class="ref">kasir-online-s3</span></li>
+          <li><b>Back office:</b> 7 menu di bar atas plus sidebar akordeon bersarang. Menu Laporan saja berisi lebih dari 25 halaman (Ringkasan, Detail, Per Periode, Outlet, Uang Muka, Jenis Bayar, Jenis Order, Void, Refund, Dapur, Produk, Jasa, Fasilitas, Promo, Pajak, Kasir, Deposit, Pelanggan, Karyawan, Persediaan, Settlement, Analisa). <span class="ref">#3–#29</span></li>
+          <li>Dashboard dibuka dengan banner pinjaman majoo Capital sebelum data penjualan, dan bar trial merah "Perpanjang" selalu tampil di bawah. <span class="ref">#1, #18–#28</span></li>
+          <li>Tabel berkolom banyak dengan header huruf kapital kecil abu-abu dan scroll horizontal. Hampir semua layar terlihat sebagai tabel kosong. <span class="ref">#6, #8, #11</span></li>
+          <li>Kuota karyawan dan admin terlihat jelas di halaman Karyawan. Itu transparan, tapi juga terasa seperti "dibatasi". <span class="ref">#67–#74</span></li>
+        </ul></div>
+        <div class="obs-item"><div><div class="tag">Olsera</div><div class="ref">137 file</div></div><ul>
+          <li>Header biru, sidebar putih, dan tab horizontal per modul (Produk / Kategori / Paket / Addon / Brand / Spesifikasi). Strukturnya rapi, tapi tab-nya banyak. <span class="ref">#7–#13</span></li>
+          <li>Ada <b>"Kembali ke menu lama"</b> di atas sidebar, jadi pengguna harus belajar dua navigasi. <span class="ref">#1</span></li>
+          <li>"Pencari Pintar" di header adalah pola bagus yang perlu kita adopsi (Ctrl+K / "Cari apa saja"). <span class="ref">semua</span></li>
+          <li>Empty state dengan maskot beruang kutub terasa ramah dan konsisten. <span class="ref">#20, #50–#56</span></li>
+          <li>Istilah teknis atau Inggris di tengah UI Indonesia: Special Type, Look Book, Income &amp; Expense, Settlement List, Production Cost, "Butuh Diproses". <span class="ref">#20–#30, #67, #71</span></li>
+          <li>Menu Laporan berupa daftar 15+ laporan di panel kiri, masing-masing dengan ekspor PDF/Excel. Lengkap, tapi pemilik harus tahu laporan mana yang dia butuhkan. <span class="ref">#74–#113</span></li>
+          <li>Integrasi luas: website toko (tema, domain, SEO, Google Login, FB Pixel), marketplace (Tokopedia, Shopee, Lazada, Blibli, TikTok), GrabFood, Accurate/Jurnal, dan QRIS Netzme dengan MDR 0,7%. <span class="ref">#70, #116–#132</span></li>
+          <li>Ada 12 preset peran staf (Pemilik, Supervisor, POS Staff, Logistik + Gudang, Perpajakan, dst.) dengan deskripsi akses yang jelas. Ini patut ditiru. <span class="ref">#133–#135</span></li>
+        </ul></div>
+        <div class="obs-item"><div><div class="tag">ESB</div><div class="ref">9 foto layar</div></div><ul>
+          <li>POS desktop Windows: tile menu teks berwarna biru seragam tanpa foto, dengan pita merah "Sold Out" di item habis.</li>
+          <li>Modal "Quick Service" berisi jumlah tamu (pax) dan mode penjualan: Takeaway, GoFood/Grab, Qpon, TikTok. Harga dan pencatatan per kanal ditentukan di awal pesanan.</li>
+          <li>Pilih topping dengan aturan "minimal 1, maksimal 2" dan stok habis ditandai per opsi. Ini logika penting untuk F&amp;B.</li>
+          <li>Bar aksi bawah: Move to Table, Move Item, Checker, Cancel Order, Save Order, Print Bill. Semuanya berbahasa Inggris, dan tombol nonaktif nyaris tak terbaca.</li>
+          <li>ESB Core (web): Live View Net/Gross Sales, Sales Growth, Top &amp; Worst Menu, serta modul Production, Purchasing, dan Inventory yang dalam. Ini kebutuhan chain, bukan warung.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <!-- ULASAN -->
+    <section id="ulasan">
+      <div class="eyebrow">Pengganti wawancara</div>
+      <h2>Suara pengguna dari ulasan Play Store</h2>
+      <p>Wawancara langsung tidak memungkinkan, jadi suara pengguna diambil dari ulasan Play Store (diambil 15 Nov 2026). Rating diambil dari halaman aplikasi. Keluhan dikelompokkan manual dari ±110 ulasan bintang 1–2 yang paling relevan: Majoo 40, Moka 40, Olsera 30.</p>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Aplikasi</th><th class="num">Rating</th><th class="num">Unduhan</th><th class="num">Bintang 5</th><th class="num">Bintang 2–4</th><th class="num">Bintang 1</th><th>Catatan</th></tr></thead>
+          <tbody>
+            <tr><td><b>Majoo</b></td><td class="num">4,9</td><td class="num">100rb+</td><td class="num">5.771</td><td class="num">67</td><td class="num">119 (2%)</td><td>Hampir tidak ada bintang 2–4. Angka 4,9 tidak mencerminkan isi keluhan, jadi lebih jujur membaca bintang 1-nya.</td></tr>
+            <tr><td><b>Moka</b></td><td class="num">4,7 (HP 4,1)</td><td class="num">1jt+</td><td class="num">3.461</td><td class="num">535</td><td class="num">1.046 (21%)</td><td>Satu dari lima rating adalah bintang 1.</td></tr>
+            <tr><td><b>Olsera</b></td><td class="num">4,4</td><td class="num">100rb+</td><td class="num">952</td><td class="num">50</td><td class="num">141 (12%)</td><td>Keluhan terbaru (2025–2026) soal stok selisih dan fitur yang dihapus.</td></tr>
+            <tr><td>Pawoon</td><td class="num">3,8</td><td colspan="5">Dari daftar hasil pencarian Play Store.</td></tr>
+            <tr><td>Qasir</td><td class="num">3,9</td><td colspan="5">Dari daftar hasil pencarian Play Store.</td></tr>
+            <tr><td>Youtap POS</td><td class="num">3,5</td><td colspan="5">Dari daftar hasil pencarian Play Store.</td></tr>
+            <tr><td>Kasir Pintar</td><td class="num">4,8</td><td colspan="5">Aplikasi gratis untuk usaha mikro. Ratingnya paling stabil di antara aplikasi lokal.</td></tr>
+            <tr><td>Loyverse</td><td class="num">4,4</td><td colspan="5">Rating global, versi Indonesia.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figure>
+        <div class="themes" role="img" aria-label="Tema keluhan dari ulasan bintang 1 sampai 2, dalam persen dari sekitar 110 ulasan">
+          <div class="theme"><span>Purna jual lambat, teknisi tidak datang</span><div class="bar"><i style="width:100%"></i></div><b>±28%</b></div>
+          <div class="theme"><span>Error, lambat, gagal login setelah update</span><div class="bar"><i style="width:82%"></i></div><b>±23%</b></div>
+          <div class="theme"><span>Sales janji berlebihan, bayar di muka, telepon terus-menerus</span><div class="bar"><i style="width:75%"></i></div><b>±21%</b></div>
+          <div class="theme"><span>Stok selisih, data kasir beda dengan laporan</span><div class="bar"><i style="width:61%"></i></div><b>±17%</b></div>
+          <div class="theme"><span>Fitur terkunci, harus bayar lagi, atau hilang setelah update</span><div class="bar"><i style="width:43%"></i></div><b>±12%</b></div>
+          <div class="theme"><span>Daftar ribet, aktivasi e-wallet/QRIS berminggu-minggu</span><div class="bar"><i style="width:36%"></i></div><b>±10%</b></div>
+          <div class="theme"><span>Printer Bluetooth putus, tidak bisa cetak ulang</span><div class="bar"><i style="width:18%"></i></div><b>±5%</b></div>
+          <div class="theme"><span>Input produk harus lewat laptop/web</span><div class="bar"><i style="width:18%"></i></div><b>±5%</b></div>
+        </div>
+        <figcaption>Satu ulasan bisa masuk lebih dari satu tema. Urutan "paling relevan" dari Play Store banyak memunculkan ulasan 2020–2022, tapi pola yang sama masih muncul di ulasan 2024–2026.</figcaption>
+      </figure>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Keluhan berulang</th><th>Contoh nyata (diringkas)</th><th>Jawaban di produk kita</th></tr></thead>
+          <tbody>
+            <tr><td><b>Stok tidak akurat</b></td><td>Stok Olsera selisih puluhan selama 2 tahun. Void di Moka menambah stok. Stok Majoo berkurang tapi tidak masuk laporan.</td><td>Setiap perubahan stok dicatat sebagai riwayat (ledger), tidak ada angka yang ditimpa. Stok opname wajib ada dengan alasan selisih. Laporan kasir dan dashboard dicocokkan otomatis.</td></tr>
+            <tr><td><b>Purna jual</b></td><td>"Pusat lama jawabnya", teknisi dijanjikan 2 minggu tidak datang, CS cuma jam kantor padahal klaim 24/7.</td><td>Pengguna bisa setup sendiri tanpa teknisi. Ada bantuan di dalam aplikasi dan chat WA, target respons yang jelas, dan halaman status sistem.</td></tr>
+            <tr><td><b>Sales &amp; pembayaran</b></td><td>Bayar Rp3 juta untuk setahun lalu fitur tidak sesuai. Ditelepon dari banyak nomor "seperti pinjol".</td><td>Tanpa sales agresif. Trial mandiri tanpa kartu, bayar bulanan, dan garansi uang kembali 14 hari.</td></tr>
+            <tr><td><b>Update merusak</b></td><td>Olsera menghapus fitur shift dan pembatalan. Moka tidak bisa input kas setelah update. Transaksi hilang setelah aplikasi diinstal ulang.</td><td>Rilis bertahap dengan feature flag. Fitur tidak pernah dihapus tanpa pengganti. Data selalu tersimpan di cloud dan kembali setelah instal ulang.</td></tr>
+            <tr><td><b>Data terkunci</b></td><td>Data pelanggan dan stok Majoo tidak bisa diekspor ke Excel. Logo di invoice Olsera harus bayar lagi.</td><td>Ekspor semua data (CSV/Excel) di semua paket, termasuk Gratis. Logo dan struk custom di semua paket.</td></tr>
+            <tr><td><b>Printer</b></td><td>Harus klik puluhan kali sampai printer tersambung. Struk tutup kasir tidak bisa dicetak ulang.</td><td>Daftar printer yang sudah diuji, sambung ulang otomatis, antrean cetak dengan percobaan ulang, dan cetak ulang semua dokumen.</td></tr>
+            <tr><td><b>Hak akses kaku</b></td><td>Kurangi qty saja harus PIN supervisor (Olsera). Kasir bisa melihat omzet harian padahal pemilik tidak mau (Majoo).</td><td>Pemilik mengatur aksi mana yang perlu PIN dan informasi apa yang boleh dilihat kasir.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CELAH -->
+    <section id="celah">
+      <div class="eyebrow">Masalah → peluang</div>
+      <h2>Keluhan umum dan jawaban kita</h2>
+      <div class="pairs">
+        <div class="pair"><div class="pain"><span class="k">Masalah</span><p>Menu terlalu banyak dan dalam. Pemilik tidak tahu fitur ada di mana.</p></div><div class="opp"><span class="k">Peluang</span><p>Back office cukup 7 menu, ditambah "Cari apa saja". Ada <b>Mode Simpel</b> (bawaan) dan Mode Lengkap. Fitur muncul saat dibutuhkan.</p></div></div>
+        <div class="pair"><div class="pain"><span class="k">Masalah</span><p>Puluhan halaman laporan yang terpisah-pisah.</p></div><div class="opp"><span class="k">Peluang</span><p>Satu halaman Laporan dengan filter (tanggal, outlet, kasir, kanal) dan 4 tab: Penjualan, Produk, Stok, Keuangan. Ringkasan harian juga dikirim ke WhatsApp.</p></div></div>
+        <div class="pair"><div class="pain"><span class="k">Masalah</span><p>Bayar tahunan, add-on mahal, dan harga "hubungi sales".</p></div><div class="opp"><span class="k">Peluang</span><p>Harga bulanan yang tertera jelas, bisa berhenti kapan saja. Pengguna bisa pindah paket sendiri di aplikasi, dan tidak ada biaya per perangkat sampai batas paket.</p></div></div>
+        <div class="pair"><div class="pain"><span class="k">Masalah</span><p>Internet putus, data kasir dan dashboard tidak sama, order ojol telat masuk.</p></div><div class="opp"><span class="k">Peluang</span><p>Offline-first: transaksi disimpan di perangkat, antrean sinkron terlihat, dan ada status "Semua data terkirim ✓". Ada juga riwayat sinkron yang bisa dicek pemilik.</p></div></div>
+        <div class="pair"><div class="pain"><span class="k">Masalah</span><p>Input produk satu per satu membuat pengguna menyerah di hari pertama.</p></div><div class="opp"><span class="k">Peluang</span><p>Template per jenis usaha. Pengguna cukup memotret daftar menu atau nota, lalu AI mengubahnya jadi produk. Bisa juga impor Excel atau file ekspor dari Majoo/Moka/Olsera.</p></div></div>
+        <div class="pair"><div class="pain"><span class="k">Masalah</span><p>Teks kecil, bahasa campur, ikon tanpa label. Kasir senior kesulitan.</p></div><div class="opp"><span class="k">Peluang</span><p>Tiga ukuran teks, kontras tinggi, ikon selalu berlabel, dan bahasa sehari-hari: "Uang diterima", "Kembalian", "Simpan pesanan".</p></div></div>
+        <div class="pair"><div class="pain"><span class="k">Masalah</span><p>Istilah QRIS dan pajak membingungkan.</p></div><div class="opp"><span class="k">Peluang</span><p>Cukup satu tombol "QRIS", sistem yang memilih dinamis atau statis. Pengaturan pajak berupa panduan: "Usaha Anda restoran di kota apa?", lalu PBJT dan service charge terisi otomatis.</p></div></div>
+        <div class="pair"><div class="pain"><span class="k">Masalah</span><p>Iklan pinjaman dan bar trial di dashboard.</p></div><div class="opp"><span class="k">Peluang</span><p>Dashboard bersih tanpa iklan. Tawaran mitra hanya muncul di menu khusus dan bisa dimatikan.</p></div></div>
+      </div>
+    </section>
+
+    <!-- RISET LANJUTAN -->
+    <section id="lanjutan">
+      <div class="eyebrow">Riset lanjutan · 15 Nov 2026</div>
+      <h2>Pembayaran, ojol, WhatsApp, legal, dan biaya</h2>
+      <div class="rows">
+        <div class="row-card">
+          <h3>QRIS &amp; payment gateway</h3>
+          <ul>
+            <li>Aturan BI sejak 1 Okt 2026: MDR 0% untuk transaksi sampai Rp100rb (semua merchant) dan sampai Rp500rb (usaha mikro). <b>MDR ditanggung merchant dan tidak boleh dibebankan ke pembeli</b>, jadi POS tidak boleh punya fitur "biaya tambahan QRIS".</li>
+            <li>Dokumentasi Midtrans masih mencantumkan MDR QRIS 0,7% untuk merchant reguler dan belum menyebut aturan 0%. Tarif resmi Xendit belum ditemukan. Keduanya harus ditanyakan langsung saat negosiasi.</li>
+            <li><b>Rencana:</b> di MVP, merchant memakai QRIS statis miliknya sendiri. Gambarnya diunggah, tampil di layar pelanggan, lalu kasir konfirmasi manual. Tidak butuh integrasi. Di Fase 2 baru QRIS dinamis lewat mitra PJP (Xendit/Midtrans), dengan konfirmasi otomatis via webhook. Merchant tetap perlu KYB lewat mitra.</li>
+            <li>Penagihan langganan kita sendiri juga lewat payment gateway (VA, QRIS, e-wallet, kartu).</li>
+          </ul>
+        </div>
+        <div class="row-card">
+          <h3>Integrasi ojol <span class="risk">butuh kemitraan</span></h3>
+          <ul>
+            <li><b>GoFood:</b> Gojek punya GoBiz Partner Integration API (developer.gobiz.com) untuk sinkron katalog, terima/tolak pesanan, tandai siap, dan QRIS. Akses lewat onboarding partner dan perjanjian, bukan pendaftaran mandiri.</li>
+            <li><b>GrabFood:</b> menurut dokumentasi vendor POS, integrasi diaktifkan lewat account manager atau partner Grab. Halaman developer resmi belum terverifikasi.</li>
+            <li><b>ShopeeFood:</b> belum ada informasi publik.</li>
+            <li><b>Rencana:</b> ajukan kemitraan sejak awal karena prosesnya lama. Sambil menunggu, MVP mendukung input pesanan ojol manual dengan harga per kanal dan pencatatan komisi.</li>
+          </ul>
+        </div>
+        <div class="row-card">
+          <h3>WhatsApp lewat Baileys (keputusan tim) <span class="risk">risiko diblokir</span></h3>
+          <ul>
+            <li>Baileys adalah klien WhatsApp tidak resmi (multi-device, login lewat QR atau pairing code). Kelebihannya tanpa biaya per pesan. Risikonya: melanggar ketentuan WhatsApp, nomor bisa diblokir permanen tanpa banding, dan bisa rusak kalau protokol WhatsApp berubah.</li>
+            <li>April 2026: sebuah paket npm "anti-ban" untuk Baileys terbukti mencuri sesi dan pesan WhatsApp. Jangan pakai pembungkus pihak ketiga, dan kunci versi dependensi.</li>
+            <li><b>Desain pengaman:</b>
+              <ul>
+                <li>Merchant menyambungkan nomornya sendiri lewat QR, jadi pesan dikirim dari nomor toko ke pelanggannya.</li>
+                <li>Nomor platform untuk OTP dipisah.</li>
+                <li>Hanya pesan transaksional (struk, laporan, status laundry), tanpa blast promosi di MVP.</li>
+                <li>Batas kirim konservatif dengan jeda acak.</li>
+                <li>Kalau sesi putus, otomatis kembali ke tombol "bagikan ke WhatsApp" atau email. OTP cadangan lewat email.</li>
+                <li>Kredensial sesi dienkripsi, layanan gateway dipisah, dan ada lapisan provider supaya bisa pindah ke Cloud API kapan saja.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="row-card">
+          <h3>Legal &amp; kepatuhan</h3>
+          <ul>
+            <li><b>PSE lingkup privat</b> (Permenkominfo 5/2020): wajib daftar sebelum layanan dibuka untuk umum. Sepanjang 2026, Komdigi menegur dan mengancam memutus akses PSE yang belum terdaftar.</li>
+            <li><b>UU PDP + PP 33/2026:</b> kita jadi prosesor untuk data pelanggan milik merchant, dan pengendali untuk data akun merchant. Yang perlu disiapkan:
+              <ul>
+                <li>Kebijakan privasi dan perjanjian pemrosesan data di syarat layanan.</li>
+                <li>Persetujuan pelanggan untuk struk dan promosi via WA.</li>
+                <li>Prosedur notifikasi kebocoran (3×24 jam).</li>
+              </ul>
+              Denda administratif disebut bisa sampai 2% pendapatan tahunan.</li>
+            <li><b>Badan usaha</b> (PT atau PT perorangan) untuk menagih langganan, ditambah NIB. Pajak penjualan SaaS perlu dikonsultasikan ke konsultan pajak.</li>
+            <li><b>Merek:</b> nama dan logo nanti diatur dari panel admin, tapi tetap didaftarkan ke DJKI sebelum promosi besar.</li>
+          </ul>
+        </div>
+        <div class="row-card">
+          <h3>Biaya &amp; hitungan kasar</h3>
+          <ul>
+            <li>VPS lokal 4 vCPU / 8 GB: sekitar Rp215rb (harga promo IDCloudHost) sampai Rp645rb (DomaiNesia) per bulan. Awalnya cukup 3 server (API + database, gateway WA, cadangan/staging), sekitar Rp1–3 juta per bulan untuk ratusan toko pertama. Ini asumsi dan perlu dicek saat beli.</li>
+            <li>Biaya tetap: Google Play Console sekali bayar, Apple Developer tahunan (kalau iOS), domain, beberapa SIM khusus untuk nomor WA platform, Sentry/monitoring (ada tier gratis).</li>
+            <li>Contoh titik impas biaya operasional (belum termasuk gaji): kalau infra dan tools Rp5 juta/bulan, butuh ±51 pelanggan Basic atau ±26 Pro.</li>
+            <li>Target awal yang masuk akal: ARPU Rp120–150rb, churn di bawah 3% per bulan, dan konversi trial ke berbayar di atas 15%. Angka ini harus dipantau sejak bulan pertama.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEGMEN -->
+    <section id="segmen">
+      <div class="eyebrow">Keputusan tim · semua segmen</div>
+      <h2>Satu inti, tiga modul usaha</h2>
+      <p>Supaya bisa bersaing di semua segmen tanpa membuat tiga aplikasi, produk dibangun dari satu inti yang dipakai semua usaha, plus modul yang aktif sesuai jenis usaha. Template onboarding mengaktifkan modul yang cocok, dan pemilik bisa menyalakan modul lain kapan saja (misalnya kafe yang juga jual merchandise).</p>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Bagian</th><th>Isi</th><th>Contoh usaha</th></tr></thead>
+          <tbody>
+            <tr><td><b>Inti (semua)</b></td><td>Kasir offline, produk &amp; varian, stok + <b>stok opname</b>, pelanggan &amp; kasbon, diskon, pembayaran (tunai, QRIS, transfer, EDC, kasbon, pisah bayar), buka/tutup kasir, refund/void + PIN, struk printer &amp; WA, laporan, karyawan &amp; hak akses, ekspor data</td><td>Semua</td></tr>
+            <tr><td><b>Modul F&amp;B</b></td><td>Meja &amp; open bill, topping/modifier dengan batas minimal–maksimal, kirim ke dapur (layar &amp; printer dapur), mode pelayan, harga per kanal ojol, resep &amp; HPP, QR menu, service charge</td><td>Warung makan, kafe, resto, kedai kopi</td></tr>
+            <tr><td><b>Modul Retail</b></td><td>Barcode (scan &amp; cetak label), varian ukuran × warna, multi-satuan (pcs/pak/dus), harga grosir bertingkat, supplier &amp; pembelian, retur, kedaluwarsa (fase lanjut)</td><td>Kelontong, minimarket, toko baju, apotek kecil</td></tr>
+            <tr><td><b>Modul Jasa</b></td><td>Layanan per kg/jam/paket, status pengerjaan + WA "siap diambil", antrean, booking, komisi per layanan, uang muka</td><td>Laundry, barbershop, salon, bengkel kecil</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Fase</th><th>Fitur utama</th></tr></thead>
+          <tbody>
+            <tr><td><b>Fase 1 · MVP</b></td><td>Seluruh inti di atas. Template F&amp;B/retail/jasa, impor produk dari Excel, barcode via kamera &amp; scanner, multi-satuan, simpan pesanan, QRIS statis, layanan + status pengerjaan (jasa), WA via Baileys (OTP, struk, laporan harian), langganan Gratis &amp; Basic, panel super admin (toko, paket, branding).</td></tr>
+            <tr><td><b>Fase 2</b></td><td>Denah meja, layar &amp; printer dapur, mode pelayan, resep &amp; HPP, promo &amp; member, multi-outlet &amp; transfer stok, pembelian &amp; supplier, QRIS dinamis, harga grosir &amp; label barcode, booking &amp; komisi, app pemilik (PWA), layar pelanggan, paket Pro &amp; Bisnis.</td></tr>
+            <tr><td><b>Fase 3</b></td><td>Integrasi GoFood/GrabFood, QR self-order, asisten AI lewat WA, toko online &amp; marketplace, akuntansi &amp; ekspor ke Jurnal/Accurate, API publik, iOS &amp; Windows.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- PERSONA -->
+    <section id="persona">
+      <div class="eyebrow">Pengguna</div>
+      <h2>Empat persona yang kita desain</h2>
+      <div class="personas">
+        <div class="persona"><div class="who"><div class="avatar" aria-hidden="true">BS</div><div><b>Bu Sri, 54</b><div class="role">Pemilik warung makan</div></div></div><p>Pakai HP Android dan WhatsApp setiap hari, tapi belum pernah pakai aplikasi kasir. Mata sudah plus. Ingin tahu "hari ini untung berapa" tanpa menghitung manual.</p><p class="muted">Butuh: teks besar, langkah sedikit, laporan via WA.</p></div>
+        <div class="persona"><div class="who"><div class="avatar" aria-hidden="true">DM</div><div><b>Dimas, 23</b><div class="role">Kasir kafe</div></div></div><p>Saat jam sibuk melayani 80+ transaksi per jam, sambil memantau order ojol dan pelanggan dine-in sekaligus.</p><p class="muted">Butuh: kecepatan, favorit, modifier cepat, pintasan keyboard.</p></div>
+        <div class="persona"><div class="who"><div class="avatar" aria-hidden="true">PH</div><div><b>Pak Hendra, 41</b><div class="role">Pemilik 3 outlet kopi</div></div></div><p>Jarang ada di toko. Khawatir dengan stok bocor, void mencurigakan, dan selisih kas.</p><p class="muted">Butuh: app pemilik, notifikasi void/selisih, perbandingan outlet.</p></div>
+        <div class="persona"><div class="who"><div class="avatar" aria-hidden="true">RN</div><div><b>Rina, 29</b><div class="role">Admin keuangan</div></div></div><p>Setiap bulan merekap penjualan, pembelian, dan pajak untuk dimasukkan ke software akuntansi.</p><p class="muted">Butuh: ekspor rapi, laporan pajak (PBJT/PPN), rekonsiliasi QRIS.</p></div>
+      </div>
+    </section>
+
+    <!-- UIUX -->
+    <section id="uiux">
+      <div class="eyebrow">Prinsip desain</div>
+      <h2>UI/UX yang bisa dipakai semua umur</h2>
+      <p>Dasarnya: WCAG 2.2 level AA, riset ukuran tombol layar sentuh untuk lansia (Jin, Plocher &amp; Kiff 2007: tombol ±19 mm dengan jarak 3–13 mm), dan temuan bahwa kesalahan paling umum pada pengguna lansia adalah tap yang meleset dari target. Semua angka di bawah juga dipakai di mockup.</p>
+      <div class="principles">
+        <div class="pr"><h3>Tombol besar, jarak lega</h3><p>Tile produk minimal 120×96 px dengan jarak 12 px. Tombol utama (Bayar, Simpan) setinggi 64 px. Target sentuh lain minimal 48×48 px.</p><span class="spec">tile ≥120×96 · gap 12 · CTA 64 · min 48</span></div>
+        <div class="pr"><h3>Tiga ukuran teks</h3><p>Normal 16 px, Besar 18 px, Sangat Besar 20 px, bisa diganti dari kasir dengan satu tap. Angka total minimal 36 px dengan angka tabular supaya digitnya sejajar.</p><span class="spec">16 / 18 / 20 · total ≥36 tnum</span></div>
+        <div class="pr"><h3>Kontras dan status ganda</h3><p>Teks minimal 4,5:1 dan ikon/garis minimal 3:1. Status selalu ditandai warna, ikon, dan teks sekaligus, karena ±8% pria mengalami buta warna.</p><span class="spec">AA 4.5:1 · ikon 3:1 · warna+ikon+teks</span></div>
+        <div class="pr"><h3>Ikon selalu berlabel</h3><p>Tidak ada tombol yang hanya berupa ikon di kasir dan app pemilik, dan tidak ada menu hamburger untuk fungsi utama. Gestur swipe hanya jadi jalan pintas, selalu ada tombolnya.</p><span class="spec">ikon + teks · tanpa gestur tersembunyi</span></div>
+        <div class="pr"><h3>Maksimal 3 tap ke struk</h3><p>Dari produk terakhir: Bayar → pilih uang (nominal cepat) → Selesai. Tombol Bayar selalu di posisi yang sama, di pojok kanan bawah.</p><span class="spec">Bayar → nominal → Selesai</span></div>
+        <div class="pr"><h3>Batalkan, bukan "Yakin?"</h3><p>Hapus item langsung terjadi, lalu muncul tombol "Batalkan" selama 5 detik. PIN supervisor hanya diminta untuk void, refund, dan diskon besar.</p><span class="spec">undo 5 dtk · PIN untuk void/refund</span></div>
+        <div class="pr"><h3>Bahasa sehari-hari</h3><p>Satu istilah untuk satu arti, dan tidak dicampur bahasa Inggris. "Uang diterima", "Kembalian", "Simpan pesanan", "Pindah meja". Pesan error memberi tahu cara memperbaikinya.</p><span class="spec">kamus istilah tunggal</span></div>
+        <div class="pr"><h3>Umpan balik yang terasa</h3><p>Bunyi "ting" dan getar saat item masuk, kartu produk berkedip singkat, dan jumlah di keranjang beranimasi. Gerakan dikurangi kalau pengguna memilih reduce motion.</p><span class="spec">suara · getar · animasi ≤200ms</span></div>
+        <div class="pr"><h3>Mode Simpel dan Lengkap</h3><p>Mode Simpel menyembunyikan meja, varian rumit, dan multi-harga. Saat dibutuhkan, pengguna cukup menyalakan "Tampilkan fitur restoran" tanpa harus pindah aplikasi.</p><span class="spec">progressive disclosure</span></div>
+      </div>
+
+      <h3>Tombol uang cepat berwarna seperti uang Rupiah</h3>
+      <p>Kasir, terutama yang lebih tua, mengenali uang dari warnanya. Tombol nominal cepat memakai warna uang kertas, selalu disertai angka besar.</p>
+      <div class="money" aria-label="Contoh tombol uang cepat">
+        <span style="background:#C2185B">Rp100.000</span>
+        <span style="background:#1565C0">Rp50.000</span>
+        <span style="background:#2E7D32">Rp20.000</span>
+        <span style="background:#6A1B9A">Rp10.000</span>
+        <span style="background:#8D6E63">Rp5.000</span>
+        <span style="background:#546E7A">Rp2.000</span>
+      </div>
+
+      <h3>Struktur menu back office (7 menu + cari)</h3>
+      <div class="ia">
+        <span>Beranda</span><span>Penjualan</span><span>Produk &amp; Stok</span><span>Pelanggan &amp; Promo</span><span>Karyawan</span><span>Laporan</span><span>Pengaturan</span><span>🔍 Cari apa saja (Ctrl+K)</span>
+      </div>
+      <div class="callout"><b>Aturan tata letak kasir:</b><p>Tiga zona tetap: kategori di kiri (di HP jadi tab di atas), grid produk di tengah, dan keranjang di kanan dengan Bayar paling bawah. Mode terang jadi bawaan karena lebih terbaca di bawah sinar matahari (warung, booth outdoor), mode gelap tersedia untuk layar dapur dan pemakaian malam.</p></div>
+    </section>
+
+    <!-- PAKET -->
+    <section id="paket">
+      <div class="eyebrow">Model bisnis</div>
+      <h2>Draft paket langganan bulanan</h2>
+      <p>Harga diletakkan di antara Kasir Pintar/Qasir (murah tapi terbatas) dan Majoo/Moka (lengkap tapi Rp249–299rb ke atas). Ini masih hipotesis dan perlu divalidasi lewat wawancara calon pengguna.</p>
+      <div class="tiers">
+        <div class="tier"><div class="name">Gratis</div><div class="price">Rp0</div><div class="for">Warung, toko kecil, jasa rintisan</div><ul><li>1 outlet, 1 perangkat</li><li>Transaksi tidak dibatasi</li><li>Hingga 100 produk/layanan</li><li>Stok &amp; stok opname</li><li>Kasbon pelanggan</li><li>QRIS statis, struk via tombol bagikan WA</li><li>Ekspor semua data</li></ul></div>
+        <div class="tier"><div class="name">Basic</div><div class="price">Rp99rb<small>/bulan</small></div><div class="for">Usaha 1 outlet yang mulai ramai</div><ul><li>2 perangkat, 5 karyawan + PIN</li><li>Produk tidak dibatasi, varian, multi-satuan</li><li>Buka/tutup kasir &amp; laporan selisih</li><li>Laporan lengkap + ekspor</li><li>Struk &amp; laporan harian otomatis ke WA</li><li>Status pengerjaan jasa + WA "siap diambil"</li></ul></div>
+        <div class="tier hl"><div class="name">Pro</div><div class="price">Rp199rb<small>/bulan/outlet</small></div><div class="for">Kafe, resto, retail, jasa yang aktif</div><ul><li>4 perangkat, karyawan tidak dibatasi</li><li>Meja, open bill, layar dapur</li><li>Resep, bahan baku, HPP</li><li>Grosir bertingkat &amp; label barcode</li><li>Promo, member, poin</li><li>Booking &amp; komisi jasa</li><li>QRIS dinamis (Fase 2)</li></ul></div>
+        <div class="tier"><div class="name">Bisnis</div><div class="price">Rp399rb<small>/bulan/outlet</small></div><div class="for">Multi-outlet &amp; franchise</div><ul><li>Perangkat tidak dibatasi</li><li>Transfer stok antar outlet</li><li>Pembelian &amp; supplier</li><li>Peran &amp; persetujuan berlapis</li><li>Laporan gabungan, API</li><li>Asisten AI via WA (Fase 3)</li></ul></div>
+      </div>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Add-on (semua paket berbayar)</th><th class="num">Harga usulan</th><th>Catatan</th></tr></thead>
+          <tbody>
+            <tr><td>Perangkat tambahan</td><td class="num">Rp29rb/bulan</td><td>Di atas kuota paket</td></tr>
+            <tr><td>Integrasi ojol (GoFood, GrabFood, ShopeeFood)</td><td class="num">Rp99rb/outlet</td><td>Majoo menjualnya Rp499rb</td></tr>
+            <tr><td>Toko online + marketplace</td><td class="num">Rp99rb/outlet</td><td>Sinkron stok</td></tr>
+            <tr><td>Bayar tahunan</td><td class="num">Diskon 2 bulan</td><td>Opsional, bukan kewajiban</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Asumsi: harga belum termasuk PPN. Paket Gratis dibatasi jumlah produk, bukan jumlah transaksi, karena batas transaksi (seperti Pawoon) membuat warung tidak bisa memakainya sungguhan. Stok opname ada di semua paket karena stok tidak akurat adalah salah satu keluhan terbesar di Play Store. Semua harga, batas, dan fitur paket bisa diubah dari panel super admin tanpa rilis aplikasi baru.</p>
+    </section>
+
+    <!-- LANJUT -->
+    <section id="lanjut">
+      <div class="eyebrow">Selanjutnya</div>
+      <h2>Langkah berikutnya</h2>
+      <ol class="steps">
+        <li><p><b>Keputusan yang sudah dikunci (15 Nov):</b> semua segmen lewat modul, stok opname wajib ada, WhatsApp lewat Baileys, nama dan logo diatur dari panel admin.</p></li>
+        <li><p><b>Uji mockup informal:</b> minta 2 orang berusia 50+ dan 2 kasir muda dari lingkungan tim mencoba prototipe kasir. Targetnya transaksi pertama selesai di bawah 60 detik tanpa dibantu.</p></li>
+        <li><p><b>Ajukan kemitraan lebih awal:</b> mitra PJP untuk QRIS dinamis, partner GoBiz, dan partner Grab, karena prosesnya bisa berbulan-bulan.</p></li>
+        <li><p><b>Dokumen kerja:</b> PRD, roadmap, tech stack, backlog, dan papan progres untuk membagi tugas tim.</p></li>
+      </ol>
+      <div class="callout"><b>Keterbatasan riset ini</b><p>Tidak ada wawancara langsung. Suara pengguna diambil dari ulasan Play Store, yang cenderung bernada ekstrem. Beberapa ulasan kompetitor berasal dari artikel pesaing (HashMicro, BigSeller, Kasir Pintar, EQUIP) yang bias. Harga Olsera, Moka, Pawoon, dan iSeller sebagian dari pihak ketiga. Syarat partner GoFood/GrabFood dan tarif QRIS gateway belum dikonfirmasi langsung. Semua angka perlu dicek ulang sebelum dipakai di luar tim.</p></div>
+    </section>
+
+    <!-- SUMBER -->
+    <section id="sumber">
+      <div class="eyebrow">Referensi</div>
+      <h2>Sumber</h2>
+      <ul class="sources">
+        <li><a href="https://majoo.id/harga">Majoo · Harga</a></li>
+        <li><a href="https://majoo.id/aplikasi-kasir-online">Majoo · Kasir Online</a></li>
+        <li><a href="https://www.olsera.com/en/pricing">Olsera · Pricing</a></li>
+        <li><a href="https://www.equiperp.com/blog/olsera-pos/">EQUIP · Ulasan Olsera POS (pesaing)</a></li>
+        <li><a href="https://www.pawoon.com/harga/">Pawoon · Harga</a></li>
+        <li><a href="https://www.qasir.id/en/qasir-pro?region=id">Qasir · Qasir Pro</a></li>
+        <li><a href="https://kasirpintar.co.id/solusi/detail/perbandingan-7-sistem-pos-terpopuler-di-indonesia-pada-tahun-2023">Kasir Pintar · Perbandingan 7 POS (pesaing)</a></li>
+        <li><a href="https://www.hashmicro.com/id/blog/review-aplikasi-moka-pos/">HashMicro · Review Moka POS (pesaing)</a></li>
+        <li><a href="https://www.take.app/alternatives/moka-pos">Take App · Harga Moka POS</a></li>
+        <li><a href="https://www.bigseller.com/blog/articleDetails/software-pos-terbaik.5025.htm">BigSeller · 7 Software POS (pesaing)</a></li>
+        <li><a href="https://www.esb.id/">ESB · Beranda</a></li>
+        <li><a href="https://esb.id/en/solusi/produk/pos">ESB · Produk POS</a></li>
+        <li><a href="https://keuangan.kontan.co.id/news/kebijakan-mdr-qris-0-berlaku-mulai-1-oktober-2026-btn-sesuaikan-tarif-merchant">Kontan · MDR QRIS 0% mulai 1 Okt 2026</a></li>
+        <li><a href="https://www.metrotvnews.com/read/kM6C4njO-mdr-qris-gratis-mulai-1-oktober-2026-ini-batas-transaksinya">Metro TV · Batas transaksi MDR QRIS 0%</a></li>
+        <li><a href="https://bali.antaranews.com/berita/411917/qris-dipakai-6577-juta-pengguna-dan-diterima-4486-juta-gerai">Antara · Pengguna &amp; merchant QRIS</a></li>
+        <li><a href="https://ortax.org/pbjt-makanan-minuman">Ortax · PBJT makanan dan minuman</a></li>
+        <li><a href="https://www.pajak.go.id/sites/default/files/2025-02/SP-4%20PEMERINTAH%20TERBITKAN%20ATURAN%20DPP%20NILAI%20LAIN%20DAN%20BESARAN%20TERTENTU%20PPN.pdf">DJP · DPP nilai lain PPN</a></li>
+        <li><a href="https://www.capterra.com/p/150632/Loyverse-POS/">Capterra · Loyverse POS</a></li>
+        <li><a href="https://toolradar.com/tools/loyverse">Toolradar · Loyverse</a></li>
+        <li><a href="https://www.costbench.com/compare/shopify-pos-vs-square-pos/">Costbench · Square vs Shopify POS</a></li>
+        <li><a href="https://www.costbench.com/compare/square-for-restaurants-vs-toast-pos/">Costbench · Square vs Toast</a></li>
+        <li><a href="https://help.shopify.com/en/manual/sell-in-person/getting-started/smart-grid">Shopify · Smart grid</a></li>
+        <li><a href="https://qashier.com/sg/qashierpos">Qashier · POS &amp; QashierGM</a></li>
+        <li><a href="https://www.storehub.com/pricing">StoreHub · Pricing</a></li>
+        <li><a href="https://www.springerprofessional.de/en/touch-screen-user-interfaces-for-older-adults-button-size-and-sp/2824982">Jin, Plocher &amp; Kiff (2007) · Ukuran tombol untuk lansia</a></li>
+        <li><a href="https://www.smashingmagazine.com/2015/02/designing-digital-technology-for-the-elderly/">Smashing Magazine · Designing for the elderly</a></li>
+        <li><a href="https://www.w3.org/TR/WCAG22/">W3C · WCAG 2.2</a></li>
+        <li><a href="https://play.google.com/store/apps/details?id=com.klopos&amp;hl=id&amp;gl=ID">Google Play · majoo</a></li>
+        <li><a href="https://play.google.com/store/apps/details?id=com.mokapos.android&amp;hl=id&amp;gl=ID">Google Play · Moka POS</a></li>
+        <li><a href="https://play.google.com/store/apps/details?id=com.olserapratama.pos&amp;hl=id&amp;gl=ID">Google Play · Olsera POS</a></li>
+        <li><a href="https://docs.midtrans.com/docs/what-is-the-applicable-transaction-fee-for-qris">Midtrans · Biaya QRIS</a></li>
+        <li><a href="https://katadata.co.id/foto/6a882ffd488a8/foto-bi-perluas-mdr-qris-0-mulai-oktober-2026">Katadata · Perluasan MDR QRIS 0%</a></li>
+        <li><a href="https://apis.io/providers/gojek/">apis.io · GoBiz Partner Integration API</a></li>
+        <li><a href="https://support.mosaic-solutions.com/knowledge/activating-the-grabfood-integration">Mosaic · Aktivasi integrasi GrabFood</a></li>
+        <li><a href="https://zylos.ai/zh/research/2026-01-26-whatsapp-api-automation">Zylos · WhatsApp API &amp; automation 2026</a></li>
+        <li><a href="https://whatsapp.checkleaked.cc/ja/blog/whatsapp-cloud-api-vs-unofficial">WhatsApp Cloud API vs unofficial</a></li>
+        <li><a href="https://teknologi.bisnis.com/read/20260928/101/2007757/komdigi-beri-tenggat-1-oktober-7-pse-belum-terdaftar-terancam-kena-teguran">Bisnis · Komdigi tenggat pendaftaran PSE</a></li>
+        <li><a href="https://siplawfirm.id/resources/pp-33-2026-pelindungan-data-pribadi">SIP Law · PP 33/2026 PDP</a></li>
+        <li><a href="https://meridianhukum.com/article/perbedaan-pengendali-dan-prosesor-data-pribadi-dalam-uu-pdp">Meridian Hukum · Pengendali vs prosesor</a></li>
+        <li><a href="https://idcloudhost.com/en/server-vps/">IDCloudHost · Harga VPS</a></li>
+      </ul>
+    </section>
+  </main>
+</div>
+<footer><div class="wrap">Disusun 14 November 2026 dari riset web dan screenshot internal tim. Dokumen kerja, bukan untuk publikasi.</div></footer>

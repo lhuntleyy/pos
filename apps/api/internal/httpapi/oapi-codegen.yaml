@@ -1,0 +1,9 @@
+# Konfigurasi generator server dari packages/api-spec/openapi.yaml.
+# Jalankan dari root repo: pnpm gen:go (atau `go generate ./...` di apps/api).
+package: httpapi
+output: api.gen.go
+generate:
+  models: true
+  chi-server: true
+compatibility:
+  always-prefix-enum-values: true

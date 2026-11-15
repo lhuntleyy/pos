@@ -1,0 +1,22 @@
+# Semua teks pakai LF supaya sama di Windows, macOS, dan Linux (CI).
+* text=auto eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Biner
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.ttf binary
+*.woff2 binary
+
+# File hasil generator: disembunyikan di diff PR GitHub
+*.gen.go linguist-generated=true
+*.gen.ts linguist-generated=true
+*.g.dart linguist-generated=true
+apps/api/internal/db/sqlc/** linguist-generated=true
+packages/design-tokens/generated/** linguist-generated=true
+pnpm-lock.yaml linguist-generated=true

@@ -1,0 +1,16 @@
+packages:
+  - apps/web
+  - apps/site
+  - apps/wa-gateway
+  - packages/*
+
+# Versi paket npm baru baru dipakai 3 hari setelah rilis (dalam menit).
+# Melindungi dari paket yang dibajak lalu ditarik lagi dari npm, seperti
+# kasus paket "anti-ban" Baileys palsu yang mencuri sesi WhatsApp (April 2026).
+minimumReleaseAge: 4320
+
+# pnpm 10 memblokir skrip postinstall secara default. Hanya paket ini yang boleh.
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - protobufjs

@@ -1,0 +1,24 @@
+# Query SQL ditulis tangan di internal/db/queries, sqlc membuat kode Go bertipe.
+# Jalankan: sqlc generate (di folder apps/api). Lihat README untuk cara pasang sqlc.
+version: "2"
+sql:
+  - engine: postgresql
+    schema: internal/db/migrations
+    queries: internal/db/queries
+    gen:
+      go:
+        package: sqlc
+        out: internal/db/sqlc
+        sql_package: pgx/v5
+        emit_json_tags: true
+        emit_empty_slices: true
+        overrides:
+          - db_type: uuid
+            go_type: github.com/google/uuid.UUID
+          - db_type: timestamptz
+            go_type: time.Time
+          - db_type: timestamptz
+            nullable: true
+            go_type:
+              type: time.Time
+              pointer: true

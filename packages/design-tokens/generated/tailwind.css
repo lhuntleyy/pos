@@ -1,0 +1,60 @@
+/* Dibuat otomatis dari packages/design-tokens/tokens.json. Jangan diedit manual; jalankan `pnpm gen:tokens`. */
+@theme {
+  --color-brand: #3B35B5;
+  --color-brand-strong: #2A2590;
+  --color-brand-soft: #F1F0FD;
+  --color-brand-line: #E6E5FA;
+  --color-on-brand: #FFFFFF;
+  --color-ink: #181A2E;
+  --color-ink-muted: #51546F;
+  --color-ink-faint: #B9BCD3;
+  --color-line: #D9DBEA;
+  --color-line-soft: #EDEEF7;
+  --color-canvas: #F6F6FB;
+  --color-surface: #FFFFFF;
+  --color-highlight: #E39D00;
+  --color-highlight-soft: #FFF2D2;
+  --color-highlight-ink: #6B4600;
+  --color-focus: #E39D00;
+  --color-success: #16774A;
+  --color-success-soft: #DDF3E7;
+  --color-danger: #B42318;
+  --color-danger-soft: #FBE3E0;
+  --color-money-100000: #C2185B;
+  --color-money-50000: #1565C0;
+  --color-money-20000: #2E7D32;
+  --color-money-10000: #6A1B9A;
+  --color-money-5000: #8D6E63;
+  --color-money-2000: #546E7A;
+  --spacing-touch-min: 48px;
+  --spacing-touch-category: 56px;
+  --spacing-touch-primary: 64px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --text-body: 16px;
+  --text-product-name: 15px;
+  --text-card-price: 17px;
+  --text-total: 36px;
+  --product-columns: 4;
+}
+
+/* Ukuran teks A+ dan A++: pasang data-text-size di <html>. */
+[data-text-size="large"] {
+  --text-body: 18px;
+  --text-product-name: 17px;
+  --text-card-price: 19px;
+  --text-total: 40px;
+  --product-columns: 4;
+}
+
+[data-text-size="xlarge"] {
+  --text-body: 20px;
+  --text-product-name: 19px;
+  --text-card-price: 22px;
+  --text-total: 44px;
+  --product-columns: 3;
+}

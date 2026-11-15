@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Diskon dan pelanggan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <header style="height: 64px; flex: none; display: flex; align-items: center; gap: 14px; padding: 0 20px; background: #FFFFFF; border-bottom: 1px solid #D9DBEA">
+    <div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div>
+    <span style="font-weight: 800; font-size: 18px">Beri diskon</span>
+    <span style="font-size: 15px; color: #51546F">Pesanan bawa pulang · Dimas</span>
+  </header>
+  <div style="flex: 1; min-height: 0; display: flex; gap: 20px; padding: 20px">
+    <section aria-label="Pilih diskon" style="flex: 1; min-width: 0; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 20px 24px; display: flex; flex-direction: column; gap: 16px">
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <span style="font-size: 16px; font-weight: 800">Pelanggan</span>
+        <div style="display: flex; align-items: center; gap: 14px; padding: 12px 14px; border: 2px solid #3B35B5; border-radius: 14px; background: #F1F0FD">
+          <span style="width: 48px; height: 48px; border-radius: 50%; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800">RN</span>
+          <span style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 17px; font-weight: 800">Bu Rina</span><span style="font-size: 14px; color: #51546F">Member Emas · 1.240 poin · datang 23 kali</span></span>
+          <button type="button" style="height: 44px; padding: 0 14px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 14px">Ganti</button>
+        </div>
+        <label for="pakai-poin" style="display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 14px; border-radius: 12px; border: 1px solid #D9DBEA; font-size: 16px; font-weight: 700"><input id="pakai-poin" type="checkbox" checked style="width: 22px; height: 22px">Pakai 1.000 poin = potongan Rp10.000</label>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 16px; font-weight: 800">Diskon tambahan</span>
+          <div role="group" aria-label="Jenis diskon" style="display: flex; gap: 4px; background: #EDEEF7; padding: 4px; border-radius: 12px">
+            <button type="button" aria-pressed="true" style="height: 40px; padding: 0 16px; border-radius: 9px; border: 0; background: #FFFFFF; color: #3B35B5; font-weight: 800; font-size: 15px">Persen</button>
+            <button type="button" aria-pressed="false" style="height: 40px; padding: 0 16px; border-radius: 9px; border: 0; background: transparent; color: #51546F; font-weight: 700; font-size: 15px">Rupiah</button>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px">
+          <sc-for list="{{ pct }}" as="p" hint-placeholder-count="5"><button type="button" aria-pressed="{{p.on}}" style="height: 64px; border-radius: 14px; border: 2px solid {{p.border}}; background: {{p.bg}}; color: {{p.fg}}; font-weight: 800; font-size: 20px">{{p.label}}</button></sc-for>
+        </div>
+        <div role="group" aria-label="Berlaku untuk" style="display: flex; gap: 10px">
+          <button type="button" aria-pressed="true" style="flex: 1; height: 52px; border-radius: 12px; border: 2px solid #3B35B5; background: #FFFFFF; color: #3B35B5; font-weight: 800; font-size: 15px">Seluruh pesanan</button>
+          <button type="button" aria-pressed="false" style="flex: 1; height: 52px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #51546F; font-weight: 700; font-size: 15px">Pilih item tertentu</button>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <span style="font-size: 16px; font-weight: 800">Promo yang bisa dipakai</span>
+        <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px dashed #E39D00; border-radius: 12px; background: #FFF8E6"><span style="flex: 1; font-size: 15px; font-weight: 700; color: #6B4600">Happy hour 14.00–17.00: 2 Es Kopi Susu Aren Rp30.000</span><button type="button" style="height: 44px; padding: 0 14px; border-radius: 10px; border: 2px solid #E39D00; background: #FFFFFF; color: #6B4600; font-weight: 800; font-size: 14px">Pakai</button></div>
+      </div>
+      <div style="flex: 1"></div>
+      <span style="font-size: 14px; color: #51546F">Diskon di atas 20% perlu PIN kepala toko. Batasnya diatur pemilik di menu Karyawan › Hak akses.</span>
+    </section>
+    <aside aria-label="Ringkasan pesanan" style="width: 400px; flex: none; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px">
+      <span style="font-size: 18px; font-weight: 800">Pesanan · 5 item</span>
+      <sc-for list="{{ lines }}" as="l" hint-placeholder-count="3"><div style="display: flex; justify-content: space-between; font-size: 16px; padding: 8px 0; border-bottom: 1px solid #EDEEF7"><span><b>{{l.q}}×</b> {{l.n}}</span><span style="font-variant-numeric: tabular-nums">{{l.p}}</span></div></sc-for>
+      <div style="flex: 1"></div>
+      <div style="display: flex; justify-content: space-between; font-size: 15px; color: #51546F"><span>Subtotal</span><span>Rp87.000</span></div>
+      <div style="display: flex; justify-content: space-between; font-size: 15px; color: #16774A; font-weight: 700"><span>Diskon 10%</span><span>−Rp8.700</span></div>
+      <div style="display: flex; justify-content: space-between; font-size: 15px; color: #16774A; font-weight: 700"><span>Tukar 1.000 poin</span><span>−Rp10.000</span></div>
+      <div style="display: flex; justify-content: space-between; font-size: 15px; color: #51546F"><span>PBJT 10%</span><span>Rp6.830</span></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 18px; font-weight: 700">Total</span><span style="font-size: 36px; font-weight: 800; font-variant-numeric: tabular-nums">Rp75.130</span></div>
+      <span style="font-size: 14px; color: #51546F">Hemat Rp18.700 · dapat 75 poin baru</span>
+      <button type="button" style="height: 64px; border-radius: 14px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 19px; margin-top: 6px">Terapkan &amp; lanjut bayar</button>
+    </aside>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const pct = ['5%', '10%', '15%', '20%', 'Lainnya'].map(p => ({ label: p, on: p === '10%', border: p === '10%' ? '#3B35B5' : '#D9DBEA', bg: p === '10%' ? '#3B35B5' : '#FFFFFF', fg: p === '10%' ? '#FFFFFF' : '#181A2E' }));
+    const lines = [{ q: 2, n: 'Es Kopi Susu Aren', p: 'Rp36.000' }, { q: 1, n: 'Kopi Latte Panas', p: 'Rp22.000' }, { q: 1, n: 'Roti Bakar Cokelat', p: 'Rp14.000' }, { q: 1, n: 'Kentang Goreng', p: 'Rp15.000' }];
+    return { pct: pct, lines: lines };
+  }
+}
+</script>
+</body>
+</html>

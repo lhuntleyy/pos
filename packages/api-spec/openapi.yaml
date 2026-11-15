@@ -1,0 +1,582 @@
+openapi: 3.0.3
+info:
+  title: POS Kita API
+  version: 0.1.0
+  description: |
+    Kontrak API untuk app kasir, web back office, dan gateway WhatsApp.
+
+    Aturan umum:
+    - Semua nominal uang adalah bilangan bulat Rupiah (tanpa desimal).
+    - Semua ID memakai UUIDv7. Data dari kasir offline membawa ID buatan perangkat.
+    - Waktu dalam format RFC 3339 (UTC).
+    - Error memakai Problem Details (RFC 9457) dengan `code` yang stabil untuk dibaca program.
+servers:
+  - url: http://localhost:8080
+    description: Lokal
+tags:
+  - name: Sistem
+    description: Cek kesehatan server
+  - name: Akun
+    description: Daftar dan masuk dengan OTP WhatsApp, token sesi
+  - name: Perangkat
+    description: Memasang perangkat kasir ke outlet
+  - name: Sinkron
+    description: Sinkron offline-first antara kasir dan server (lihat docs/adr/0004)
+  - name: Katalog
+    description: Produk, kategori, varian, dan harga
+security:
+  - bearerAuth: []
+
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      summary: Cek server hidup
+      tags: [Sistem]
+      security: []
+      responses:
+        "200":
+          description: Server hidup
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Health"
+
+  /v1/auth/otp/request:
+    post:
+      operationId: requestOtp
+      summary: Kirim kode OTP ke WhatsApp (cadangan email)
+      tags: [Akun]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OtpRequest"
+      responses:
+        "202":
+          description: Kode sedang dikirim
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OtpRequested"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+
+  /v1/auth/otp/verify:
+    post:
+      operationId: verifyOtp
+      summary: Tukar kode OTP dengan token
+      tags: [Akun]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OtpVerify"
+      responses:
+        "200":
+          description: Kode benar
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenPair"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /v1/auth/refresh:
+    post:
+      operationId: refreshToken
+      summary: Perpanjang sesi dengan refresh token (refresh token diputar)
+      tags: [Akun]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefreshRequest"
+      responses:
+        "200":
+          description: Token baru
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenPair"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /v1/devices/pair:
+    post:
+      operationId: pairDevice
+      summary: Pasang perangkat kasir dengan kode 6 digit dari web
+      tags: [Perangkat]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DevicePairRequest"
+      responses:
+        "201":
+          description: Perangkat terpasang
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DevicePairing"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /v1/sync/pull:
+    get:
+      operationId: pullChanges
+      summary: Ambil perubahan master data sejak cursor terakhir
+      tags: [Sinkron]
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          description: Cursor dari respons sebelumnya. Kosong berarti ambil semua dari awal.
+          schema:
+            type: string
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Daftar perubahan
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PullResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /v1/sync/push:
+    post:
+      operationId: pushEvents
+      summary: Kirim event dari outbox perangkat (idempoten per event_id)
+      tags: [Sinkron]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PushRequest"
+      responses:
+        "200":
+          description: Hasil per event. Event yang sudah pernah diterima dibalas `duplicate`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PushResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /v1/products:
+    get:
+      operationId: listProducts
+      summary: Daftar produk di outlet
+      tags: [Katalog]
+      parameters:
+        - name: q
+          in: query
+          required: false
+          description: Cari nama, SKU, atau barcode
+          schema:
+            type: string
+        - name: category_id
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/Uuid"
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Satu halaman produk
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductPage"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    post:
+      operationId: createProduct
+      summary: Tambah produk
+      tags: [Katalog]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductInput"
+      responses:
+        "201":
+          description: Produk dibuat
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Token akses (15 menit) untuk pengguna, atau token perangkat untuk app kasir.
+
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 500
+        default: 100
+
+  responses:
+    BadRequest:
+      description: Data yang dikirim tidak valid
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+    Unauthorized:
+      description: Belum masuk atau token kedaluwarsa
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+    NotFound:
+      description: Data tidak ditemukan
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+    TooManyRequests:
+      description: Terlalu sering, coba lagi nanti
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+
+  schemas:
+    Uuid:
+      type: string
+      format: uuid
+      example: 0193a1b2-7c3d-7e4f-8a9b-0c1d2e3f4a5b
+
+    Rupiah:
+      type: integer
+      format: int64
+      description: Nominal dalam Rupiah, bilangan bulat tanpa desimal.
+      example: 18000
+
+    Problem:
+      type: object
+      description: Problem Details (RFC 9457)
+      required: [title, status, code]
+      properties:
+        type:
+          type: string
+          example: about:blank
+        title:
+          type: string
+          description: Ringkasan untuk developer
+          example: Data tidak valid
+        status:
+          type: integer
+          example: 400
+        detail:
+          type: string
+          description: Penjelasan yang aman ditampilkan ke pengguna (Bahasa Indonesia)
+          example: Nomor HP harus diawali 08 atau 62.
+        code:
+          type: string
+          description: Kode stabil untuk dibaca program
+          example: invalid_phone
+        instance:
+          type: string
+
+    Health:
+      type: object
+      required: [status, version, time]
+      properties:
+        status:
+          type: string
+          enum: [ok]
+        version:
+          type: string
+          example: 0.1.0
+        time:
+          type: string
+          format: date-time
+
+    OtpRequest:
+      type: object
+      required: [phone]
+      properties:
+        phone:
+          type: string
+          description: Nomor HP format 08xx atau 628xx
+          example: "081234567890"
+        channel:
+          type: string
+          enum: [whatsapp, email]
+          default: whatsapp
+        email:
+          type: string
+          format: email
+          description: Wajib kalau channel = email
+
+    OtpRequested:
+      type: object
+      required: [channel, expires_in_seconds, resend_in_seconds]
+      properties:
+        channel:
+          type: string
+          enum: [whatsapp, email]
+        expires_in_seconds:
+          type: integer
+          example: 300
+        resend_in_seconds:
+          type: integer
+          example: 60
+
+    OtpVerify:
+      type: object
+      required: [phone, code]
+      properties:
+        phone:
+          type: string
+          example: "081234567890"
+        code:
+          type: string
+          pattern: "^[0-9]{6}$"
+          example: "482913"
+
+    RefreshRequest:
+      type: object
+      required: [refresh_token]
+      properties:
+        refresh_token:
+          type: string
+
+    TokenPair:
+      type: object
+      required: [access_token, refresh_token, expires_in_seconds, is_new_user]
+      properties:
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+        expires_in_seconds:
+          type: integer
+          example: 900
+        is_new_user:
+          type: boolean
+          description: true kalau nomor ini baru daftar, app lanjut ke onboarding
+
+    DevicePairRequest:
+      type: object
+      required: [pairing_code, device_name, platform]
+      properties:
+        pairing_code:
+          type: string
+          pattern: "^[0-9]{6}$"
+          example: "193847"
+        device_name:
+          type: string
+          example: Kasir depan
+        platform:
+          type: string
+          enum: [android, ios, windows]
+        app_version:
+          type: string
+          example: 0.1.0
+
+    DevicePairing:
+      type: object
+      required: [device_id, device_token, business_id, outlet_id, receipt_prefix]
+      properties:
+        device_id:
+          $ref: "#/components/schemas/Uuid"
+        device_token:
+          type: string
+          description: Simpan di penyimpanan aman perangkat. Dipakai sebagai bearer token.
+        business_id:
+          $ref: "#/components/schemas/Uuid"
+        outlet_id:
+          $ref: "#/components/schemas/Uuid"
+        receipt_prefix:
+          type: string
+          description: Prefix nomor nota perangkat ini, misalnya K1 untuk nota S-K1-0412
+          example: K1
+
+    Change:
+      type: object
+      required: [entity, op, id, version]
+      properties:
+        entity:
+          type: string
+          enum: [product, category, variant, modifier_group, tax, employee, outlet_setting, plan_entitlement]
+        op:
+          type: string
+          enum: [upsert, delete]
+        id:
+          $ref: "#/components/schemas/Uuid"
+        version:
+          type: integer
+          format: int64
+          description: Naik setiap kali data berubah di server
+        data:
+          type: object
+          additionalProperties: true
+          description: Isi data terbaru. Kosong kalau op = delete.
+
+    PullResponse:
+      type: object
+      required: [changes, next_cursor, has_more]
+      properties:
+        changes:
+          type: array
+          items:
+            $ref: "#/components/schemas/Change"
+        next_cursor:
+          type: string
+        has_more:
+          type: boolean
+
+    SyncEvent:
+      type: object
+      required: [event_id, type, occurred_at, payload]
+      properties:
+        event_id:
+          $ref: "#/components/schemas/Uuid"
+        type:
+          type: string
+          enum:
+            - sale.completed
+            - sale.voided
+            - refund.created
+            - cash.moved
+            - shift.opened
+            - shift.closed
+            - stock_count.submitted
+            - customer.upserted
+            - receivable.paid
+        occurred_at:
+          type: string
+          format: date-time
+          description: Waktu kejadian menurut jam perangkat
+        payload:
+          type: object
+          additionalProperties: true
+
+    PushRequest:
+      type: object
+      required: [device_id, events]
+      properties:
+        device_id:
+          $ref: "#/components/schemas/Uuid"
+        events:
+          type: array
+          minItems: 1
+          maxItems: 200
+          items:
+            $ref: "#/components/schemas/SyncEvent"
+
+    PushResult:
+      type: object
+      required: [event_id, status]
+      properties:
+        event_id:
+          $ref: "#/components/schemas/Uuid"
+        status:
+          type: string
+          enum: [accepted, duplicate, rejected]
+        reason:
+          type: string
+          description: Diisi kalau status = rejected
+
+    PushResponse:
+      type: object
+      required: [results]
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/PushResult"
+
+    ProductInput:
+      type: object
+      required: [name, price]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 120
+          example: Es Kopi Susu Aren
+        category_id:
+          $ref: "#/components/schemas/Uuid"
+        price:
+          $ref: "#/components/schemas/Rupiah"
+        sku:
+          type: string
+        barcode:
+          type: string
+        track_stock:
+          type: boolean
+          default: false
+
+    Product:
+      allOf:
+        - $ref: "#/components/schemas/ProductInput"
+        - type: object
+          required: [id, version, created_at, updated_at]
+          properties:
+            id:
+              $ref: "#/components/schemas/Uuid"
+            version:
+              type: integer
+              format: int64
+            created_at:
+              type: string
+              format: date-time
+            updated_at:
+              type: string
+              format: date-time
+
+    ProductPage:
+      type: object
+      required: [items, has_more]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Product"
+        next_cursor:
+          type: string
+        has_more:
+          type: boolean

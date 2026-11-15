@@ -1,0 +1,25 @@
+{
+  "name": "@pos/api-spec",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Spesifikasi OpenAPI dan klien TypeScript bertipe",
+  "exports": {
+    ".": "./ts/index.ts",
+    "./openapi.yaml": "./openapi.yaml"
+  },
+  "scripts": {
+    "lint:spec": "redocly lint openapi.yaml",
+    "gen": "openapi-typescript openapi.yaml -o ts/schema.gen.ts --redocly codegen/redocly.yaml",
+    "typecheck": "tsc --noEmit",
+    "test": "pnpm lint:spec"
+  },
+  "dependencies": {
+    "openapi-fetch": "^0.17.0"
+  },
+  "devDependencies": {
+    "@redocly/cli": "^2.77.0",
+    "openapi-typescript": "^7.13.0",
+    "typescript": "^5.9.3"
+  }
+}

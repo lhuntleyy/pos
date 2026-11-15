@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Stok masuk dari supplier</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height: 1000px; box-sizing: border-box; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+  <nav aria-label="Menu utama" style="flex: 1 1 232px; max-width: 100%; background: #FFFFFF; border-right: 1px solid #D9DBEA; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 6px 18px"><div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div><span style="font-size: 18px; font-weight: 800">POS Kita</span></div>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7"><a href="#" aria-current="{{n.current}}" style="min-height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 12px; text-decoration: none; background: {{n.bg}}; color: {{n.fg}}; font-weight: {{n.weight}}; font-size: 15px"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{n.dot}}; flex: none"></span>{{n.label}}</a></sc-for>
+  </nav>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 24px clamp(16px, 3vw, 36px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; color: #51546F; font-weight: 600">Produk &amp; Stok › Stok masuk</span><h1 style="margin: 0; font-size: 28px; font-weight: 800">Catat stok masuk</h1></div>
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+      <section aria-label="Form stok masuk" style="flex: 2 1 600px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+          <label for="supplier" style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700">Supplier<input id="supplier" type="text" value="CV Susu Segar Abadi" style="height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; padding: 0 12px; font-size: 15px"></label>
+          <label for="faktur" style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700">No. nota supplier<input id="faktur" type="text" value="SSA/11/0458" style="height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; padding: 0 12px; font-size: 15px"></label>
+          <label for="tgl-masuk" style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700">Tanggal barang datang<input id="tgl-masuk" type="text" value="Jumat, 14 Nov 2026" style="height: 48px; border-radius: 12px; border: 2px solid #E39D00; padding: 0 12px; font-size: 15px"></label>
+        </div>
+        <span style="font-size: 13px; color: #6B4600; font-weight: 600">Tanggal mundur diperbolehkan. Stok dan laporan HPP sejak tanggal itu dihitung ulang, dan perubahan tercatat di log aktivitas.</span>
+        <div style="overflow-x: auto">
+          <table style="width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px">
+            <thead><tr style="background: #F6F6FB"><th scope="col" style="text-align: left; padding: 10px 12px; font-size: 13px; color: #51546F">Barang</th><th scope="col" style="text-align: left; padding: 10px; font-size: 13px; color: #51546F">Satuan beli</th><th scope="col" style="text-align: right; padding: 10px; font-size: 13px; color: #51546F">Jumlah</th><th scope="col" style="text-align: right; padding: 10px; font-size: 13px; color: #51546F">Masuk ke stok</th><th scope="col" style="text-align: right; padding: 10px; font-size: 13px; color: #51546F">Harga beli</th><th scope="col" style="text-align: right; padding: 10px 12px; font-size: 13px; color: #51546F">Subtotal</th></tr></thead>
+            <tbody>
+              <sc-for list="{{ rows }}" as="r" hint-placeholder-count="4"><tr style="border-top: 1px solid #EDEEF7"><td style="padding: 10px 12px; font-weight: 700">{{r.name}}</td><td style="padding: 10px; color: #51546F">{{r.unit}}</td><td style="padding: 10px; text-align: right; font-weight: 800">{{r.qty}}</td><td style="padding: 10px; text-align: right; color: #16774A; font-weight: 700">{{r.into}}</td><td style="padding: 10px; text-align: right; font-variant-numeric: tabular-nums">{{r.price}}</td><td style="padding: 10px 12px; text-align: right; font-weight: 800; font-variant-numeric: tabular-nums">{{r.sub}}</td></tr></sc-for>
+            </tbody>
+          </table>
+        </div>
+        <button type="button" style="align-self: flex-start; height: 44px; padding: 0 14px; border-radius: 10px; border: 1px dashed #3B35B5; background: #FFFFFF; color: #3B35B5; font-weight: 800; font-size: 14px">+ Tambah barang (atau scan)</button>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; border-top: 1px solid #EDEEF7; padding-top: 14px">
+          <div role="group" aria-label="Status bayar" style="display: flex; gap: 6px; background: #EDEEF7; padding: 4px; border-radius: 12px"><button type="button" aria-pressed="false" style="height: 40px; padding: 0 14px; border-radius: 9px; border: 0; background: transparent; color: #51546F; font-weight: 700; font-size: 14px">Lunas</button><button type="button" aria-pressed="true" style="height: 40px; padding: 0 14px; border-radius: 9px; border: 0; background: #FFFFFF; color: #3B35B5; font-weight: 800; font-size: 14px">Tempo · jatuh tempo 28 Nov</button></div>
+          <div style="display: flex; align-items: baseline; gap: 12px"><span style="font-size: 15px; color: #51546F">Total</span><span style="font-size: 28px; font-weight: 800; font-variant-numeric: tabular-nums">Rp1.906.000</span></div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px"><button type="button" style="height: 48px; padding: 0 16px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 14px">Foto nota supplier</button><div style="flex: 1"></div><button type="button" style="height: 52px; padding: 0 22px; border-radius: 12px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 15px">Simpan &amp; tambah stok</button></div>
+      </section>
+      <aside aria-label="Riwayat stok masuk" style="flex: 1 1 300px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 10px">
+        <h2 style="margin: 0; font-size: 18px; font-weight: 800">Stok masuk terakhir</h2>
+        <sc-for list="{{ hist }}" as="h" hint-placeholder-count="5"><div style="display: flex; flex-direction: column; gap: 2px; padding: 8px 0; border-bottom: 1px solid #EDEEF7"><div style="display: flex; justify-content: space-between; font-size: 15px"><b>{{h.sup}}</b><span style="font-variant-numeric: tabular-nums">{{h.v}}</span></div><div style="display: flex; justify-content: space-between; font-size: 13px; color: #51546F"><span>{{h.d}}</span><span style="color: {{h.fg}}; font-weight: 700">{{h.st}}</span></div></div></sc-for>
+      </aside>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const N = [['Beranda'], ['Penjualan'], ['Produk & Stok', true], ['Pelanggan & Promo'], ['Karyawan'], ['Laporan'], ['Pengaturan']];
+    const nav = N.map(n => ({ label: n[0], current: n[1] ? 'page' : 'false', bg: n[1] ? '#3B35B5' : 'transparent', fg: n[1] ? '#FFFFFF' : '#181A2E', weight: n[1] ? 800 : 600, dot: n[1] ? '#FFC23D' : '#D9DBEA' }));
+    const rows = [['Susu UHT full cream 1 L', 'Dus isi 12', 6, '+72 liter', 'Rp216.000', 'Rp1.296.000'], ['Krimer kental manis', 'Dus isi 24', 1, '+24 kaleng', 'Rp290.000', 'Rp290.000'], ['Keju cheddar 2 kg', 'Blok', 1, '+2 kg', 'Rp210.000', 'Rp210.000'], ['Whipping cream 1 L', 'Kotak', 2, '+2 liter', 'Rp55.000', 'Rp110.000']].map(r => ({ name: r[0], unit: r[1], qty: r[2], into: r[3], price: r[4], sub: r[5] }));
+    const hist = [['CV Susu Segar Abadi', 'Rp1.906.000', '14 Nov · Kemang', 'Tempo', '#6B4600'], ['Toko Plastik Jaya', 'Rp420.000', '12 Nov · semua outlet', 'Lunas', '#16774A'], ['Roastery Lereng', 'Rp3.300.000', '10 Nov · Kemang', 'Lunas', '#16774A'], ['Pasar Induk (belanja harian)', 'Rp286.000', '10 Nov · Tebet', 'Lunas', '#16774A'], ['CV Susu Segar Abadi', 'Rp1.512.000', '7 Nov · Senopati', 'Lunas', '#16774A']].map(h => ({ sup: h[0], v: h[1], d: h[2], st: h[3], fg: h[4] }));
+    return { nav: nav, rows: rows, hist: hist };
+  }
+}
+</script>
+</body>
+</html>

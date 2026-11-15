@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Layar pelanggan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; box-sizing: border-box; display: flex; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <section aria-label="Pesanan Anda" style="flex: 1; min-width: 0; padding: 40px 44px; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; align-items: center; gap: 12px">
+      <div style="width: 48px; height: 48px; border-radius: 14px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 22px">S</div>
+      <div style="display: flex; flex-direction: column"><span style="font-size: 24px; font-weight: 800">Kedai Kopi Senja</span><span style="font-size: 16px; color: #51546F">Dilayani oleh Dimas · Makan di sini</span></div>
+    </div>
+    <h1 style="margin: 12px 0 0; font-size: 30px; font-weight: 800">Pesanan Anda</h1>
+    <div style="flex: 1; min-height: 0; display: flex; flex-direction: column">
+      <sc-for list="{{ lines }}" as="l" hint-placeholder-count="3">
+        <div style="display: flex; gap: 16px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid #D9DBEA; font-size: 24px">
+          <span style="font-weight: 800; min-width: 48px; font-variant-numeric: tabular-nums">{{l.qty}}×</span>
+          <span style="flex: 1; font-weight: 600">{{l.name}}</span>
+          <span style="font-weight: 800; font-variant-numeric: tabular-nums">{{l.total}}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px; font-size: 20px; color: #51546F">
+      <div style="display: flex; justify-content: space-between"><span>Subtotal</span><span style="font-variant-numeric: tabular-nums">Rp57.000</span></div>
+      <div style="display: flex; justify-content: space-between"><span>PBJT makan-minum 10%</span><span style="font-variant-numeric: tabular-nums">Rp5.700</span></div>
+    </div>
+    <div style="background: #FFF2D2; color: #6B4600; border-radius: 16px; padding: 16px 20px; font-size: 18px; font-weight: 700; line-height: 1.45">Senin–Jumat pukul 14.00–17.00: 2 Es Kopi Susu Aren cukup Rp30.000.</div>
+  </section>
+
+  <section aria-label="Pembayaran" style="width: 500px; flex: none; background: #FFFFFF; border-left: 1px solid #D9DBEA; padding: 40px 44px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center">
+    <span style="font-size: 20px; font-weight: 700; color: #51546F">Total yang dibayar</span>
+    <span style="font-size: 64px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; line-height: 1.05">Rp62.700</span>
+    <div style="margin-top: 8px; padding: 16px; border: 1px solid #D9DBEA; border-radius: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px">
+      <span style="font-weight: 800; font-size: 18px; letter-spacing: 0.1em">QRIS</span>
+      <div role="img" aria-label="Contoh kode QR untuk dibayar" style="display: grid; grid-template-columns: repeat(25, 10px); width: 250px; height: 250px">
+        <sc-for list="{{ qr }}" as="cell" hint-placeholder-count="625"><div style="width: 10px; height: 10px; background: {{cell.c}}"></div></sc-for>
+      </div>
+    </div>
+    <span style="font-size: 20px; font-weight: 800">Scan pakai aplikasi bank atau e-wallet apa saja</span>
+    <span style="font-size: 16px; color: #51546F; line-height: 1.5">Struk digital dan poin member bisa dikirim ke WhatsApp Anda. Sebutkan nomor ke kasir.</span>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  qrCells() {
+    if (this._qr) return this._qr;
+    const N = 25;
+    let seed = 29;
+    const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    const cells = [];
+    for (let r = 0; r < N; r++) {
+      for (let c = 0; c < N; c++) {
+        let corner = null;
+        if (r < 8 && c < 8) corner = [0, 0];
+        else if (r < 8 && c >= N - 8) corner = [0, N - 7];
+        else if (r >= N - 8 && c < 8) corner = [N - 7, 0];
+        let on;
+        if (corner) {
+          const rr = r - corner[0], cc = c - corner[1];
+          if (rr < 0 || cc < 0 || rr > 6 || cc > 6) on = false;
+          else { const ring = Math.max(Math.abs(rr - 3), Math.abs(cc - 3)); on = ring === 3 || ring <= 1; }
+        } else { on = rnd() > 0.52; }
+        cells.push({ c: on ? '#181A2E' : '#FFFFFF' });
+      }
+    }
+    this._qr = cells;
+    return cells;
+  }
+  renderVals() {
+    const lines = [
+      { qty: 2, name: 'Es Kopi Susu Aren', total: 'Rp36.000' },
+      { qty: 1, name: 'Es Teh Manis', total: 'Rp6.000' },
+      { qty: 1, name: 'Pisang Goreng Keju', total: 'Rp15.000' }
+    ];
+    return { lines: lines, qr: this.qrCells() };
+  }
+}
+</script>
+</body>
+</html>

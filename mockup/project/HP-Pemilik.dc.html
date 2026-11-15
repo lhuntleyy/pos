@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>App pemilik</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <div style="flex: 1; min-height: 0; overflow: auto; padding: 18px 16px 16px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px">
+      <div style="display: flex; flex-direction: column">
+        <span style="font-size: 15px; color: #51546F">Sabtu, 14 Nov · 15.40</span>
+        <span style="font-size: 22px; font-weight: 800">Selamat sore, Pak Hendra</span>
+      </div>
+      <button type="button" style="height: 44px; padding: 0 12px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px; flex: none">
+        3 outlet
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+      </button>
+    </div>
+
+    <section aria-label="Penjualan hari ini" style="background: #3B35B5; color: #FFFFFF; border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 4px">
+      <span style="font-size: 16px; font-weight: 600; opacity: 0.9">Penjualan bersih hari ini</span>
+      <span style="font-size: 38px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; line-height: 1.15">Rp4.215.000</span>
+      <span style="display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 700">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9EF0C4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg>
+        Naik 12% dari Sabtu lalu pada jam yang sama
+      </span>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 10px">
+        <div style="background: rgba(255,255,255,0.14); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column"><span style="font-size: 14px; opacity: 0.9">Laba kotor</span><span style="font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums">Rp1.940.000</span></div>
+        <div style="background: rgba(255,255,255,0.14); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column"><span style="font-size: 14px; opacity: 0.9">Transaksi</span><span style="font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums">186</span></div>
+      </div>
+    </section>
+
+    <section aria-label="Penjualan per jam" style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 16px; font-weight: 800">Ramai jam berapa?</span><span style="font-size: 13px; color: #51546F">Rp juta</span></div>
+      <div style="display: flex; align-items: flex-end; gap: 6px; height: 96px">
+        <sc-for list="{{ hours }}" as="h" hint-placeholder-count="9">
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end">
+            <div style="width: 100%; height: {{h.pct}}%; border-radius: 6px 6px 2px 2px; background: {{h.bg}}"></div>
+            <span style="font-size: 12px; color: #51546F; font-variant-numeric: tabular-nums">{{h.label}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-label="Perlu perhatian" style="display: flex; flex-direction: column; gap: 8px">
+      <span style="font-size: 17px; font-weight: 800">Perlu perhatian · 3</span>
+      <sc-for list="{{ alerts }}" as="a" hint-placeholder-count="3">
+        <button type="button" style="display: flex; gap: 12px; align-items: flex-start; text-align: left; padding: 12px 14px; border-radius: 14px; border: 1px solid {{a.border}}; background: {{a.bg}}; color: #181A2E">
+          <span style="width: 36px; height: 36px; border-radius: 10px; background: #FFFFFF; color: {{a.fg}}; display: flex; align-items: center; justify-content: center; flex: none; font-weight: 800; font-size: 18px">{{a.mark}}</span>
+          <span style="flex: 1; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 13px; font-weight: 800; color: {{a.fg}}">{{a.kind}}</span>
+            <span style="font-size: 16px; font-weight: 700; line-height: 1.35">{{a.text}}</span>
+            <span style="font-size: 14px; color: #51546F">{{a.where}}</span>
+          </span>
+        </button>
+      </sc-for>
+    </section>
+
+    <section aria-label="Asisten" style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+      <span style="font-size: 16px; font-weight: 800">Tanya asisten</span>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px">
+        <button type="button" style="min-height: 44px; padding: 8px 12px; border-radius: 12px; border: 1px solid #D9DBEA; background: #F6F6FB; color: #181A2E; font-weight: 700; font-size: 14px; text-align: left">Menu apa paling laku minggu ini?</button>
+        <button type="button" style="min-height: 44px; padding: 8px 12px; border-radius: 12px; border: 1px solid #D9DBEA; background: #F6F6FB; color: #181A2E; font-weight: 700; font-size: 14px; text-align: left">Kenapa Tebet sepi hari ini?</button>
+      </div>
+      <span style="font-size: 14px; color: #51546F">Bisa juga lewat WhatsApp. Ringkasan harian dikirim tiap jam 22.00.</span>
+    </section>
+  </div>
+
+  <nav aria-label="Navigasi utama" style="height: 76px; flex: none; background: #FFFFFF; border-top: 1px solid #D9DBEA; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding-bottom: 6px">
+    <button type="button" aria-current="page" style="border: 0; background: transparent; color: #3B35B5; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-weight: 800; font-size: 13px">
+      <span style="width: 52px; height: 30px; border-radius: 999px; background: #E6E5FA; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7"></path><path d="M5 10v10h14V10"></path></svg></span>
+      Beranda
+    </button>
+    <button type="button" style="border: 0; background: transparent; color: #51546F; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-weight: 600; font-size: 13px">
+      <span style="width: 52px; height: 30px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"></path></svg></span>
+      Laporan
+    </button>
+    <button type="button" style="border: 0; background: transparent; color: #51546F; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-weight: 600; font-size: 13px">
+      <span style="width: 52px; height: 30px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5Z"></path><path d="M3 8l9 5 9-5M12 13v8"></path></svg></span>
+      Stok
+    </button>
+    <button type="button" style="border: 0; background: transparent; color: #51546F; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-weight: 600; font-size: 13px">
+      <span style="width: 52px; height: 30px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg></span>
+      Akun
+    </button>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const H = [['08', 22], ['09', 35], ['10', 41], ['11', 58], ['12', 100], ['13', 87], ['14', 49], ['15', 38], ['16', 12]];
+    const hours = H.map(h => ({ label: h[0], pct: h[1], bg: h[1] === 100 ? '#3B35B5' : (h[0] === '16' ? '#D9DBEA' : '#B9B6EE') }));
+    const alerts = [
+      { kind: 'Stok menipis', mark: '!', text: 'Susu UHT tinggal 4 liter, cukup ±2 jam', where: 'Outlet Kemang · pesan ke supplier', bg: '#FFF8E6', border: '#F0D08A', fg: '#6B4600' },
+      { kind: 'Void besar', mark: '×', text: '2 pesanan dibatalkan, total Rp186.000', where: 'Outlet Senopati · kasir Rudi · lihat alasan', bg: '#FDF1EF', border: '#F1B5AE', fg: '#B42318' },
+      { kind: 'Selisih kas', mark: '≠', text: 'Kas kurang Rp15.000 saat tutup shift pagi', where: 'Outlet Tebet · kasir Lala', bg: '#FFF8E6', border: '#F0D08A', fg: '#6B4600' }
+    ];
+    return { hours: hours, alerts: alerts };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Kebijakan privasi">
+  <article class="legal">
+    <h1>Kebijakan privasi</h1>
+    <p class="draft" role="note">
+      Draf. Isi final wajib ditinjau sebelum rilis publik (story RL-03), mengikuti UU No. 27/2022 tentang Pelindungan
+      Data Pribadi dan PP turunannya.
+    </p>
+    <h2>Data yang kami kumpulkan</h2>
+    <p>Nomor HP pemilik dan karyawan, data usaha, produk, transaksi, dan data pelanggan yang Anda masukkan.</p>
+    <h2>Untuk apa data dipakai</h2>
+    <p>Menjalankan aplikasi kasir, mengirim struk dan laporan lewat WhatsApp atas persetujuan pelanggan, dan penagihan langganan.</p>
+    <h2>Hak Anda</h2>
+    <p>Anda bisa mengunduh semua data kapan saja dan meminta data dihapus saat berhenti berlangganan.</p>
+  </article>
+</Base>
+
+<style>
+  .legal {
+    max-width: 720px;
+  }
+  .draft {
+    background: var(--color-highlight-soft);
+    color: var(--color-highlight-ink);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    font-weight: 600;
+  }
+</style>

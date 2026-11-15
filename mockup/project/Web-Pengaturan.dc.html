@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Pengaturan usaha</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height: 1200px; box-sizing: border-box; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+  <nav aria-label="Menu utama" style="flex: 1 1 232px; max-width: 100%; background: #FFFFFF; border-right: 1px solid #D9DBEA; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 6px 18px"><div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div><span style="font-size: 18px; font-weight: 800">POS Kita</span></div>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7"><a href="#" aria-current="{{n.current}}" style="min-height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 12px; text-decoration: none; background: {{n.bg}}; color: {{n.fg}}; font-weight: {{n.weight}}; font-size: 15px"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{n.dot}}; flex: none"></span>{{n.label}}</a></sc-for>
+  </nav>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 24px clamp(16px, 3vw, 36px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <h1 style="margin: 0; font-size: 28px; font-weight: 800">Pengaturan</h1>
+    <div role="tablist" aria-label="Bagian pengaturan" style="display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid #D9DBEA">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="7"><button type="button" role="tab" aria-selected="{{t.on}}" style="height: 48px; padding: 0 14px; border: 0; border-bottom: 3px solid {{t.line}}; background: transparent; color: {{t.fg}}; font-weight: {{t.w}}; font-size: 15px">{{t.label}}</button></sc-for>
+    </div>
+    <section aria-label="Modul usaha" style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 2px"><h2 style="margin: 0; font-size: 19px; font-weight: 800">Modul usaha</h2><span style="font-size: 14px; color: #51546F">Nyalakan sesuai kebutuhan. Bisa lebih dari satu, misalnya kafe yang juga jual merchandise.</span></div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px">
+        <sc-for list="{{ modules }}" as="m" hint-placeholder-count="3">
+          <div style="border: {{m.border}}; background: {{m.bg}}; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px">
+            <div style="display: flex; align-items: center; gap: 10px"><span style="flex: 1; font-size: 17px; font-weight: 800">{{m.title}}</span><span role="switch" aria-checked="{{m.on}}" aria-label="{{m.title}}" style="display: inline-flex; width: 52px; height: 30px; border-radius: 999px; background: {{m.sw}}; padding: 3px; box-sizing: border-box; justify-content: {{m.j}}"><span style="width: 24px; height: 24px; border-radius: 50%; background: #FFFFFF"></span></span></div>
+            <span style="font-size: 14px; color: #51546F; line-height: 1.5">{{m.items}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+      <section aria-label="Pajak dan biaya" style="flex: 1 1 380px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px">
+        <h2 style="margin: 0; font-size: 19px; font-weight: 800">Pajak &amp; biaya</h2>
+        <sc-for list="{{ taxes }}" as="t" hint-placeholder-count="4">
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid #EDEEF7"><span style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 700">{{t.label}}</span><span style="font-size: 13px; color: #51546F">{{t.help}}</span></span><span style="padding: 5px 12px; border-radius: 10px; background: {{t.bg}}; color: {{t.fg}}; font-size: 13px; font-weight: 800">{{t.v}}</span></div>
+        </sc-for>
+        <span style="font-size: 13px; color: #51546F; line-height: 1.5">Biaya QRIS tidak boleh dibebankan ke pembeli (aturan BI), jadi pilihan itu memang tidak tersedia.</span>
+      </section>
+      <section aria-label="Struk" style="flex: 1 1 420px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px 20px; display: flex; flex-wrap: wrap; gap: 16px">
+        <div style="flex: 1 1 200px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+          <h2 style="margin: 0; font-size: 19px; font-weight: 800">Struk</h2>
+          <sc-for list="{{ receipt }}" as="r" hint-placeholder-count="5"><div style="display: flex; align-items: center; gap: 10px; min-height: 40px"><span style="flex: 1; font-size: 15px">{{r.label}}</span><span role="switch" aria-checked="{{r.on}}" aria-label="{{r.label}}" style="display: inline-flex; width: 46px; height: 26px; border-radius: 999px; background: {{r.sw}}; padding: 3px; box-sizing: border-box; justify-content: {{r.j}}"><span style="width: 20px; height: 20px; border-radius: 50%; background: #FFFFFF"></span></span></div></sc-for>
+        </div>
+        <div aria-label="Pratinjau struk" style="flex: 0 0 220px; background: #F6F6FB; border-radius: 12px; padding: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.55; display: flex; flex-direction: column; gap: 2px">
+          <span style="text-align: center; font-weight: 700; font-size: 13px">KEDAI KOPI SENJA</span>
+          <span style="text-align: center">Jl. Kemang Raya No. 12</span>
+          <span>--------------------------</span>
+          <span style="display: flex; justify-content: space-between"><span>2x Es Kopi Aren</span><span>36.000</span></span>
+          <span style="display: flex; justify-content: space-between"><span>PBJT 10%</span><span>3.600</span></span>
+          <span style="display: flex; justify-content: space-between; font-weight: 700"><span>TOTAL</span><span>39.600</span></span>
+          <span>--------------------------</span>
+          <span style="text-align: center">Wifi: senja2026</span>
+          <span style="text-align: center">Terima kasih!</span>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1200}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const N = [['Beranda'], ['Penjualan'], ['Produk & Stok'], ['Pelanggan & Promo'], ['Karyawan'], ['Laporan'], ['Pengaturan', true]];
+    const nav = N.map(n => ({ label: n[0], current: n[1] ? 'page' : 'false', bg: n[1] ? '#3B35B5' : 'transparent', fg: n[1] ? '#FFFFFF' : '#181A2E', weight: n[1] ? 800 : 600, dot: n[1] ? '#FFC23D' : '#D9DBEA' }));
+    const tabs = [['Usaha & modul', true], ['Pajak & struk'], ['Pembayaran'], ['WhatsApp'], ['Perangkat'], ['Langganan'], ['Data & ekspor']].map(t => ({ label: t[0], on: !!t[1], line: t[1] ? '#3B35B5' : 'transparent', fg: t[1] ? '#3B35B5' : '#51546F', w: t[1] ? 800 : 600 }));
+    const sw = on => ({ sw: on ? '#3B35B5' : '#B9BCD3', j: on ? 'flex-end' : 'flex-start' });
+    const modules = [
+      Object.assign({ title: 'Makanan & minuman', items: 'Meja & open bill, topping dengan batas minimal–maksimal, kirim ke dapur, mode pelayan, resep & HPP, harga ojol, service charge', on: true, border: '2px solid #3B35B5', bg: '#F1F0FD' }, sw(true)),
+      Object.assign({ title: 'Retail', items: 'Barcode & label, varian ukuran × warna, multi-satuan, harga grosir, supplier & pembelian, retur', on: true, border: '2px solid #3B35B5', bg: '#F1F0FD' }, sw(true)),
+      Object.assign({ title: 'Jasa', items: 'Layanan per kg/jam, status pengerjaan + WA "siap diambil", antrean, booking, komisi, uang muka', on: false, border: '1px solid #D9DBEA', bg: '#FFFFFF' }, sw(false))
+    ];
+    const taxes = [['PBJT makan-minum', 'Kota Jakarta Selatan · dari panduan daftar', '10% · aktif', '#DDF3E7', '#16774A'], ['Service charge', 'Hanya untuk makan di sini', 'Tidak aktif', '#EDEEF7', '#51546F'], ['PPN', 'Untuk usaha yang sudah PKP · DPP nilai lain 11/12', 'Tidak aktif', '#EDEEF7', '#51546F'], ['Pembulatan', 'Ke Rp100 terdekat, ditampilkan di struk', 'Aktif', '#DDF3E7', '#16774A']].map(t => ({ label: t[0], help: t[1], v: t[2], bg: t[3], fg: t[4] }));
+    const receipt = [['Tampilkan logo', true], ['Tampilkan nama kasir', true], ['QR struk digital & poin', true], ['Pesan bawah (wifi, sosmed)', true], ['Cetak otomatis setelah bayar', false]].map(r => Object.assign({ label: r[0], on: r[1] }, sw(r[1])));
+    return { nav: nav, tabs: tabs, modules: modules, taxes: taxes, receipt: receipt };
+  }
+}
+</script>
+</body>
+</html>

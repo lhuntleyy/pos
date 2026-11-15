@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: PRD, roadmap, dan backlog
+    url: https://claude.ai/artifact/C3fa2i3ZmJVfstRHUzsybf
+    about: Aturan bisnis dan kriteria terima setiap fitur
+  - name: Mockup semua layar
+    url: https://claude.ai/artifact/WgWf38bWpEs41JdifDu4on
+    about: 42 layar kasir, HP, web, super admin, layar & struk, situs

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Pilih jenis usaha</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <div style="padding: 20px 20px 8px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <button type="button" aria-label="Kembali" style="width: 48px; height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: #181A2E">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
+      </button>
+      <span style="font-size: 15px; font-weight: 700; color: #51546F">Langkah 2 dari 4</span>
+      <button type="button" style="height: 48px; padding: 0 12px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 15px">Aa Teks</button>
+    </div>
+    <div role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="2" aria-label="Langkah pendaftaran" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px">
+      <span style="height: 6px; border-radius: 3px; background: #3B35B5"></span>
+      <span style="height: 6px; border-radius: 3px; background: #3B35B5"></span>
+      <span style="height: 6px; border-radius: 3px; background: #D9DBEA"></span>
+      <span style="height: 6px; border-radius: 3px; background: #D9DBEA"></span>
+    </div>
+    <h1 style="margin: 6px 0 0; font-size: 26px; font-weight: 800; line-height: 1.25">Usaha Anda jenis apa?</h1>
+    <p style="margin: 0; font-size: 16px; color: #51546F; line-height: 1.5">Kami siapkan menu kasir, kategori, dan pengaturan pajak yang cocok. Semuanya bisa diubah nanti.</p>
+  </div>
+
+  <div style="flex: 1; min-height: 0; overflow: auto; padding: 8px 20px 12px">
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+      <sc-for list="{{ types }}" as="t" hint-placeholder-count="8">
+        <button type="button" aria-pressed="{{t.on}}" style="min-height: 96px; border-radius: 16px; border: {{t.border}}; background: {{t.bg}}; color: #181A2E; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; padding: 14px; text-align: left; position: relative">
+          <span style="width: 40px; height: 40px; border-radius: 12px; background: {{t.iconBg}}; color: {{t.iconFg}}; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px">{{t.initial}}</span>
+          <span style="font-size: 16px; font-weight: 800; line-height: 1.25">{{t.label}}</span>
+          <sc-if value="{{ t.on }}" hint-placeholder-val="{{ false }}">
+            <span style="position: absolute; top: 12px; right: 12px; width: 26px; height: 26px; border-radius: 50%; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+            </span>
+          </sc-if>
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="margin-top: 14px; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 16px; display: flex; gap: 14px; align-items: flex-start">
+      <span style="width: 48px; height: 48px; flex: none; border-radius: 14px; background: #FFF2D2; color: #6B4600; display: flex; align-items: center; justify-content: center">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>
+      </span>
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <span style="font-size: 16px; font-weight: 800">Punya daftar menu atau nota harga?</span>
+        <span style="font-size: 15px; color: #51546F; line-height: 1.45">Foto saja. Nama produk dan harga kami isikan otomatis, tinggal Anda cek.</span>
+        <button type="button" style="align-self: flex-start; margin-top: 6px; height: 44px; padding: 0 14px; border-radius: 12px; border: 2px solid #E39D00; background: #FFF8E6; color: #6B4600; font-weight: 800; font-size: 15px">Foto daftar menu</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 12px 20px 24px; background: #FFFFFF; border-top: 1px solid #D9DBEA; display: flex; flex-direction: column; gap: 8px">
+    <button type="button" style="height: 60px; border-radius: 14px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 18px">Lanjut: Kafe &amp; kedai kopi</button>
+    <span style="text-align: center; font-size: 14px; color: #51546F">Butuh bantuan? Chat tim kami di WhatsApp</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const list = [
+      { label: 'Warung makan', initial: 'W', bg: '#FCE3D6', fg: '#9A3412' },
+      { label: 'Kafe & kedai kopi', initial: 'K', bg: '#F3E6DA', fg: '#6B3E1E', on: true },
+      { label: 'Toko kelontong', initial: 'T', bg: '#DDF0EA', fg: '#11624A' },
+      { label: 'Restoran', initial: 'R', bg: '#FCE3D6', fg: '#9A3412' },
+      { label: 'Laundry', initial: 'L', bg: '#E1ECFB', fg: '#1D4E89' },
+      { label: 'Barbershop & salon', initial: 'B', bg: '#EFE3F7', fg: '#6A1B9A' },
+      { label: 'Toko baju', initial: 'B', bg: '#FFF0C7', fg: '#7A5200' },
+      { label: 'Usaha lainnya', initial: '+', bg: '#EDEEF7', fg: '#51546F' }
+    ];
+    return {
+      types: list.map(t => ({
+        label: t.label, initial: t.initial, iconBg: t.bg, iconFg: t.fg, on: !!t.on,
+        bg: t.on ? '#F1F0FD' : '#FFFFFF', border: t.on ? '3px solid #3B35B5' : '1px solid #D9DBEA'
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

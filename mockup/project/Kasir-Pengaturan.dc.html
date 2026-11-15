@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Pengaturan perangkat kasir</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <header style="height: 64px; flex: none; display: flex; align-items: center; gap: 14px; padding: 0 20px; background: #FFFFFF; border-bottom: 1px solid #D9DBEA">
+    <div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div>
+    <span style="font-weight: 800; font-size: 18px">Pengaturan perangkat ini</span>
+    <span style="font-size: 15px; color: #51546F">Kasir 1 · Tablet Android · versi 1.4.2</span>
+  </header>
+  <div style="flex: 1; min-height: 0; display: flex">
+    <nav aria-label="Menu pengaturan" style="width: 250px; flex: none; background: #FFFFFF; border-right: 1px solid #D9DBEA; padding: 14px 12px; display: flex; flex-direction: column; gap: 6px">
+      <sc-for list="{{ menu }}" as="m" hint-placeholder-count="6">
+        <a href="#" aria-current="{{m.cur}}" style="min-height: 56px; display: flex; align-items: center; padding: 0 14px; border-radius: 12px; text-decoration: none; background: {{m.bg}}; color: {{m.fg}}; font-weight: {{m.w}}; font-size: 16px">{{m.label}}</a>
+      </sc-for>
+    </nav>
+    <main style="flex: 1; min-width: 0; padding: 20px 24px; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 18px; align-content: start">
+      <section aria-label="Printer" style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+        <div style="display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 19px; font-weight: 800">Printer</h2><button type="button" style="height: 44px; padding: 0 14px; border-radius: 12px; border: 2px solid #3B35B5; background: #FFFFFF; color: #3B35B5; font-weight: 800; font-size: 14px">+ Cari printer</button></div>
+        <sc-for list="{{ printers }}" as="p" hint-placeholder-count="3">
+          <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; border: 1px solid #D9DBEA">
+            <span style="width: 12px; height: 12px; border-radius: 50%; background: {{p.dot}}; flex: none"></span>
+            <span style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 16px; font-weight: 800">{{p.name}}</span><span style="font-size: 14px; color: #51546F">{{p.meta}}</span><span style="font-size: 13px; font-weight: 700; color: {{p.fg}}">{{p.status}}</span></span>
+            <button type="button" style="height: 44px; padding: 0 14px; border-radius: 10px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 14px">{{p.action}}</button>
+          </div>
+        </sc-for>
+        <span style="font-size: 14px; color: #51546F; line-height: 1.5">Kalau printer putus, struk masuk antrean dan dicetak otomatis saat tersambung lagi. Semua struk, termasuk laporan tutup kasir, bisa dicetak ulang dari Riwayat.</span>
+      </section>
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <section aria-label="Tampilan" style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+          <h2 style="margin: 0; font-size: 19px; font-weight: 800">Tampilan</h2>
+          <span style="font-size: 15px; font-weight: 700">Ukuran teks</span>
+          <div role="group" aria-label="Ukuran teks" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+            <button type="button" aria-pressed="false" style="height: 56px; border-radius: 12px; border: 2px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 16px">A Normal</button>
+            <button type="button" aria-pressed="true" style="height: 56px; border-radius: 12px; border: 2px solid #3B35B5; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 18px">A+ Besar</button>
+            <button type="button" aria-pressed="false" style="height: 56px; border-radius: 12px; border: 2px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 20px">A++</button>
+          </div>
+          <sc-for list="{{ toggles }}" as="t" hint-placeholder-count="3">
+            <div style="display: flex; align-items: center; gap: 12px; min-height: 52px">
+              <span style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 16px; font-weight: 700">{{t.label}}</span><span style="font-size: 13px; color: #51546F">{{t.help}}</span></span>
+              <span role="switch" aria-checked="{{t.on}}" aria-label="{{t.label}}" style="display: inline-flex; width: 52px; height: 30px; border-radius: 999px; background: {{t.bg}}; padding: 3px; box-sizing: border-box; justify-content: {{t.j}}"><span style="width: 24px; height: 24px; border-radius: 50%; background: #FFFFFF"></span></span>
+            </div>
+          </sc-for>
+        </section>
+        <section aria-label="Sinkron data" style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 18px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px">
+          <h2 style="margin: 0; font-size: 19px; font-weight: 800">Sinkron data</h2>
+          <span style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 12px; background: #DDF3E7; color: #16774A; font-weight: 700; font-size: 15px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Semua data terkirim · terakhir 15.41</span>
+          <div style="display: flex; justify-content: space-between; font-size: 15px"><span>Menunggu dikirim</span><b>0 transaksi</b></div>
+          <div style="display: flex; justify-content: space-between; font-size: 15px"><span>Data di perangkat</span><b>7 hari terakhir · 12 MB</b></div>
+          <div style="display: flex; gap: 8px"><button type="button" style="flex: 1; height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 14px">Kirim sekarang</button><button type="button" style="flex: 1; height: 48px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 14px">Riwayat sinkron</button></div>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const menu = [['Printer & tampilan', true], ['Struk'], ['Laci kasir & scanner'], ['Layar pelanggan'], ['Akun & perangkat'], ['Bantuan']].map(m => ({ label: m[0], cur: m[1] ? 'page' : 'false', bg: m[1] ? '#3B35B5' : 'transparent', fg: m[1] ? '#FFFFFF' : '#181A2E', w: m[1] ? 800 : 600 }));
+    const printers = [
+      { name: 'Printer struk · RPP02N', meta: 'Bluetooth · 58 mm · laci kasir ikut terbuka', status: 'Tersambung', dot: '#16774A', fg: '#16774A', action: 'Tes cetak' },
+      { name: 'Printer dapur · Epson TM-T82', meta: 'Jaringan 192.168.1.50 · 80 mm · khusus makanan', status: 'Tersambung', dot: '#16774A', fg: '#16774A', action: 'Tes cetak' },
+      { name: 'Printer label · XP-365B', meta: 'USB · stiker 40×30 mm', status: 'Putus · 2 label menunggu', dot: '#E39D00', fg: '#6B4600', action: 'Sambung ulang' }
+    ];
+    const toggles = [
+      { label: 'Mode simpel', help: 'Sembunyikan meja, varian rumit, dan multi-harga', on: false },
+      { label: 'Bunyi saat item masuk', help: 'Bunyi "ting" dan getar', on: true },
+      { label: 'Mode gelap', help: 'Untuk pemakaian malam', on: false }
+    ].map(t => Object.assign(t, { bg: t.on ? '#3B35B5' : '#B9BCD3', j: t.on ? 'flex-end' : 'flex-start' }));
+    return { menu: menu, printers: printers, toggles: toggles };
+  }
+}
+</script>
+</body>
+</html>

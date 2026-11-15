@@ -1,0 +1,30 @@
+version: 2
+updates:
+  - package-ecosystem: gomod
+    directory: /apps/api
+    schedule:
+      interval: weekly
+    groups:
+      go-deps:
+        patterns: ["*"]
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    # Baileys sengaja dikunci (ADR-0005). Naikkan manual setelah dicek changelog-nya.
+    ignore:
+      - dependency-name: baileys
+    groups:
+      npm-deps:
+        patterns: ["*"]
+
+  - package-ecosystem: pub
+    directory: /apps/kasir
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

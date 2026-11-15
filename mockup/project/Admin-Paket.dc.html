@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Super admin paket dan harga</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height: 1100px; box-sizing: border-box; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+  <nav aria-label="Menu super admin" style="flex: 1 1 232px; max-width: 100%; background: #181A2E; color: #ECECF6; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 6px 6px"><div style="width: 36px; height: 36px; border-radius: 10px; background: #FFC23D; color: #181A2E; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div><span style="font-size: 18px; font-weight: 800">POS Kita</span></div>
+    <span style="padding: 0 6px 16px; font-size: 13px; font-weight: 700; color: #FFD98A">Panel super admin · tim internal</span>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="8"><a href="#" aria-current="{{n.current}}" style="min-height: 46px; display: flex; align-items: center; padding: 0 12px; border-radius: 12px; text-decoration: none; background: {{n.bg}}; color: {{n.fg}}; font-weight: {{n.weight}}; font-size: 15px">{{n.label}}</a></sc-for>
+  </nav>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 24px clamp(16px, 3vw, 36px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px"><div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 28px; font-weight: 800">Paket &amp; harga</h1><span style="font-size: 15px; color: #51546F">Ubah harga, batas, dan fitur tanpa rilis aplikasi baru. Perubahan tercatat di log audit.</span></div><div style="display: flex; gap: 10px"><button type="button" style="height: 48px; padding: 0 16px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 14px">Simpan draf</button><button type="button" style="height: 48px; padding: 0 16px; border-radius: 12px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 14px">Terbitkan perubahan</button></div></div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px">
+      <sc-for list="{{ plans }}" as="p" hint-placeholder-count="4">
+        <div style="background: #FFFFFF; border: {{p.border}}; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+          <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 18px; font-weight: 800">{{p.name}}</span><span style="font-size: 12px; font-weight: 800; color: #51546F">{{p.users}}</span></div>
+          <label style="display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 700; color: #51546F">Harga bulanan<span style="height: 44px; display: flex; align-items: center; padding: 0 12px; border: 1px solid #D9DBEA; border-radius: 10px; font-size: 16px; font-weight: 800; color: #181A2E; font-variant-numeric: tabular-nums">{{p.m}}</span></label>
+          <label style="display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 700; color: #51546F">Harga tahunan<span style="height: 44px; display: flex; align-items: center; padding: 0 12px; border: 1px solid #D9DBEA; border-radius: 10px; font-size: 16px; font-weight: 800; color: #181A2E; font-variant-numeric: tabular-nums">{{p.y}}</span></label>
+          <span style="font-size: 13px; color: #51546F">{{p.note}}</span>
+        </div>
+      </sc-for>
+    </div>
+    <section aria-label="Batas dan fitur per paket" style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; overflow-x: auto">
+      <table style="width: 100%; min-width: 820px; border-collapse: collapse; font-size: 14px">
+        <thead><tr style="background: #F6F6FB"><th scope="col" style="text-align: left; padding: 12px 16px; font-size: 12px; color: #51546F">Batas / fitur</th><th scope="col" style="text-align: left; padding: 12px 10px; font-size: 12px; color: #51546F">Gratis</th><th scope="col" style="text-align: left; padding: 12px 10px; font-size: 12px; color: #51546F">Basic</th><th scope="col" style="text-align: left; padding: 12px 10px; font-size: 12px; color: #3B35B5">Pro</th><th scope="col" style="text-align: left; padding: 12px 16px; font-size: 12px; color: #51546F">Bisnis</th></tr></thead>
+        <tbody><sc-for list="{{ rows }}" as="r" hint-placeholder-count="10"><tr style="border-top: 1px solid #EDEEF7"><th scope="row" style="text-align: left; padding: 10px 16px; font-weight: 700">{{r.f}}<span style="display: block; font-size: 12px; color: #51546F; font-weight: 500">{{r.key}}</span></th><td style="padding: 10px"><span style="padding: 4px 10px; border-radius: 8px; background: {{r.a.bg}}; color: {{r.a.fg}}; font-weight: 800; font-size: 13px">{{r.a.v}}</span></td><td style="padding: 10px"><span style="padding: 4px 10px; border-radius: 8px; background: {{r.b.bg}}; color: {{r.b.fg}}; font-weight: 800; font-size: 13px">{{r.b.v}}</span></td><td style="padding: 10px"><span style="padding: 4px 10px; border-radius: 8px; background: {{r.c.bg}}; color: {{r.c.fg}}; font-weight: 800; font-size: 13px">{{r.c.v}}</span></td><td style="padding: 10px 16px"><span style="padding: 4px 10px; border-radius: 8px; background: {{r.d.bg}}; color: {{r.d.fg}}; font-weight: 800; font-size: 13px">{{r.d.v}}</span></td></tr></sc-for></tbody>
+      </table>
+    </section>
+    <div style="background: #FFF8E6; border: 1px solid #F0D08A; border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
+      <b style="color: #6B4600">Saat harga berubah</b>
+      <label for="grandfather" style="display: flex; align-items: center; gap: 10px; min-height: 44px"><input id="grandfather" type="checkbox" checked style="width: 20px; height: 20px">Pelanggan lama tetap di harga lama sampai mereka ganti paket</label>
+      <label for="notify-change" style="display: flex; align-items: center; gap: 10px; min-height: 44px"><input id="notify-change" type="checkbox" checked style="width: 20px; height: 20px">Beri tahu lewat email &amp; WA 30 hari sebelum harga baru berlaku</label>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const N = [['Ringkasan'], ['Toko & pengguna'], ['Paket & harga', true], ['Branding'], ['Tagihan & pembayaran'], ['Sesi WhatsApp'], ['Dukungan'], ['Log audit']];
+    const nav = N.map(n => ({ label: n[0], current: n[1] ? 'page' : 'false', bg: n[1] ? '#3B35B5' : 'transparent', fg: n[1] ? '#FFFFFF' : '#C9CBDE', weight: n[1] ? 800 : 600 }));
+    const plans = [['Gratis', '1.180 toko', 'Rp0', 'Rp0', 'Tanpa batas waktu'], ['Basic', '262 toko', 'Rp99.000', 'Rp990.000', 'Per toko'], ['Pro', '118 toko', 'Rp199.000', 'Rp1.990.000', 'Per outlet · trial 30 hari', true], ['Bisnis', '23 toko', 'Rp399.000', 'Rp3.990.000', 'Per outlet']].map(p => ({ name: p[0], users: p[1], m: p[2], y: p[3], note: p[4], border: p[5] ? '2px solid #3B35B5' : '1px solid #D9DBEA' }));
+    const cell = v => ({ v: v, bg: v === 'Tidak' ? '#FBE3E0' : (v === 'Ya' ? '#DDF3E7' : '#EDEEF7'), fg: v === 'Tidak' ? '#B42318' : (v === 'Ya' ? '#16774A' : '#181A2E') });
+    const R = [['Outlet', 'limit.outlets', '1', '1', 'Per outlet', 'Per outlet'], ['Perangkat per outlet', 'limit.devices', '1', '2', '4', 'Tanpa batas'], ['Produk', 'limit.products', '100', 'Tanpa batas', 'Tanpa batas', 'Tanpa batas'], ['Karyawan', 'limit.staff', '1', '5', 'Tanpa batas', 'Tanpa batas'], ['Stok opname', 'feature.stock_opname', 'Tidak', 'Ya', 'Ya', 'Ya'], ['WA otomatis (struk & laporan)', 'feature.wa_auto', 'Tidak', 'Ya', 'Ya', 'Ya'], ['Meja & layar dapur', 'feature.fnb_table_kds', 'Tidak', 'Tidak', 'Ya', 'Ya'], ['Resep & HPP', 'feature.recipe_cogs', 'Tidak', 'Tidak', 'Ya', 'Ya'], ['Transfer stok antar outlet', 'feature.stock_transfer', 'Tidak', 'Tidak', 'Tidak', 'Ya'], ['Ekspor data', 'feature.export', 'Ya', 'Ya', 'Ya', 'Ya']];
+    const rows = R.map(r => ({ f: r[0], key: r[1], a: cell(r[2]), b: cell(r[3]), c: cell(r[4]), d: cell(r[5]) }));
+    return { nav: nav, plans: plans, rows: rows };
+  }
+}
+</script>
+</body>
+</html>

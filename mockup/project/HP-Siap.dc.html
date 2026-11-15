@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Siap jualan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <div style="padding: 20px 20px 8px; display: flex; flex-direction: column; gap: 12px">
+    <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 15px; font-weight: 700; color: #51546F">Langkah 4 dari 4</span><button type="button" style="height: 44px; padding: 0 12px; border-radius: 10px; border: 0; background: transparent; color: #3B35B5; font-weight: 800; font-size: 15px">Lewati</button></div>
+    <div role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="4" aria-label="Langkah pendaftaran" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px"><span style="height: 6px; border-radius: 3px; background: #3B35B5"></span><span style="height: 6px; border-radius: 3px; background: #3B35B5"></span><span style="height: 6px; border-radius: 3px; background: #3B35B5"></span><span style="height: 6px; border-radius: 3px; background: #3B35B5"></span></div>
+    <h1 style="margin: 6px 0 0; font-size: 26px; font-weight: 800; line-height: 1.25">Isi menu pertama Anda</h1>
+    <p style="margin: 0; font-size: 16px; color: #51546F; line-height: 1.5">Pilih cara yang paling gampang. Semua bisa diubah nanti.</p>
+  </div>
+  <div style="flex: 1; min-height: 0; overflow: auto; padding: 8px 20px 12px; display: flex; flex-direction: column; gap: 10px">
+    <sc-for list="{{ ways }}" as="w" hint-placeholder-count="4">
+      <button type="button" aria-pressed="{{w.on}}" style="min-height: 84px; border-radius: 16px; border: {{w.border}}; background: {{w.bg}}; color: #181A2E; text-align: left; padding: 12px 14px; display: flex; gap: 14px; align-items: center">
+        <span style="width: 48px; height: 48px; border-radius: 14px; background: {{w.iconBg}}; color: {{w.iconFg}}; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; flex: none">{{w.mark}}</span>
+        <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 17px; font-weight: 800">{{w.title}}</span><span style="font-size: 14px; color: #51546F; line-height: 1.4">{{w.help}}</span></span>
+      </button>
+    </sc-for>
+    <div style="margin-top: 6px; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px">
+      <span style="font-size: 16px; font-weight: 800">Sambungkan printer (opsional)</span>
+      <span style="font-size: 14px; color: #51546F">Nyalakan printer Bluetooth lalu tekan Cari. Bisa dilakukan nanti.</span>
+      <button type="button" style="align-self: flex-start; height: 44px; padding: 0 14px; border-radius: 10px; border: 2px solid #3B35B5; background: #FFFFFF; color: #3B35B5; font-weight: 800; font-size: 14px">Cari printer</button>
+    </div>
+  </div>
+  <div style="padding: 12px 20px 24px; background: #FFFFFF; border-top: 1px solid #D9DBEA"><button type="button" style="width: 100%; height: 60px; border-radius: 14px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 18px">Pakai contoh menu &amp; mulai jualan</button></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const W = [
+      ['Pakai contoh menu kafe', '24 menu kopi, non-kopi, makanan, dan camilan. Tinggal ubah harganya.', 'K', '#F3E6DA', '#6B3E1E', true],
+      ['Foto daftar menu atau nota', 'Nama dan harga diisi otomatis, Anda tinggal mengecek.', 'F', '#FFF2D2', '#6B4600'],
+      ['Impor dari Excel atau aplikasi lama', 'Bisa dari file ekspor aplikasi kasir lain.', 'X', '#DDF0EA', '#11624A'],
+      ['Tambah satu per satu', 'Cocok kalau menunya sedikit.', '+', '#EDEEF7', '#51546F']
+    ];
+    const ways = W.map(w => ({ title: w[0], help: w[1], mark: w[2], iconBg: w[3], iconFg: w[4], on: !!w[5], border: w[5] ? '3px solid #3B35B5' : '1px solid #D9DBEA', bg: w[5] ? '#F1F0FD' : '#FFFFFF' }));
+    return { ways: ways };
+  }
+}
+</script>
+</body>
+</html>

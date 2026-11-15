@@ -1,0 +1,31 @@
+{
+  "name": "pos-kita",
+  "private": true,
+  "description": "Monorepo POS Kita: API Go, app kasir Flutter, web back office, situs, dan gateway WhatsApp.",
+  "packageManager": "pnpm@10.18.3",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev:api": "cd apps/api && go run ./cmd/api",
+    "dev:web": "pnpm --filter @pos/web dev",
+    "dev:site": "pnpm --filter @pos/site dev",
+    "dev:wa": "pnpm --filter @pos/wa-gateway dev",
+    "infra:up": "docker compose -f infra/dev/docker-compose.yml up -d",
+    "infra:down": "docker compose -f infra/dev/docker-compose.yml down",
+    "db:migrate": "cd apps/api && go run ./cmd/api migrate",
+    "gen": "pnpm gen:tokens && pnpm gen:api && pnpm gen:go",
+    "gen:tokens": "pnpm --filter @pos/design-tokens build",
+    "gen:api": "pnpm --filter @pos/api-spec gen",
+    "gen:go": "cd apps/api && go generate ./...",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "build": "pnpm -r --if-present build"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.6.7",
+    "typescript": "^5.9.3"
+  }
+}

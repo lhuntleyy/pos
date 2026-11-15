@@ -1,0 +1,106 @@
+---
+import { formatRupiah, includedInAll, plans } from "../data/plans";
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Harga paket" description="Paket langganan bulanan tanpa kontrak. Mulai gratis.">
+  <h1>Pilih paket, bisa berhenti kapan saja</h1>
+  <p class="lead">Bayar bulanan, tanpa kontrak. Data tetap bisa diunduh walaupun berhenti langganan.</p>
+
+  <section class="plans" aria-label="Daftar paket">
+    {
+      plans.map((p) => (
+        <article class:list={["plan", { popular: p.popular }]}>
+          {p.popular && <span class="badge">Paling banyak dipilih</span>}
+          <h2>{p.name}</h2>
+          <p class="for">{p.for}</p>
+          <p class="price tabular">{p.monthly === 0 ? "Rp0" : formatRupiah(p.monthly)}</p>
+          <p class="unit">
+            {p.monthly === 0 ? "Selamanya, tanpa kartu kredit" : `per bulan${p.perOutlet ? " per outlet" : ""}`}
+          </p>
+          <ul>
+            {p.features.map((f) => (
+              <li>{f}</li>
+            ))}
+          </ul>
+          <a class:list={["button", { "button-primary": p.popular }]} href="#">
+            {p.cta}
+          </a>
+        </article>
+      ))
+    }
+  </section>
+
+  <section class="included">
+    <h2>Semua paket sudah termasuk</h2>
+    <ul>
+      {includedInAll.map((i) => <li>{i}</li>)}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  h1 {
+    font-size: clamp(28px, 4vw, 40px);
+    margin: 0;
+  }
+  .lead {
+    color: var(--color-ink-muted);
+    font-size: 18px;
+  }
+  .plans {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    margin-top: var(--space-8);
+  }
+  .plan {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+  }
+  .plan.popular {
+    border: 2px solid var(--color-brand);
+  }
+  .badge {
+    align-self: flex-start;
+    background: var(--color-highlight);
+    color: var(--color-ink);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 2px var(--space-3);
+    border-radius: var(--radius-pill);
+  }
+  .plan h2 {
+    margin: 0;
+    font-size: 22px;
+  }
+  .for,
+  .unit {
+    margin: 0;
+    color: var(--color-ink-muted);
+  }
+  .price {
+    margin: var(--space-2) 0 0;
+    font-size: 36px;
+    font-weight: 800;
+  }
+  .plan ul {
+    flex: 1;
+    padding-left: var(--space-5);
+  }
+  .included {
+    margin-top: var(--space-10);
+  }
+  .included ul {
+    display: grid;
+    gap: var(--space-2);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    padding-left: var(--space-5);
+  }
+</style>

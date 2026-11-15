@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Pelanggan dan kasbon web</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height: 1000px; box-sizing: border-box; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+  <nav aria-label="Menu utama" style="flex: 1 1 232px; max-width: 100%; background: #FFFFFF; border-right: 1px solid #D9DBEA; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 6px 18px"><div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div><span style="font-size: 18px; font-weight: 800">POS Kita</span></div>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7"><a href="#" aria-current="{{n.current}}" style="min-height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 12px; text-decoration: none; background: {{n.bg}}; color: {{n.fg}}; font-weight: {{n.weight}}; font-size: 15px"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{n.dot}}; flex: none"></span>{{n.label}}</a></sc-for>
+  </nav>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 24px clamp(16px, 3vw, 36px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 28px; font-weight: 800">Pelanggan &amp; kasbon</h1><span style="font-size: 15px; color: #51546F">1.284 pelanggan · 312 member · 6 punya kasbon</span></div>
+      <button type="button" style="height: 48px; padding: 0 16px; border-radius: 12px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 14px">Kirim pengingat ke 2 yang lewat tempo</button>
+    </div>
+    <div role="tablist" aria-label="Bagian" style="display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid #D9DBEA">
+      <button type="button" role="tab" aria-selected="false" style="height: 48px; padding: 0 16px; border: 0; border-bottom: 3px solid transparent; background: transparent; color: #51546F; font-weight: 600; font-size: 15px">Semua pelanggan</button>
+      <button type="button" role="tab" aria-selected="true" style="height: 48px; padding: 0 16px; border: 0; border-bottom: 3px solid #3B35B5; background: transparent; color: #3B35B5; font-weight: 800; font-size: 15px">Kasbon</button>
+      <button type="button" role="tab" aria-selected="false" style="height: 48px; padding: 0 16px; border: 0; border-bottom: 3px solid transparent; background: transparent; color: #51546F; font-weight: 600; font-size: 15px">Member &amp; poin</button>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+      <sc-for list="{{ aging }}" as="a" hint-placeholder-count="4"><div style="background: {{a.bg}}; border: 1px solid {{a.border}}; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: {{a.fg}}">{{a.label}}</span><span style="font-size: 26px; font-weight: 800; font-variant-numeric: tabular-nums; color: {{a.fg}}">{{a.v}}</span><span style="font-size: 13px; color: #51546F">{{a.n}}</span></div></sc-for>
+    </div>
+    <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; overflow-x: auto">
+      <table style="width: 100%; min-width: 820px; border-collapse: collapse; font-size: 15px">
+        <thead><tr style="background: #F6F6FB"><th scope="col" style="text-align: left; padding: 12px 16px; font-size: 13px; color: #51546F">Pelanggan</th><th scope="col" style="text-align: left; padding: 12px 10px; font-size: 13px; color: #51546F">Outlet</th><th scope="col" style="text-align: right; padding: 12px 10px; font-size: 13px; color: #51546F">Kasbon</th><th scope="col" style="text-align: right; padding: 12px 10px; font-size: 13px; color: #51546F">Batas</th><th scope="col" style="text-align: left; padding: 12px 10px; font-size: 13px; color: #51546F">Jatuh tempo</th><th scope="col" style="text-align: left; padding: 12px 10px; font-size: 13px; color: #51546F">Pengingat terakhir</th><th scope="col" style="text-align: left; padding: 12px 16px; font-size: 13px; color: #51546F">Aksi</th></tr></thead>
+        <tbody>
+          <sc-for list="{{ rows }}" as="r" hint-placeholder-count="7"><tr style="border-top: 1px solid #EDEEF7"><td style="padding: 12px 16px"><span style="display: flex; flex-direction: column"><b>{{r.name}}</b><span style="font-size: 13px; color: #51546F">{{r.phone}}</span></span></td><td style="padding: 12px 10px; color: #51546F">{{r.outlet}}</td><td style="padding: 12px 10px; text-align: right; font-weight: 800; font-variant-numeric: tabular-nums">{{r.debt}}</td><td style="padding: 12px 10px; text-align: right; color: #51546F; font-variant-numeric: tabular-nums">{{r.limit}}</td><td style="padding: 12px 10px"><span style="padding: 2px 10px; border-radius: 999px; background: {{r.chipBg}}; color: {{r.chipFg}}; font-size: 13px; font-weight: 800">{{r.due}}</span></td><td style="padding: 12px 10px; color: #51546F">{{r.last}}</td><td style="padding: 12px 16px"><a href="#" style="font-weight: 800; font-size: 14px">Catat bayar</a></td></tr></sc-for>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const N = [['Beranda'], ['Penjualan'], ['Produk & Stok'], ['Pelanggan & Promo', true], ['Karyawan'], ['Laporan'], ['Pengaturan']];
+    const nav = N.map(n => ({ label: n[0], current: n[1] ? 'page' : 'false', bg: n[1] ? '#3B35B5' : 'transparent', fg: n[1] ? '#FFFFFF' : '#181A2E', weight: n[1] ? 800 : 600, dot: n[1] ? '#FFC23D' : '#D9DBEA' }));
+    const aging = [['Total kasbon', 'Rp1.245.000', '6 pelanggan', '#FFFFFF', '#D9DBEA', '#181A2E'], ['Belum jatuh tempo', 'Rp750.000', '4 pelanggan', '#FFFFFF', '#D9DBEA', '#16774A'], ['Lewat 1–30 hari', 'Rp495.000', '2 pelanggan', '#FFF8E6', '#F0D08A', '#6B4600'], ['Lewat lebih dari 30 hari', 'Rp0', '—', '#FFFFFF', '#D9DBEA', '#51546F']].map(a => ({ label: a[0], v: a[1], n: a[2], bg: a[3], border: a[4], fg: a[5] }));
+    const R = [['Bu Wati', '0813-****-2290', 'Kemang', 'Rp320.000', 'Rp500.000', 'Lewat 6 hari', 'late', '12 Nov · WA terkirim'], ['Toni', '0857-****-1102', 'Tebet', 'Rp175.000', 'Rp300.000', 'Lewat 2 hari', 'late', '—'], ['Ibu Dewi (katering)', '0812-****-4410', 'Kemang', 'Rp410.000', 'Rp1.000.000', '25 Nov', 'ok', '—'], ['Pak Joko', '0812-****-7781', 'Kemang', 'Rp185.000', 'Rp500.000', '30 Nov', 'ok', '—'], ['Mas Seno', '0896-****-3301', 'Senopati', 'Rp95.000', 'Rp200.000', '20 Nov', 'ok', '—'], ['Arif', '0821-****-6612', 'Tebet', 'Rp60.000', 'Rp200.000', '23 Nov', 'ok', '—']];
+    const rows = R.map(r => ({ name: r[0], phone: r[1], outlet: r[2], debt: r[3], limit: r[4], due: r[5], chipBg: r[6] === 'late' ? '#FBE3E0' : '#DDF3E7', chipFg: r[6] === 'late' ? '#B42318' : '#16774A', last: r[7] }));
+    return { nav: nav, aging: aging, rows: rows };
+  }
+}
+</script>
+</body>
+</html>

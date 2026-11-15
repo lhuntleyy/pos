@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Pisah tagihan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; overflow: hidden">
+  <header style="height: 64px; flex: none; display: flex; align-items: center; gap: 14px; padding: 0 20px; background: #FFFFFF; border-bottom: 1px solid #D9DBEA">
+    <div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div>
+    <span style="font-weight: 800; font-size: 18px">Pisah tagihan · Meja 7</span>
+    <span style="font-size: 15px; color: #51546F">Total Rp218.900 · 6 tamu</span>
+    <div style="flex: 1"></div>
+    <div role="group" aria-label="Cara memisah" style="display: flex; gap: 6px; background: #EDEEF7; padding: 4px; border-radius: 12px">
+      <button type="button" aria-pressed="true" style="height: 44px; padding: 0 16px; border-radius: 9px; border: 0; background: #FFFFFF; color: #3B35B5; font-weight: 800; font-size: 15px">Per item</button>
+      <button type="button" aria-pressed="false" style="height: 44px; padding: 0 16px; border-radius: 9px; border: 0; background: transparent; color: #51546F; font-weight: 700; font-size: 15px">Bagi rata</button>
+      <button type="button" aria-pressed="false" style="height: 44px; padding: 0 16px; border-radius: 9px; border: 0; background: transparent; color: #51546F; font-weight: 700; font-size: 15px">Per nominal</button>
+    </div>
+  </header>
+  <div style="flex: 1; min-height: 0; display: flex; gap: 16px; padding: 18px">
+    <section aria-label="Belum dibagi" style="width: 300px; flex: none; background: #FFFFFF; border: 2px dashed #B9BCD3; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 8px">
+      <span style="font-size: 17px; font-weight: 800">Belum dibagi · 2 item</span>
+      <span style="font-size: 14px; color: #51546F">Tap item, lalu tap tagihan tujuan.</span>
+      <button type="button" style="min-height: 56px; border-radius: 12px; border: 3px solid #3B35B5; background: #F1F0FD; color: #181A2E; font-weight: 700; font-size: 16px; text-align: left; padding: 0 14px; display: flex; justify-content: space-between; align-items: center"><span>Kentang Goreng</span><span style="font-variant-numeric: tabular-nums">Rp15.000</span></button>
+      <button type="button" style="min-height: 56px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 16px; text-align: left; padding: 0 14px; display: flex; justify-content: space-between; align-items: center"><span>Air Mineral × 2</span><span style="font-variant-numeric: tabular-nums">Rp10.000</span></button>
+    </section>
+    <div style="flex: 1; min-width: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px">
+      <sc-for list="{{ bills }}" as="b" hint-placeholder-count="3">
+        <section aria-label="{{b.name}}" style="background: #FFFFFF; border: {{b.border}}; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 8px">
+          <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 18px; font-weight: 800">{{b.name}}</span><span style="padding: 3px 10px; border-radius: 999px; background: {{b.chipBg}}; color: {{b.chipFg}}; font-size: 13px; font-weight: 800">{{b.status}}</span></div>
+          <sc-for list="{{ b.items }}" as="i" hint-placeholder-count="3"><div style="display: flex; justify-content: space-between; font-size: 15px; padding: 7px 0; border-bottom: 1px solid #EDEEF7"><span>{{i.n}}</span><span style="font-variant-numeric: tabular-nums">{{i.p}}</span></div></sc-for>
+          <div style="flex: 1"></div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 15px; color: #51546F">Total + PBJT</span><span style="font-size: 26px; font-weight: 800; font-variant-numeric: tabular-nums">{{b.total}}</span></div>
+          <button type="button" disabled="{{b.paid}}" style="height: 56px; border-radius: 14px; border: 0; background: {{b.btnBg}}; color: #FFFFFF; font-weight: 800; font-size: 17px">{{b.btn}}</button>
+        </section>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const bills = [
+      { name: 'Tagihan 1 · Andi', status: 'Lunas · QRIS', chipBg: '#DDF3E7', chipFg: '#16774A', paid: true, btn: 'Sudah dibayar', btnBg: '#B9BCD3', border: '1px solid #D9DBEA', total: 'Rp96.800', items: [{ n: 'Nasi Goreng Spesial', p: 'Rp25.000' }, { n: 'Soto Ayam Lamongan', p: 'Rp21.000' }, { n: 'Es Kopi Susu Aren × 2', p: 'Rp36.000' }, { n: 'Es Teh Manis', p: 'Rp6.000' }] },
+      { name: 'Tagihan 2 · Budi', status: 'Belum bayar', chipBg: '#FFF2D2', chipFg: '#6B4600', paid: false, btn: 'Bayar Rp94.600', btnBg: '#3B35B5', border: '3px solid #3B35B5', total: 'Rp94.600', items: [{ n: 'Mie Goreng Jawa', p: 'Rp22.000' }, { n: 'Ayam Geprek Sambal Matah', p: 'Rp20.000' }, { n: 'Kopi Latte Panas × 2', p: 'Rp44.000' }] },
+      { name: 'Tagihan 3', status: 'Kosong', chipBg: '#EDEEF7', chipFg: '#51546F', paid: false, btn: '+ Tambahkan item', btnBg: '#7C78E0', border: '1px dashed #B9BCD3', total: 'Rp0', items: [] }
+    ];
+    return { bills: bills };
+  }
+}
+</script>
+</body>
+</html>

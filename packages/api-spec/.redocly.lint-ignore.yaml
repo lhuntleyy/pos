@@ -1,0 +1,5 @@
+# Pengecualian aturan lint yang disengaja.
+openapi.yaml:
+  operation-4xx-response:
+    # /health tidak punya respons 4xx: dipanggil load balancer tanpa input.
+    - "#/paths/~1health/get/responses"

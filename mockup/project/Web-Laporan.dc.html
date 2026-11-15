@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Laporan web</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3B35B5}a:hover{color:#2A2590}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid #E39D00;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height: 1300px; box-sizing: border-box; background: #F6F6FB; color: #181A2E; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+  <nav aria-label="Menu utama" style="flex: 1 1 232px; max-width: 100%; background: #FFFFFF; border-right: 1px solid #D9DBEA; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 6px 18px"><div style="width: 36px; height: 36px; border-radius: 10px; background: #3B35B5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">k</div><span style="font-size: 18px; font-weight: 800">POS Kita</span></div>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7"><a href="#" aria-current="{{n.current}}" style="min-height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 12px; text-decoration: none; background: {{n.bg}}; color: {{n.fg}}; font-weight: {{n.weight}}; font-size: 15px"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{n.dot}}; flex: none"></span>{{n.label}}</a></sc-for>
+  </nav>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 24px clamp(16px, 3vw, 36px) 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 28px; font-weight: 800">Laporan</h1><span style="font-size: 15px; color: #51546F">Satu halaman untuk semua laporan. Pilih filter, lalu pindah tab.</span></div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px"><button type="button" style="height: 48px; padding: 0 16px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 14px">Unduh Excel</button><button type="button" style="height: 48px; padding: 0 16px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 800; font-size: 14px">Unduh PDF</button><button type="button" style="height: 48px; padding: 0 16px; border-radius: 12px; border: 0; background: #3B35B5; color: #FFFFFF; font-weight: 800; font-size: 14px">Kirim ke WA tiap hari 22.00</button></div>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px">
+      <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4"><button type="button" style="height: 48px; padding: 0 14px; border-radius: 12px; border: 1px solid #D9DBEA; background: #FFFFFF; color: #181A2E; font-weight: 700; font-size: 14px">{{f.label}}</button></sc-for>
+    </div>
+    <div role="tablist" aria-label="Jenis laporan" style="display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid #D9DBEA">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="6"><button type="button" role="tab" aria-selected="{{t.on}}" style="height: 48px; padding: 0 16px; border: 0; border-bottom: 3px solid {{t.line}}; background: transparent; color: {{t.fg}}; font-weight: {{t.w}}; font-size: 15px">{{t.label}}</button></sc-for>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px">
+      <sc-for list="{{ kpi }}" as="k" hint-placeholder-count="4"><div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #51546F">{{k.label}}</span><span style="font-size: 26px; font-weight: 800; font-variant-numeric: tabular-nums">{{k.v}}</span><span style="font-size: 13px; font-weight: 700; color: {{k.fg}}">{{k.d}}</span></div></sc-for>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start">
+      <section aria-label="Laba rugi" style="flex: 1 1 420px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 4px">
+        <h2 style="margin: 0 0 8px; font-size: 18px; font-weight: 800">Laba rugi sederhana · 1–15 Nov 2026</h2>
+        <sc-for list="{{ pl }}" as="r" hint-placeholder-count="9"><div style="display: flex; justify-content: space-between; padding: 8px 0 8px {{r.indent}}px; border-top: {{r.line}}; font-size: {{r.size}}px; font-weight: {{r.w}}; color: {{r.fg}}"><span>{{r.label}}</span><span style="font-variant-numeric: tabular-nums">{{r.v}}</span></div></sc-for>
+        <span style="font-size: 13px; color: #51546F; margin-top: 8px">HPP dihitung dari resep dan harga beli rata-rata. Biaya diambil dari kas keluar dan pengeluaran yang dicatat.</span>
+      </section>
+      <section aria-label="Pajak" style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+        <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px">
+          <h2 style="margin: 0; font-size: 18px; font-weight: 800">Pajak yang dipungut</h2>
+          <div style="display: flex; justify-content: space-between; font-size: 15px"><span>PBJT makan-minum 10%</span><b style="font-variant-numeric: tabular-nums">Rp13.648.000</b></div>
+          <div style="display: flex; justify-content: space-between; font-size: 15px"><span>Service charge</span><b style="font-variant-numeric: tabular-nums">Rp0</b></div>
+          <div style="display: flex; justify-content: space-between; font-size: 15px"><span>PPN</span><span style="color: #51546F">Tidak aktif</span></div>
+          <span style="font-size: 13px; color: #51546F">Siap dipakai untuk lapor PBJT bulanan ke Bapenda.</span>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid #D9DBEA; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px">
+          <h2 style="margin: 0; font-size: 18px; font-weight: 800">Kecocokan data</h2>
+          <span style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 12px; background: #DDF3E7; color: #16774A; font-weight: 700; font-size: 14px">Penjualan kasir = laporan = mutasi stok</span>
+          <span style="font-size: 13px; color: #51546F; line-height: 1.5">Dicek otomatis setiap malam. Kalau ada yang tidak cocok, pemilik langsung diberi tahu lengkap dengan nomor notanya.</span>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const N = [['Beranda'], ['Penjualan'], ['Produk & Stok'], ['Pelanggan & Promo'], ['Karyawan'], ['Laporan', true], ['Pengaturan']];
+    const nav = N.map(n => ({ label: n[0], current: n[1] ? 'page' : 'false', bg: n[1] ? '#3B35B5' : 'transparent', fg: n[1] ? '#FFFFFF' : '#181A2E', weight: n[1] ? 800 : 600, dot: n[1] ? '#FFC23D' : '#D9DBEA' }));
+    const filters = ['1–15 Nov 2026', 'Semua outlet', 'Semua kasir', 'Semua kanal'].map(l => ({ label: l }));
+    const tabs = [['Penjualan'], ['Produk'], ['Stok'], ['Keuangan', true], ['Pajak'], ['Shift & kas']].map(t => ({ label: t[0], on: !!t[1], line: t[1] ? '#3B35B5' : 'transparent', fg: t[1] ? '#3B35B5' : '#51546F', w: t[1] ? 800 : 600 }));
+    const kpi = [['Penjualan bersih', 'Rp136.480.000', '▲ 9% vs 1–15 Okt', '#16774A'], ['Laba kotor', 'Rp77.410.000', 'Margin 57%', '#16774A'], ['Biaya operasional', 'Rp21.300.000', '▲ 4%', '#B42318'], ['Perkiraan laba bersih', 'Rp56.110.000', '▲ 11%', '#16774A']].map(k => ({ label: k[0], v: k[1], d: k[2], fg: k[3] }));
+    const r = (label, v, o) => Object.assign({ label: label, v: v, indent: 0, line: '0', size: 15, w: 500, fg: '#181A2E' }, o || {});
+    const pl = [r('Penjualan kotor', 'Rp141.920.000'), r('Diskon & promo', '−Rp5.440.000', { indent: 16, fg: '#51546F' }), r('Penjualan bersih', 'Rp136.480.000', { w: 800, line: '1px solid #EDEEF7' }), r('HPP (modal barang terjual)', '−Rp59.070.000', { indent: 16, fg: '#51546F' }), r('Laba kotor', 'Rp77.410.000', { w: 800, line: '1px solid #EDEEF7' }), r('Gaji harian & lembur', '−Rp12.600.000', { indent: 16, fg: '#51546F' }), r('Listrik, air, gas', '−Rp4.900.000', { indent: 16, fg: '#51546F' }), r('Lain-lain (kas keluar)', '−Rp3.800.000', { indent: 16, fg: '#51546F' }), r('Perkiraan laba bersih', 'Rp56.110.000', { size: 18, w: 800, line: '2px solid #181A2E', fg: '#16774A' })];
+    return { nav: nav, filters: filters, tabs: tabs, kpi: kpi, pl: pl };
+  }
+}
+</script>
+</body>
+</html>
