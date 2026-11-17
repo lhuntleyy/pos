@@ -2,7 +2,7 @@
 
 Aplikasi kasir untuk usaha Indonesia: F&B, retail, dan jasa. Bisa dipakai semua umur dan tetap jalan tanpa internet. Nama, logo, dan warna produk diatur dari panel super admin, jadi "POS Kita" hanya nama sementara.
 
-- **PRD, roadmap, tech stack, backlog**: https://claude.ai/artifact/C3fa2i3ZmJVfstRHUzsybf
+- **PRD, roadmap, tech stack, backlog**: [POS Kita · PRD, Roadmap, Tech Stack & Backlog.md]
 - **Mockup 42 layar**: https://claude.ai/artifact/WgWf38bWpEs41JdifDu4on
 - **Riset pasar & kompetitor**: [riset/riset-pos.html](riset/riset-pos.html)
 - **Arsitektur**: [docs/arsitektur.md](docs/arsitektur.md) · **Keputusan (ADR)**: [docs/adr](docs/adr) · **Kamus istilah & aturan UI**: [docs/kamus-istilah.md](docs/kamus-istilah.md)
